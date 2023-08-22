@@ -1,0 +1,66 @@
+﻿unit ShowBooksTest;
+
+interface
+
+uses
+  DUnitX.TestFramework;
+
+type
+  [TestFixture]
+  TBookServiceTest = class
+  private
+
+  public
+    [Test]
+    procedure GetAllBooks_DatabaseHasData_True; //GetAllBooks_DatabaseHasData_True
+    [Test]
+    procedure ShowNoBooksFound; //GetAllBooks_DataBaseIsEmpty_True
+  end;
+
+implementation
+
+uses
+  TestBookDao, BookService, Book, SysUtils, Generics.Collections;
+
+procedure TBookServiceTest.GetAllBooks_DatabaseHasData_True;
+var
+  BookList: TObjectList<TBook>;
+begin
+  BookList := TObjectList<TBook>.Create;
+
+  var FMockDatabase := TDictionary<Integer, TBook>.Create;
+
+  FMockDatabase.Add(1, TBook.Create('Book A', 'Synopsis for Book A', 1));
+  FMockDatabase.Add(2, TBook.Create('Book B', 'Synopsis for Book B', 2));
+  FMockDatabase.Add(3, TBook.Create('Book C', 'Synopsis for Book C', 3));
+
+  var BookDao := TTestBookDao.Create(FMockDatabase);
+
+  var Service := TBookService.Create(BookDao);
+
+  Service.GetAllBooks(BookList);
+
+  Assert.IsTrue(BookList.Count > 0);
+end;
+
+procedure TBookServiceTest.ShowNoBooksFound;
+var
+  BookList: TObjectList<TBook>;
+begin
+  BookList := TObjectList<TBook>.Create;
+
+  var FMockDatabase := TDictionary<Integer, TBook>.Create;
+
+  var BookDao := TTestBookDao.Create(FMockDatabase);
+
+  var Service := TBookService.Create(BookDao);
+
+  Service.GetAllBooks(BookList);
+
+  Assert.AreEqual(BookList.Count, 0);
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TBookServiceTest);
+
+end.

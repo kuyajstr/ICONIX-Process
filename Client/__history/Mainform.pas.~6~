@@ -1,0 +1,29 @@
+unit Mainform;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Data.DB, Vcl.Grids,
+  Vcl.DBGrids,
+
+  MVCFramework.RESTClient;
+
+type
+  TMainPage = class(TForm)
+    lblHeader: TLabel;
+    DBGrid1: TDBGrid;
+  private
+    RESTClient: IMVCRESTClient;
+    IsLoading: Boolean;
+  public
+    { Public declarations }
+  end;
+
+implementation
+
+{$R *.dfm}
+
+uses BookstoreDM;
+
+end.

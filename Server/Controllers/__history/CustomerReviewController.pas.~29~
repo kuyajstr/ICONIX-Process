@@ -1,0 +1,109 @@
+unit CustomerReviewController;
+
+interface
+
+uses
+  MVCFramework,
+  MVCFramework.Commons,
+  MVCFramework.Serializer.Commons,
+  BaseController,
+  CustomerReview;
+
+type
+
+  [MVCPath('/api/customer_reviews')]
+  TCustomerReviewController = class(TBaseController<TCustomerReview>)
+  private
+    procedure ValidateCustomerReview(const ReviewStr: string);
+  public
+    [MVCPath]
+    [MVCHTTPMethod([httpPOST])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure CreateCustomerReview();
+
+    [MVCPath('/validate')]
+    [MVCHTTPMethod([httpPOST])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure ValidateReview();
+
+    [MVCPath]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetAllCustomerReview();
+
+    [MVCPath('/($ID)')]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetCustomerReviewByID(const ID: Integer);
+
+    [MVCPath('/($ID)')]
+    [MVCHTTPMethod([httpDELETE])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure DeleteCustomerReview(const ID: Integer);
+
+    [MVCPath('/($ID)')]
+    [MVCHTTPMethod([httpPUT])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure UpdateCustomerReview(const ID: Integer);
+  end;
+
+implementation
+
+uses
+  StrUtils,
+  SysUtils;
+
+{ TCustomerReviewController }
+
+procedure TCustomerReviewController.ValidateCustomerReview
+  (const ReviewStr: string);
+begin
+  if Length(ReviewStr) >= 1048576 then // Review too long 1MB
+    raise Exception.Create('The review is too long (1MB)')
+  else if Length(ReviewStr) <= 10 then
+    raise Exception.Create('The review is too short')
+end;
+
+procedure TCustomerReviewController.CreateCustomerReview;
+begin
+  var CustomerReview := Context.Request.BodyAs<TCustomerReview>;
+  try
+//    ValidateCustomerReview(CustomerReview.Review);
+    CustomerReview.CheckReview;
+    CustomerReview.CheckRating;
+    
+    CustomerReview.Insert;
+  except
+    on E: Exception do
+      Render(409, E.Message)
+  end;
+end;
+
+procedure TCustomerReviewController.DeleteCustomerReview(const ID: Integer);
+begin
+  DeleteEntity(ID);
+end;
+
+procedure TCustomerReviewController.GetAllCustomerReview;
+begin
+  Render(ObjectDict().Add('data', GetAllEntities))
+end;
+
+procedure TCustomerReviewController.GetCustomerReviewByID(const ID: Integer);
+begin
+  Render(ObjectDict().Add('data', GetEntityById(ID)))
+end;
+
+procedure TCustomerReviewController.UpdateCustomerReview(const ID: Integer);
+begin
+  UpdateEntity(ID);
+end;
+
+procedure TCustomerReviewController.ValidateReview;
+begin
+  var ReviewStr := Context.Request.Params[''];
+
+
+end;
+
+end.

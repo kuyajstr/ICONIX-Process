@@ -1,0 +1,37 @@
+unit CustomerReviewControllerV1;
+
+interface
+
+uses
+  MVCFramework,
+  MVCFramework.Commons,
+  MVCFramework.Serializer.Commons,
+  CustomerReviewV1;
+
+type
+
+  [MVCPath('/api/customer_reviews')]
+  TCustomerReviewControllerV1 = class(TMVCController)
+  public
+    [MVCPath]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetAllCustomerReview();
+  end;
+
+implementation
+
+uses
+  StrUtils,
+  SysUtils,
+  MVCFramework.ActiveRecord;
+
+
+{ TCustomerReviewController }
+
+procedure TCustomerReviewControllerV1.GetAllCustomerReview;
+begin
+  Render(ObjectDict().Add('data', TMVCActiveRecord.All<TCustomerReviewV1>));
+end;
+
+end.

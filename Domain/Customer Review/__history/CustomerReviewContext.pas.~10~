@@ -1,0 +1,99 @@
+unit CustomerReviewContext;
+
+interface
+
+type
+  CustomerReviewActiveRecord = class
+  private
+    FId: Integer;
+    FBookId: Integer;
+    FCustomerId: Integer;
+    FReview: string;
+    FRating: Integer;
+    FIsPending: Boolean;
+    function GetId: Integer;
+    procedure SetId(const AId: Integer);
+    function GetBookId: Integer;
+    procedure SetBookId(const ABookId: Integer);
+    function GetCustomerId: Integer;
+    procedure SetCustomerId(const ACustomerId: Integer);
+    function GetReview: string;
+    procedure SetReview(const AReview: string);
+    function GetRating: Integer;
+    procedure SetRating(const ARating: Integer);
+    function GetIsPending: Boolean;
+    procedure SetIsPending(const AIsPending: Boolean);
+  public
+    property Id: Integer read GetId write SetId;
+    property BookId: Integer read GetBookId write SetBookId;
+    property CustomerId: Integer read GetCustomerId write SetCustomerId;
+    property Review: string read GetReview write SetReview;
+    property Rating: Integer read GetRating write SetRating;
+    property IsPending: Boolean read GetIsPending write SetIsPending;
+  end;
+
+implementation
+
+{ ICustomerReviewContext }
+
+function CustomerReviewActiveRecord.GetBookId: Integer;
+begin
+  Result := FBookId;
+end;
+
+function CustomerReviewActiveRecord.GetCustomerId: Integer;
+begin
+  Result := FCustomerId;
+end;
+
+function CustomerReviewActiveRecord.GetId: Integer;
+begin
+ Result := FId;
+end;
+
+function CustomerReviewActiveRecord.GetIsPending: Boolean;
+begin
+  Result := FIsPending;
+end;
+
+function CustomerReviewActiveRecord.GetRating: Integer;
+begin
+  Result := FRating;
+end;
+
+function CustomerReviewActiveRecord.GetReview: string;
+begin
+  Result := FReview;
+end;
+
+procedure CustomerReviewActiveRecord.SetBookId(const ABookId: Integer);
+begin
+  FBookId := ABookId;
+end;
+
+procedure CustomerReviewActiveRecord.SetCustomerId(const ACustomerId: Integer);
+begin
+  FCustomerId := ACustomerId;
+end;
+
+procedure CustomerReviewActiveRecord.SetId(const AId: Integer);
+begin
+  FId := AId;
+end;
+
+procedure CustomerReviewActiveRecord.SetIsPending(const AIsPending: Boolean);
+begin
+  FIsPending := AIsPending;
+end;
+
+procedure CustomerReviewActiveRecord.SetRating(const ARating: Integer);
+begin
+  FRating := ARating;
+end;
+
+procedure CustomerReviewActiveRecord.SetReview(const AReview: string);
+begin
+  FReview := AReview;
+end;
+
+end.

@@ -1,0 +1,27 @@
+unit CustomerReviewService;
+
+interface
+
+uses
+  CustomerReview, DAOIntf, Generics.Collections;
+
+type
+  TCustomerReviewService = class
+  private
+    FCustomerReviewDao: IDAO<TCustomerReview>;
+  public
+    constructor Create(const ACustomerReviewDao: IDAO<TCustomerReview>);
+  end;
+
+implementation
+
+{ TCustomerReviewService }
+
+constructor TCustomerReviewService.Create(const ACustomerReviewDao
+  : IDAO<TCustomerReview>);
+begin
+  inherited Create;
+  FCustomerReviewDao := ACustomerReviewDao;
+end;
+
+end.

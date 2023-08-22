@@ -1,0 +1,73 @@
+unit AuthService;
+
+interface
+
+uses
+  MVCFramework,
+  MVCFramework.Commons,
+  System.Generics.Collections;
+
+type
+
+  TAuthCriteria = class(TInterfacedObject, IMVCAuthenticationHandler)
+  public
+    procedure OnRequest(const AContext: TWebContext;
+      const AControllerQualifiedClassName: string; const AActionName: string;
+      var AAuthenticationRequired: Boolean);
+
+    procedure OnAuthentication(const AContext: TWebContext;
+      const AUserName: string; const APassword: string;
+      AUserRoles: TList<string>; var AIsValid: Boolean;
+      const ASessionData: TDictionary<string, string>);
+
+    procedure OnAuthorization(const AContext: TWebContext;
+      AUserRoles: TList<string>; const AControllerQualifiedClassName: string;
+      const AActionName: string; var AIsAuthorized: Boolean);
+  end;
+
+implementation
+
+uses
+  System.SysUtils,
+  System.StrUtils,
+  FireDAC.Comp.Client,
+  MVCFramework.ActiveRecord;
+
+{ TAuthCriteria }
+
+procedure TAuthCriteria.OnAuthentication(const AContext: TWebContext;
+  const AUserName, APassword: string; AUserRoles: TList<string>;
+  var AIsValid: Boolean; const ASessionData: TDictionary<string, string>);
+begin
+
+end;
+
+procedure TAuthCriteria.OnAuthorization(const AContext: TWebContext;
+  AUserRoles: TList<string>; const AControllerQualifiedClassName,
+  AActionName: string; var AIsAuthorized: Boolean);
+begin
+  AIsAuthorized := False;
+  if AUserRoles.Contains('employee') then
+    AIsAuthorized := True
+  else if AUserRoles.Contains('Customer') then
+  begin
+
+    if AContext.Request.HTTPMethodAsString = 'GET' then
+      AIsAuthorized := True
+    else if AActionName = 'CreateCustomerReview' then
+      AIsAuthorized := True;
+  end
+  else
+  begin
+    AIsAuthorized := AContext.Request.HTTPMethodAsString = 'GET';
+  end;
+end;
+
+procedure TAuthCriteria.OnRequest(const AContext: TWebContext;
+  const AControllerQualifiedClassName, AActionName: string;
+  var AAuthenticationRequired: Boolean);
+begin
+  AAuthenticationRequired := False; // Set to false to ignore authentication
+end;
+
+end.

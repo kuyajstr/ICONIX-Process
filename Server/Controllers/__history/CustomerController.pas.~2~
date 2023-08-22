@@ -1,0 +1,71 @@
+unit CustomerController;
+
+interface
+
+uses
+  MVCFramework,
+  MVCFramework.Commons,
+  MVCFramework.Serializer.Commons,
+  BaseController,
+  Customer;
+
+type
+
+  [MVCPath('/api/customers')]
+  TCustomerController = class(TBaseController<TCustomer>)
+    [MVCPath]
+    [MVCHTTPMethod([httpPOST])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure CreateCustomer();
+
+    [MVCPath]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetAllCustomer();
+
+    [MVCPath('/($ID)')]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetCustomerByID(const ID: Integer);
+
+    [MVCPath('/($ID)')]
+    [MVCHTTPMethod([httpDELETE])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure DeleteCustomer(const ID: Integer);
+
+    [MVCPath('/($ID)')]
+    [MVCHTTPMethod([httpPUT])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure UpdateCustomer(const ID: Integer);
+  end;
+
+implementation
+
+{ TCustomerController }
+
+procedure TCustomerController.CreateCustomer;
+begin
+  CreateEntity;
+end;
+
+procedure TCustomerController.DeleteCustomer(const ID: Integer);
+begin
+  DeleteEntity(ID);
+end;
+
+procedure TCustomerController.GetAllCustomer;
+begin
+  Render(ObjectDict().Add('data', GetAllEntities))
+end;
+
+procedure TCustomerController.GetCustomerByID(const ID: Integer);
+begin
+  Render(ObjectDict().Add('data', GetEntityById(ID)))
+end;
+
+procedure TCustomerController.UpdateCustomer(const ID: Integer);
+begin
+  UpdateEntity();
+end;
+
+end.

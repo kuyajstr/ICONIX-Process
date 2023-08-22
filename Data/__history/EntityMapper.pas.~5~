@@ -1,0 +1,36 @@
+﻿unit EntityMapper;
+
+interface
+
+uses
+  Generics.Collections,
+  MVCFramework.ActiveRecord;
+
+type
+  TEntityMapper<T: class> = class
+    function ActiveRecordObjToDomainObj(List: TObjectList<TMVCActiveRecord>)
+      : TObjectList<T>;
+  end;
+implementation
+
+{ TEntityMapper<T> }
+
+function TEntityMapper<T>.ActiveRecordObjToDomainObj
+  (List: TObjectList<TMVCActiveRecord>): TObjectList<T>;
+var
+  ObjectList: TObjectList<T>;
+  ActiveRecord: TMVCActiveRecord;
+  BookAR: TBookActiveRecord;
+begin
+  ObjectList := TObjectList<T>.Create;
+
+  for ActiveRecord in List do
+  begin
+    BookAR := ActiveRecord as TBookActiveRecord;
+    ObjectList.Add(TBook.Create(BookAR));
+  end;
+
+  Result := ObjectList;
+end;
+
+end.

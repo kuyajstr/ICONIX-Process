@@ -1,0 +1,52 @@
+package DomainLayer;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  dbrtl,
+  inet,
+  IndySystem,
+  IndyProtocols,
+  IndyCore,
+  FireDAC,
+  FireDACCommonDriver,
+  FireDACCommon,
+  FireDACMySQLDriver,
+  dmvcframeworkRT,
+  SwagDoc,
+  loggerproRT;
+
+contains
+  Book in '..\..\Internet Bookstore\Book\Book.pas',
+  BookContextIntf in '..\..\Internet Bookstore\Book\BookContextIntf.pas',
+  BookDAOIntf in '..\..\Internet Bookstore\Book\BookDAOIntf.pas',
+  BookService in '..\..\Internet Bookstore\Book\BookService.pas',
+  DAOIntf in '..\..\Internet Bookstore\DAOIntf.pas';
+
+end.

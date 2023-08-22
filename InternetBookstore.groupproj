@@ -1,0 +1,84 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{20B636D7-4A0E-4561-9586-B955C9ADB8FC}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Domain\DomainLayer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Data\DataLayer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Server\BookstoreServer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Client\BookstoreClient.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Unit Test\UnitTest.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="DomainLayer">
+        <MSBuild Projects="Domain\DomainLayer.dproj"/>
+    </Target>
+    <Target Name="DomainLayer:Clean">
+        <MSBuild Projects="Domain\DomainLayer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DomainLayer:Make">
+        <MSBuild Projects="Domain\DomainLayer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DataLayer">
+        <MSBuild Projects="Data\DataLayer.dproj"/>
+    </Target>
+    <Target Name="DataLayer:Clean">
+        <MSBuild Projects="Data\DataLayer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DataLayer:Make">
+        <MSBuild Projects="Data\DataLayer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BookstoreServer">
+        <MSBuild Projects="Server\BookstoreServer.dproj"/>
+    </Target>
+    <Target Name="BookstoreServer:Clean">
+        <MSBuild Projects="Server\BookstoreServer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BookstoreServer:Make">
+        <MSBuild Projects="Server\BookstoreServer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BookstoreClient">
+        <MSBuild Projects="Client\BookstoreClient.dproj"/>
+    </Target>
+    <Target Name="BookstoreClient:Clean">
+        <MSBuild Projects="Client\BookstoreClient.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BookstoreClient:Make">
+        <MSBuild Projects="Client\BookstoreClient.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="UnitTest">
+        <MSBuild Projects="Unit Test\UnitTest.dproj"/>
+    </Target>
+    <Target Name="UnitTest:Clean">
+        <MSBuild Projects="Unit Test\UnitTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="UnitTest:Make">
+        <MSBuild Projects="Unit Test\UnitTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="DomainLayer;DataLayer;BookstoreServer;BookstoreClient;UnitTest"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="DomainLayer:Clean;DataLayer:Clean;BookstoreServer:Clean;BookstoreClient:Clean;UnitTest:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="DomainLayer:Make;DataLayer:Make;BookstoreServer:Make;BookstoreClient:Make;UnitTest:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

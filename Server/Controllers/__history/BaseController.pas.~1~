@@ -1,0 +1,77 @@
+unit BaseController;
+
+interface
+
+uses
+  MVCFramework,
+  MVCFramework.Commons,
+  MVCFramework.Serializer.Commons,
+  MVCFramework.ActiveRecord,
+  Generics.Collections;
+
+type
+
+  TBaseController<T: TMVCActiveRecord, constructor> = class abstract
+    (TMVCController)
+  protected
+    function GetEntities: TObjectList<T>;
+    function GetEntityById(const ID: Integer): T;
+    procedure CreateEntity;
+    procedure UpdateEntity(const ID: Integer);
+    procedure DeleteEntity(const ID: Integer);
+
+  end;
+
+implementation
+
+uses
+  System.SysUtils, MVCFramework.Logger, System.StrUtils;
+
+{ TBaseController<T> }
+
+procedure TBaseController<T>.CreateEntity;
+begin
+  var Entity := Context.Request.BodyAs<T>;
+  try
+    Entity.Insert;
+    Render201Created('', Format('%s row created', [Entity.TableName]));
+  finally
+    Entity.Free;
+  end;
+end;
+
+procedure TBaseController<T>.DeleteEntity(const ID: Integer);
+begin
+  var Entity := TMVCActiveRecord.GetByPK<T>(ID);
+  try
+    Entity.Delete;
+    Render201Created('', Format('%s row deleted', [Entity.TableName]));
+  finally
+    Entity.Free;
+  end;
+
+end;
+
+function TBaseController<T>.GetEntities: TObjectList<T>;
+begin
+  Result := TMVCActiveRecord.All<T>;
+end;
+
+function TBaseController<T>.GetEntityById(const ID: Integer): T;
+begin
+  Result := TMVCActiveRecord.GetByPK<T>(ID);
+end;
+
+procedure TBaseController<T>.UpdateEntity(const ID: Integer);
+begin
+  var Entity := TMVCActiveRecord.GetByPK<T>(ID);
+  try
+    Context.Request.BodyFor<T>(Entity);
+    Entity.Update;
+    Render201Created('', Format('%s row updated', [Entity.TableName]));
+  finally
+    Entity.Free;
+  end;
+end;
+
+end.

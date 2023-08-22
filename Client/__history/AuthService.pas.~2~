@@ -1,0 +1,12 @@
+unit AuthService;
+
+interface
+
+type
+TAuthService = class
+  
+end;
+
+implementation
+
+end.

@@ -1,0 +1,33 @@
+unit CustomerReviewService;
+
+interface
+
+uses
+  CustomerReview, DAOIntf, Generics.Collections;
+
+type
+  TCustomerReviewService = class
+  private
+    FCustomerReviewDao: IDAO<TCustomerReview>;
+  public
+    constructor Create(const ACustomerReviewDao: IDAO<TCustomerReview>);
+  end;
+
+implementation
+
+uses
+  SysUtils;
+
+{ TCustomerReviewService }
+
+constructor TCustomerReviewService.Create(const ACustomerReviewDao
+  : IDAO<TCustomerReview>);
+begin
+  if not Assigned(ACustomerReviewDao) then
+    raise EArgumentNilException.Create('Customer Review Data access is nil');
+
+  inherited Create;
+  FCustomerReviewDao := ACustomerReviewDao;
+end;
+
+end.

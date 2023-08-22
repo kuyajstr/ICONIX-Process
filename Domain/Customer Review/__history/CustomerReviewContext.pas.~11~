@@ -1,0 +1,31 @@
+unit CustomerReviewContext;
+
+interface
+
+type
+  CustomerReviewActiveRecord = interface
+    ['{8E786CE7-F577-480C-ACDD-142403BCC539}']
+    function GetId: Integer;
+    procedure SetId(const AId: Integer);
+    function GetBookId: Integer;
+    procedure SetBookId(const ABookId: Integer);
+    function GetCustomerId: Integer;
+    procedure SetCustomerId(const ACustomerId: Integer);
+    function GetReview: string;
+    procedure SetReview(const AReview: string);
+    function GetRating: Integer;
+    procedure SetRating(const ARating: Integer);
+    function GetIsPending: Boolean;
+    procedure SetIsPending(const AIsPending: Boolean);
+
+    property Id: Integer read GetId write SetId;
+    property BookId: Integer read GetBookId write SetBookId;
+    property CustomerId: Integer read GetCustomerId write SetCustomerId;
+    property Review: string read GetReview write SetReview;
+    property Rating: Integer read GetRating write SetRating;
+    property IsPending: Boolean read GetIsPending write SetIsPending;
+  end;
+
+implementation
+
+end.

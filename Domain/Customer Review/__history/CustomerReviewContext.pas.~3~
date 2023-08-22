@@ -1,0 +1,45 @@
+﻿unit CustomerReviewContext;
+
+interface
+
+type
+  ICustomerReviewContext = class
+  private
+    FId: Integer;
+    FBookId: Integer;
+    function GetId: Integer;
+    procedure SetId(const AId: Integer);
+    function GetBookId: Integer;
+    procedure SetBookId(const Value: Integer);
+  public
+    property Id: Integer read GetId write SetId;
+    property BookId: Integer read GetBookId write SetBookId;
+    
+
+  end;
+
+implementation
+
+{ ICustomerReviewContext }
+
+function ICustomerReviewContext.GetBookId: Integer;
+begin
+  Result := FBookId;
+end;
+
+function ICustomerReviewContext.GetId: Integer;
+begin
+ Result := FId;
+end;
+
+procedure ICustomerReviewContext.SetBookId(const Value: Integer);
+begin
+  FBookId := Value;
+end;
+
+procedure ICustomerReviewContext.SetId(const AId: Integer);
+begin
+  FId := AId;
+end;
+
+end.

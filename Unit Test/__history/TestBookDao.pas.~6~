@@ -1,0 +1,55 @@
+unit TestBookDao;
+
+interface
+
+uses
+  DAOIntf, Book, Generics.Collections;
+
+type
+  TTestBookDao = class(TInterfacedObject, IDAO<TBook>)
+  public
+    procedure Insert(var Obj: TBook);
+    procedure Select(const AId: Integer; var Obj: TBook);
+    procedure Update(var Obj: TBook);
+    procedure Delete(const AId: Integer);
+    procedure SelectAll(var AList: TObjectList<TBook>);
+  end;
+
+implementation
+
+uses
+  SysUtils;
+
+{ TTestBookDao }
+
+procedure TTestBookDao.Delete(const AId: Integer);
+begin
+
+end;
+
+procedure TTestBookDao.Insert(var Obj: TBook);
+begin
+  if Obj.Title = '' then
+    raise Exception.Create('Title is empty');
+
+  if Obj.Synopsis = '' then
+    raise Exception.Create('Synopsis is empty');
+
+end;
+
+procedure TTestBookDao.Select(const AId: Integer; var Obj: TBook);
+begin
+
+end;
+
+procedure TTestBookDao.SelectAll(var AList: TObjectList<TBook>);
+begin
+
+end;
+
+procedure TTestBookDao.Update(var Obj: TBook);
+begin
+
+end;
+
+end.

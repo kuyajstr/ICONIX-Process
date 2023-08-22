@@ -1,0 +1,96 @@
+unit ShowBooksTest;
+
+interface
+
+uses
+  DUnitX.TestFramework;
+
+type
+
+  [TestFixture]
+  TBookServiceTest = class
+  private
+    // procedure Insert(var Obj: TBook);
+    // procedure Select(const AId: Integer; var Obj: TBook);
+    // procedure Update(var Obj: TBook);
+    // procedure Delete(const AId: Integer);
+    // procedure SelectAll(var AList: TObjectList<TBook>);
+
+  public
+
+    [Test]
+    procedure Insert_BookTitleIsEmpty_ThrowException;
+
+    [Test]
+    procedure GetAllBooks_DatabaseHasData_True;
+    [Test]
+    procedure GetAllBooks_DataBaseIsEmpty_True;
+  end;
+
+implementation
+
+uses
+  TestBookDao, BookService, Book, SysUtils, Generics.Collections;
+
+procedure TBookServiceTest.GetAllBooks_DatabaseHasData_True;
+var
+  BookList: TObjectList<TBook>;
+begin
+  // Arrange
+  BookList := TObjectList<TBook>.Create;
+  var DB := TDictionary<Integer, TBook>.Create;
+  DB.Add(1, TBook.Create('Book A', 'Synopsis for Book A', 1));
+  DB.Add(2, TBook.Create('Book B', 'Synopsis for Book B', 2));
+  DB.Add(3, TBook.Create('Book C', 'Synopsis for Book C', 3));
+  var
+  BookDao := TTestBookDao.Create(DB);
+  var
+  Service := TBookService.Create(BookDao);
+
+  // Act
+  Service.GetAllBooks(BookList);
+
+  // Assert
+  Assert.IsTrue(BookList.Count > 0);
+end;
+
+procedure TBookServiceTest.GetAllBooks_DataBaseIsEmpty_True;
+var
+  BookList: TObjectList<TBook>;
+begin
+  // Arrange
+  BookList := TObjectList<TBook>.Create;
+  var DB := TDictionary<Integer, TBook>.Create;
+  var BookDao := TTestBookDao.Create(DB);
+  var Service := TBookService.Create(BookDao);
+
+  // Act
+  Service.GetAllBooks(BookList);
+
+  // Assert
+  Assert.AreEqual(BookList.Count, 0);
+end;
+
+procedure TBookServiceTest.Insert_BookTitleIsEmpty_ThrowException;
+begin
+  // Arrange
+  var BookList := TObjectList<TBook>.Create;
+  var DB := TDictionary<Integer, TBook>.Create;
+  var BookDao := TTestBookDao.Create(DB);
+  var Service := TBookService.Create(BookDao);
+
+  var Book := TBook.Create('Book Test','Synopsis Test',1);
+
+  //Assert
+  Assert.WillRaiseAny(procedure
+  begin
+    Service.CreateBook(Book);
+  end);
+end;
+
+
+initialization
+
+TDUnitX.RegisterTestFixture(TBookServiceTest);
+
+end.

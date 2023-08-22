@@ -1,0 +1,65 @@
+﻿unit CustomerService;
+
+interface
+
+uses
+  Customer, DAOIntf, Generics.Collections;
+
+type
+  TCustomerService = class
+  private
+    FCustomerDao: IDAO<TCustomer>;
+  public
+    constructor Create(const ACustomerDao: IDAO<TCustomer>);
+
+    procedure CreateCustomer(var ACustomer: TCustomer);
+    procedure GetCustomer(const AId: Integer; var ABook:  TCustomer);
+    procedure UpdateCustomer(var ACustomer:  TCustomer);
+    procedure DeleteCustomer(const AId: Integer);
+    procedure GetAllCustomer(var AList: TObjectList<TCustomer>);
+  end;
+
+implementation
+
+uses
+  SysUtils;
+
+{ TCustomerService }
+
+constructor TCustomerService.Create(const ACustomerDao: IDAO<TCustomer>);
+begin
+  if not Assigned(ACustomerDao) then
+    raise EArgumentNilException.Create('Customer Data Access is nil');
+
+  inherited Create;
+  FCustomerDao := ACustomerDao;
+end;
+
+
+procedure TCustomerService.CreateCustomer(var ACustomer: TCustomer);
+begin
+  FCustomerDao.Insert(ACustomer);
+end;
+
+procedure TCustomerService.DeleteCustomer(const AId: Integer);
+begin
+  FCustomerDao.Delete(AId);
+end;
+
+procedure TCustomerService.GetAllCustomer(var AList: TObjectList<TCustomer>);
+begin
+  FCustomerDao.SelectAll(AList);
+end;
+
+procedure TCustomerService.GetCustomer(const AId: Integer;
+  var ABook: TCustomer);
+begin
+  FCustomerDao.Select(AId,ABook);
+end;
+
+procedure TCustomerService.UpdateCustomer(var ACustomer: TCustomer);
+begin
+
+end;
+
+end.

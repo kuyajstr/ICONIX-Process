@@ -1,0 +1,105 @@
+unit BookController;
+
+interface
+
+uses
+  MVCFramework,
+  MVCFramework.Commons,
+  MVCFramework.Serializer.Commons,
+  Book,
+  BookService,
+  BookActiveRecord;
+
+type
+
+  [MVCPath('/api/books')]
+  TBookController = class(TMVCController)
+  private
+    FService: TBookService;
+  public
+    constructor Create (const Service: TBookService);
+
+    [MVCPath]
+    [MVCHTTPMethod([httpPOST])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure CreateBook();
+
+    [MVCPath]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetAllBooks();
+
+    [MVCPath('/($ID)')]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetBookByID(const ID: Integer);
+
+    [MVCPath('/($ID)')]
+    [MVCHTTPMethod([httpDELETE])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure DeleteBook(const ID: Integer);
+
+    [MVCPath('/($ID)')]
+    [MVCHTTPMethod([httpPUT])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure UpdateBook(const ID: Integer);
+  end;
+
+implementation
+
+uses
+  SysUtils;
+
+{ TBookController }
+
+constructor TBookController.Create(const Service: TBookService);
+begin
+  if not assigned(Service) then
+    raise EArgumentNilException.Create('Book Service is nill');
+
+  inherited Create;
+  FService := Service;
+end;
+
+procedure TBookController.CreateBook;
+begin
+  var Book := Context.Request.BodyAs<TBook>;
+  try
+    FService.CreateBook(Book);
+    Render(201, 'Book Created');
+  finally
+    Book.Free;
+  end;
+end;
+
+procedure TBookController.DeleteBook(const ID: Integer);
+begin
+  FService.DeleteBook(ID);
+  Render204NoContent(Format('Book: %d deleted.', [ID]));
+end;
+
+procedure TBookController.GetAllBooks;
+begin
+
+end;
+
+procedure TBookController.GetBookByID(const ID: Integer);
+var
+  Book: TBook;
+begin
+  FService.GetBook(ID, Book);
+
+end;
+
+procedure TBookController.UpdateBook(const ID: Integer);
+begin
+  var Book := Context.Request.BodyAs<TBook>;
+  try
+    FService.UpdateBook(Book);
+    Render(200, 'Book Updated');
+  finally
+    Book.Free;
+  end;
+end;
+
+end.

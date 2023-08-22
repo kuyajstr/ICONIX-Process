@@ -1,0 +1,109 @@
+﻿unit BookActiveRecordDao;
+
+interface
+
+uses
+  DAOIntf,
+  Book,
+  BookActiveRecord,
+  MVCFramework.ActiveRecord,
+  Generics.Collections,
+  BookContextIntf;
+
+type
+  TBookActiveRecordDao = class(TinterfacedObject, IDAO<TBook>)
+  private
+    function TBookARtoTBook(List: TObjectList<TMVCActiveRecord>): TObjectList<TBook>;
+  public
+    procedure Insert(var Obj: TBook);
+    procedure Select(const AId: Integer; var Obj: TBook);
+    procedure Update(var Obj: TBook);
+    procedure Delete(const AId: Integer);
+    procedure SelectAll(var AList: TObjectList<TBook>);
+  end;
+
+implementation
+
+{ TBookActiveRecordDao }
+
+function TBookActiveRecordDao.TBookARtoTBook(List: TObjectList<TMVCActiveRecord>): TObjectList<TBook>;
+var 
+  BookList: TObjectList<TBook>;
+  ActiveRecord: TMVCActiveRecord;
+  BookAR: TBookActiveRecord;
+begin
+  BookList := TObjectList<TBook>.Create;
+
+  for ActiveRecord in List do
+  begin
+    BookAR := ActiveRecord as TBookActiveRecord;
+    BookList.Add(TBook.Create(BookAR));
+  end;
+
+  Result := BookList;
+end;
+
+procedure TBookActiveRecordDao.Delete(const AId: Integer);
+begin
+  var BookAR := TBookActiveRecord.Create;
+  try
+    BookAR.Id := AId;
+    BookAR.Delete(True);
+  finally
+    BookAR.Free;
+  end;
+end;
+
+procedure TBookActiveRecordDao.Insert(var Obj: TBook);
+begin
+  var BookAR := TBookActiveRecord.Create(Obj);
+  try
+    BookAR.Insert;
+    Obj := TBook.Create(BookAR);
+  finally
+    BookAR.Free;
+  end;
+end;
+
+procedure TBookActiveRecordDao.Select(const AId: Integer; var Obj: TBook);
+begin
+  var BookAR := TBookActiveRecord.Create;
+  try
+    BookAR.LoadByPk(AId);
+    Obj := TBook.create(BookAR);
+  finally
+    BookAR.Free;
+  end;
+end;
+
+procedure TBookActiveRecordDao.SelectAll(var AList: TObjectList<TBook>);
+begin
+  var Books := TBookActiveRecord.Create;
+  try
+    var BooksAR := Books.All(TBookActiveRecord);  
+
+    AList := TBookARtoTBook(BooksAR);
+  finally
+    Books.Free;
+  end;
+
+//  var Books := TMVCActiveRecord.All<TBookActiveRecord>;
+//  try
+//    AList := TBookARtoTBook(Books);
+//  finally
+//    Books.Free;
+//  end;
+end;
+
+procedure TBookActiveRecordDao.Update(var Obj: TBook);
+begin
+  var BookAR := TBookActiveRecord.Create(Obj);
+  try
+    BookAR.Update;
+    Obj := TBook.Create(BookAR);
+  finally
+    BookAR.Free;
+  end;
+end;
+
+end.

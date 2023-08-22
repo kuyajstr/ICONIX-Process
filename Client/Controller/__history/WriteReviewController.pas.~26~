@@ -1,0 +1,99 @@
+unit WriteReviewController;
+
+interface
+
+uses
+  ControllerIntf,
+  Vcl.Forms,
+  Json,
+  CustomerReview,
+  MVCFramework.RESTClient,
+  Book;
+
+type
+  TWriteReviewController = class(TInterfacedObject, IController)
+  private
+    FView: TForm;
+    FCustomerReview: TCustomerReview;
+    FBook: TBook;
+    RESTClient: IMVCRESTClient;
+    function GetView: TForm;
+    procedure SetView(AView: TForm);
+  public
+    constructor Create;
+
+    procedure Display(ABook: TBook);
+    procedure ValidateReview(Review: string; Rating: Integer);
+    procedure SubmitReview(JSONBody: TJSONObject);
+    property View: TForm read GetView write SetView;
+  end;
+
+implementation
+
+uses
+  WriteReviewForm,
+  Vcl.Dialogs,
+  Vcl.Controls;
+
+{ TWriteReviewController }
+
+constructor TWriteReviewController.Create;
+begin
+  inherited Create;
+  RESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
+
+  FView := TWriteReviewFrm.Create(Self);
+end;
+
+procedure TWriteReviewController.Display(ABook: TBook);
+begin
+  var
+  WriteReviewView := FView as TWriteReviewFrm;
+
+  FBook := ABook;
+
+  WriteReviewView.edtBookTitle.Text := FBook.Title;
+  WriteReviewView.Show;
+end;
+
+function TWriteReviewController.GetView: TForm;
+begin
+  Result := FView;
+end;
+
+procedure TWriteReviewController.SetView(AView: TForm);
+begin
+  FView := AView;
+end;
+
+procedure TWriteReviewController.SubmitReview(JSONBody: TJSONObject);
+begin
+  Writeln('Submitting Review..');
+end;
+
+procedure TWriteReviewController.ValidateReview(Review: string;
+  Rating: Integer);
+begin
+  var JSONBody: TJSONObject := TJSONObject.Create;
+  var ConvertedView := FView as TWriteReviewFrm;
+
+  JSONBody.AddPair('BookId', FBook.Id);
+  JSONBody.AddPair('Review', Review);
+  JSONBody.AddPair('Rating', Rating);
+
+  var Resp := RESTClient.Post('/api/customer_reviews/validate',
+    JSONBody.ToString);
+
+  if Resp.Success then
+  begin
+    if MessageDlg('Submit Review?', mtConfirmation,
+      [mbYes, mbNo], 0) = mrYes then
+    begin
+      SubmitReview(JSONBody);
+    end;
+
+  end;
+
+end;
+
+end.

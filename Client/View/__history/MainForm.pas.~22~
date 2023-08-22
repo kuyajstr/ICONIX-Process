@@ -1,0 +1,86 @@
+unit MainForm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Data.DB, Vcl.Grids,
+  Vcl.DBGrids,
+  MVCFramework.RESTClient, ViewIntf, ControllerIntf, MainController;
+
+type
+  TMainFrm = class(TForm, IView)
+    lblHeader: TLabel;
+    dbgBooks: TDBGrid;
+    btnLoadBooks: TButton;
+    btnClearBooks: TButton;
+    procedure btnLoadBooksClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure btnClearBooksClick(Sender: TObject);
+    procedure dbgBooksDblClick(Sender: TObject);
+  private
+    RESTClient: IMVCRESTClient;
+    IsLoading: Boolean;
+    FController: IController;
+
+    function GetController: IController;
+    procedure SetController(AController: IController);
+  public
+
+    property Controller: IController read GetController write SetController;
+  end;
+
+implementation
+
+{$R *.dfm}
+
+uses
+  BookstoreDM,
+  MVCFramework.DataSet.Utils,
+  MVCFramework.Serializer.Commons,
+  BookDetailsForm;
+
+procedure TMainFrm.btnLoadBooksClick(Sender: TObject);
+begin
+  TMainController(Controller).LoadBooks;
+end;
+
+procedure TMainFrm.dbgBooksDblClick(Sender: TObject);
+begin
+  var selected := dbgBooks.SelectedRows;
+  var selectedCol := dbgBooks.SelectedField;
+
+  TMainController(Controller).ShowBookDetails(nil);
+
+//  var View := TBookDetailsFrm.Create(Application);
+//  View.Show;
+end;
+
+procedure TMainFrm.btnClearBooksClick(Sender: TObject);
+begin
+  var MemTable := dmolBookstore.dsBooks;
+
+  MemTable.Close;
+  MemTable.Open;
+end;
+
+procedure TMainFrm.FormCreate(Sender: TObject);
+begin
+  RESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
+end;
+
+
+function TMainFrm.GetController: IController;
+begin
+  Result := FController;
+end;
+
+procedure TMainFrm.SetController(AController: IController);
+begin
+  FController := AController;
+
+  Controller.View := Self;
+end;
+
+end.

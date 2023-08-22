@@ -1,0 +1,20 @@
+unit TestBookDao;
+
+interface
+
+uses
+  DAOIntf, Book;
+
+type
+  TTestBookDao = class(TInterfacedObject, IDAO<TBook>)
+  public
+    procedure Insert(var Obj: TBook);
+    procedure Select(const AId: Integer; var Obj: TBook);
+    procedure Update(var Obj: TBook);
+    procedure Delete(const AId: Integer);
+    procedure SelectAll(var AList: TObjectList<TBook>);
+  end;
+
+implementation
+
+end.

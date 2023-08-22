@@ -1,0 +1,76 @@
+unit CustomerController;
+
+interface
+
+uses
+  MVCFramework,
+  MVCFramework.Commons,
+  MVCFramework.Serializer.Commons,
+
+  Customer,
+  CustomerService,
+  CustomerActiveRecord;
+
+type
+
+  [MVCPath('/api/customers')]
+  TCustomerController = class(TMVCController)
+  private
+    FService: TCustomerService;
+  public
+    constructor Create(const AService: TCustomerService);
+
+    [MVCPath]
+    [MVCHTTPMethod([httpPOST])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure CreateCustomer();
+
+    [MVCPath]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetAllCustomer();
+
+    [MVCPath('/($ID)')]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetCustomerByID(const ID: Integer);
+
+    [MVCPath('/($ID)')]
+    [MVCHTTPMethod([httpDELETE])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure DeleteCustomer(const ID: Integer);
+
+    [MVCPath('/($ID)')]
+    [MVCHTTPMethod([httpPUT])]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure UpdateCustomer(const ID: Integer);
+  end;
+
+implementation
+
+uses
+  SysUtils
+
+{ TCustomerController }
+
+procedure TCustomerController.DeleteCustomer(const ID: Integer);
+begin
+
+end;
+
+procedure TCustomerController.GetAllCustomer;
+begin
+
+end;
+
+procedure TCustomerController.GetCustomerByID(const ID: Integer);
+begin
+
+end;
+
+procedure TCustomerController.UpdateCustomer(const ID: Integer);
+begin
+
+end;
+
+end.

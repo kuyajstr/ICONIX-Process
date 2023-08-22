@@ -1,0 +1,71 @@
+﻿unit TestBookDao;
+
+interface
+
+uses
+  DAOIntf, Book, Generics.Collections;
+
+type
+  TTestBookDao = class(TInterfacedObject, IDAO<TBook>)
+  private
+    DB: TDictionary<Integer, TBook>;
+  public
+    constructor Create(ADB: );
+    procedure Insert(var Obj: TBook);
+    procedure Select(const AId: Integer; var Obj: TBook);
+    procedure Update(var Obj: TBook);
+    procedure Delete(const AId: Integer);
+    procedure SelectAll(var AList: TObjectList<TBook>);
+  end;
+
+implementation
+
+uses
+  SysUtils;
+
+{ TTestBookDao }
+
+constructor TTestBookDao.Create;
+begin
+  DB := TDictionary<Integer, TBook>.Create;
+
+  DB.Add(1, TBook.Create('Book A', 'Synopsis for Book A', 1));
+  DB.Add(2, TBook.Create('Book B', 'Synopsis for Book B', 2));
+  DB.Add(3, TBook.Create('Book C', 'Synopsis for Book C', 3));
+end;
+
+procedure TTestBookDao.Delete(const AId: Integer);
+begin
+  if AId <= 0 then
+    raise Exception.Create('Invalid ID');
+
+  DB.Remove(AId);
+end;
+
+procedure TTestBookDao.Insert(var Obj: TBook);
+begin
+  if Obj.Title = '' then
+    raise Exception.Create('Title is empty');
+
+  if Obj.Synopsis = '' then
+    raise Exception.Create('Synopsis is empty');
+
+  DB.Add(Obj.Id, Obj);
+end;
+
+procedure TTestBookDao.Select(const AId: Integer; var Obj: TBook);
+begin
+
+end;
+
+procedure TTestBookDao.SelectAll(var AList: TObjectList<TBook>);
+begin
+
+end;
+
+procedure TTestBookDao.Update(var Obj: TBook);
+begin
+
+end;
+
+end.

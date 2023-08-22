@@ -1,0 +1,70 @@
+﻿unit CustomerReviewService;
+
+interface
+
+uses
+  CustomerReview, DAOIntf, Generics.Collections;
+
+type
+  TCustomerReviewService = class
+  private
+    FCustomerReviewDao: IDAO<TCustomerReview>;
+  public
+    constructor Create(const ACustomerReviewDao: IDAO<TCustomerReview>);
+
+    procedure CreateCustomer(var ACustomerReview: TCustomerReview);
+    procedure GetCustomerReview(const AId: Integer; var ACustomer: TCustomerReview);
+    procedure UpdateCustomer(var ACustomerReview: TCustomerReview);
+    procedure DeleteCustomer(const AId: Integer);
+    procedure GetAllCustomer(var AList: TObjectList<TCustomerReview>);
+
+
+  end;
+
+implementation
+
+uses
+  SysUtils;
+
+{ TCustomerReviewService }
+
+constructor TCustomerReviewService.Create(const ACustomerReviewDao
+  : IDAO<TCustomerReview>);
+begin
+  if not Assigned(ACustomerReviewDao) then
+    raise EArgumentNilException.Create('Customer Review Data access is nil');
+
+  inherited Create;
+  FCustomerReviewDao := ACustomerReviewDao;
+end;
+
+procedure TCustomerReviewService.CreateCustomer(
+  var ACustomerReview: TCustomerReview);
+begin
+  FCustomerReviewDao.Insert(ACustomerReview);
+end;
+
+procedure TCustomerReviewService.DeleteCustomer(const AId: Integer);
+begin
+  FCustomerReviewDao.Delete(AId);
+end;
+
+procedure TCustomerReviewService.GetAllCustomer(
+  var AList: TObjectList<TCustomerReview>);
+begin
+  FCustomerReviewDao.SelectAll(AList);
+end;
+
+procedure TCustomerReviewService.GetCustomerReview(const AId: Integer;
+  var ACustomer: TCustomerReview);
+begin
+  FCustomerReviewDao.Select(AId, ACustomer);
+end;
+
+procedure TCustomerReviewService.UpdateCustomer(
+  var ACustomerReview: TCustomerReview);
+begin
+  FCustomerReviewDao.Update(ACustomerReview);
+end;
+
+end.

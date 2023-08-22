@@ -1,0 +1,113 @@
+unit BookstoreWM;
+
+interface
+
+uses
+  System.SysUtils,
+  System.Classes,
+  Web.HTTPApp,
+  MVCFramework;
+
+type
+  TInternetBookstoreWM = class(TWebModule)
+    procedure WebModuleCreate(Sender: TObject);
+    procedure WebModuleDestroy(Sender: TObject);
+  private
+    FMVC: TMVCEngine;
+  public
+    { Public declarations }
+  end;
+
+var
+  WebModuleClass: TComponentClass = TInternetBookstoreWM;
+
+implementation
+
+{$R *.dfm}
+
+uses
+  BookService,
+  BookActiveRecordDao,
+  BookController,
+
+  CustomerService,
+  CustomerActiveRecordDao,
+  CustomerController,
+
+  CustomerReviewService,
+  CustomerReviewActiveRecordDao,
+  CustomerReviewController,
+
+  CustomerReviewControllerV1,
+
+  System.IOUtils,
+  MVCFramework.Commons,
+  MVCFramework.Middleware.ActiveRecord,
+  MVCFramework.Middleware.StaticFiles,
+  MVCFramework.Middleware.Analytics,
+  MVCFramework.Middleware.Trace,
+  MVCFramework.Middleware.CORS,
+  MVCFramework.Middleware.ETag,
+  MVCFramework.Middleware.Compression,
+  MVCFramework.Middleware.JWT,
+  MVCFramework.JWT,
+  AuthCriteria;
+
+procedure TInternetBookstoreWM.WebModuleCreate(Sender: TObject);
+begin
+  FMVC := TMVCEngine.Create(Self,
+    procedure(Config: TMVCConfig)
+    begin
+      // enables or not system controllers loading (available only from localhost requests)
+      Config[TMVCConfigKey.LoadSystemControllers] := 'false';
+    end);
+
+  FMVC.AddController(TBookController,
+    function: TMVCController
+    begin
+      var Dao := TBookActiveRecordDao.Create;
+      var Service := TBookService.Create(Dao);
+      Result := TBookController.Create(Service);
+    end, '/api/books');
+
+  FMVC.AddController(TCustomerController,
+    function: TMVCController
+    begin
+      var Dao := TCustomerActiveRecordDao.Create;
+      var Service := TCustomerService.Create(Dao);
+      Result := TCustomerController.Create(Service);
+    end, '/api/customers');
+
+//  FMVC.AddController(TCustomerReviewController,
+//    function: TMVCController
+//    begin
+//      var Dao := TCustomerReviewActiveRecordDao.Create;
+//      var Service := TCustomerReviewService.Create(Dao);
+//      Result := TCustomerReviewController.Create(Service);
+//    end, '/api/customer_reviews');
+
+  FMVC.AddController(TCustomerReviewControllerV1);
+
+  var
+lConfigClaims:
+  TJWTClaimsSetup := procedure(const JWT: TJWT)
+    begin
+      JWT.Claims.Issuer := 'Internet Bookstore';
+      JWT.Claims.ExpirationTime := Now + EncodeTime(8, 0, 0, 0);
+      JWT.Claims.NotBefore := Now - EncodeTime(0, 5, 0, 0);
+    end;
+
+  FMVC.AddMiddleware(TMVCJWTAuthenticationMiddleware.Create
+    (TAuthCriteria.Create, lConfigClaims, 'this_is_my_secret', '/api/login',
+    [TJWTCheckableClaim.ExpirationTime, TJWTCheckableClaim.NotBefore]));
+
+  // FireDAC connection for MVCActiveRecord
+  FMVC.AddMiddleware(TMVCActiveRecordMiddleware.Create('internet_bookstore'));
+end;
+
+procedure TInternetBookstoreWM.WebModuleDestroy(Sender: TObject);
+begin
+  FMVC.Free;
+end;
+
+end.

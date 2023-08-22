@@ -1,0 +1,79 @@
+object dmolBookstore: TdmolBookstore
+  Height = 480
+  Width = 640
+  object dsBooks: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 16
+    Top = 16
+    object dsBooksId: TIntegerField
+      FieldName = 'Id'
+    end
+    object dsBooksTItle: TStringField
+      FieldName = 'TItle'
+    end
+    object dsBooksSynopsis: TStringField
+      FieldName = 'Synopsis'
+    end
+  end
+  object dsrcBooks: TDataSource
+    DataSet = dsBooks
+    Left = 16
+    Top = 80
+  end
+  object dsCustomer: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 112
+    Top = 16
+    object IntegerField1: TIntegerField
+      FieldName = 'Id'
+    end
+    object StringField1: TStringField
+      FieldName = 'TItle'
+    end
+    object StringField2: TStringField
+      FieldName = 'Synopsis'
+    end
+  end
+  object dsrcCustomers: TDataSource
+    DataSet = dsCustomer
+    Left = 112
+    Top = 80
+  end
+  object dsCustomerReview: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 224
+    Top = 16
+    object IntegerField2: TIntegerField
+      FieldName = 'Id'
+    end
+    object StringField3: TStringField
+      FieldName = 'TItle'
+    end
+    object StringField4: TStringField
+      FieldName = 'Synopsis'
+    end
+  end
+  object dsrcCustomerReview: TDataSource
+    DataSet = dsCustomerReview
+    Left = 224
+    Top = 80
+  end
+end

@@ -1,0 +1,15 @@
+unit TestBookService;
+
+interface
+
+uses
+  BookService;
+
+type
+  TTestNoOutputBookService = class(TBookService)
+
+  end;
+
+implementation
+
+end.

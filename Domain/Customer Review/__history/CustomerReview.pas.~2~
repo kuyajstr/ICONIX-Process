@@ -1,0 +1,56 @@
+unit CustomerReview;
+
+interface
+
+type
+  TCustomerReview = class
+  private
+    FId: Integer;
+    FBookId: Integer;
+    FCustomerId: Integer;
+    FReview: string;
+    FRating: Integer;
+    FIsPending: Boolean;
+  public
+    property Id: Integer read FId write FId;
+    property BookId: Integer read FBookId write FBookId;
+    property CustomerId: Integer read FCustomerId write FCustomerId;
+    property Review: string read FReview write FReview;
+    property Rating: Integer read FRating write FRating;
+    property IsPending: Boolean read FIsPending write FIsPending;
+
+    procedure CheckReview(AReview: string = '');
+    procedure CheckRating(ARating: Integer = 0);
+  end;
+
+implementation
+
+uses
+  SysUtils,
+  StrUtils;
+
+{ TCustomerReview }
+
+procedure TCustomerReview.CheckRating(ARating: Integer);
+begin
+  if ARating = 0 then
+    ARating := FRating;
+
+  if ARating < 1 then
+    raise Exception.Create('Rating must be greater than 0')
+  else if ARating > 5 then
+    raise Exception.Create('Rating must be less than 5');
+end;
+
+procedure TCustomerReview.CheckReview(AReview: string);
+begin
+  if AReview = '' then
+    AReview := FReview;
+
+  if Length(AReview) >= 1048576 then // Review too long 1MB
+    raise Exception.Create('The review is too long (1MB)')
+  else if Length(AReview) <= 10 then
+    raise Exception.Create('The review is too short')
+end;
+
+end.

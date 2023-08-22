@@ -1,0 +1,57 @@
+unit BookService;
+
+interface
+
+uses
+  Book, DAOIntf;
+
+type
+  TBookService = class
+  private
+    FBookDao: IDAO<TBook>;
+  public
+    constructor Create(const ABookDao: IDAO<TBook>);
+
+    procedure InsertBook(ABook: TBook);
+    function GetBook(const AId: Integer): TBook;
+    procedure UpdateBook(ABook: TBook);
+    procedure DeleteBook(const AId: Integer);
+  end;
+
+implementation
+
+uses
+  SysUtils;
+
+{ TBookService }
+
+constructor TBookService.Create(const ABookDao: IDAO<TBook>);
+begin
+  if not Assigned(ABookDao) then
+    raise EArgumentNilException.Create('Book Data Access is nil');
+
+  inherited Create;
+  FBookDao := ABookDao;
+end;
+
+procedure TBookService.DeleteBook(const AId: Integer);
+begin
+  FBookDao.Delete(AId);
+end;
+
+function TBookService.GetBook(const AId: Integer): TBook;
+begin
+  Result := FBookDao.Select(AId);
+end;
+
+procedure TBookService.InsertBook(ABook: TBook);
+begin
+  FBookDao.Insert(ABook);
+end;
+
+procedure TBookService.UpdateBook(ABook: TBook);
+begin
+  FBookDao.Update(ABook);
+end;
+
+end.

@@ -1,0 +1,16 @@
+unit DAOIntf;
+
+interface
+
+type
+  IDAO<T> = interface
+    ['{ED4AA087-E713-4DA1-9DBE-3BB4464E4EAE}']
+    procedure Insert(Obj: T);
+    function Select(const AId: Integer): T;
+    procedure Update(Obj: T);
+    procedure Delete(const AId: Integer);
+  end;
+
+implementation
+
+end.

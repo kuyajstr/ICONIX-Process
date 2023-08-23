@@ -1,0 +1,15 @@
+﻿[lblHeader]
+Coordinates=10,10,61,51
+
+[]
+Coordinates=206,1,84,105
+
+[edtId]
+Coordinates=390,0,40,51
+
+[edtTItle]
+Coordinates=310,0,50,51
+
+[lblBookList]
+Coordinates=470,50,70,51
+

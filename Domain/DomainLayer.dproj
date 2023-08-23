@@ -100,7 +100,7 @@
         <DCCReference Include="Customer Review\CustomerReview.pas"/>
         <DCCReference Include="Customer Review\CustomerReviewContextIntf.pas"/>
         <DCCReference Include="Customer Review\CustomerReviewService.pas"/>
-        <DCCReference Include="..\Unit Test\BookServiceTestWithStub.pas"/>
+        <DCCReference Include="..\Unit Test\BookServiceTest.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

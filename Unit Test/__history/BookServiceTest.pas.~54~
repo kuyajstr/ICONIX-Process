@@ -6,49 +6,49 @@ uses
   DUnitX.TestFramework;
 
 type
-
   [TestFixture]
   TBookServiceTest = class
-  private
-    // procedure Select(const AId: Integer; var Obj: TBook);
-    // procedure Update(var Obj: TBook);
-    // procedure Delete(const AId: Integer);
-    // procedure SelectAll(var AList: TObjectList<TBook>);
-
   public
     [Test]
-    procedure Select_SucessfullyRetrieveBook_True;
+    procedure CreateBook_TitleIsEmpty_RaiseException;
+    [Test]
+    procedure CreateBook_SynopsisIsEmpty_RaiseException;
+    [Test]
+    procedure CreateBook_SuccessfullyInsert_WillNotRaiseException;
+
+    [TestCase('ZeroID', '0')]
+    [TestCase('NegativeID', '-1')]
+    [TestCase('ExceedingID', '100')]
+    procedure GetBook_InvalidIdRange_RaiseException(const ID: Integer);
+
+    [TestCase('ZeroIdMessage', '0,Invalid ID')]
+    [TestCase('NegativeIdMessage', '-1,Invalid ID')]
+    [TestCase('ExceedingIdMessage', '100,ID Out of bound')]
+    procedure GetBook_MatchingErrorMessage_True(const ID: Integer;
+      const ErrorStr: string);
 
     [Test]
-    procedure Insert_TitleIsEmpty_RaiseException;
-    [Test]
-    procedure Insert_SynopsisIsEmpty_RaiseException;
-    [Test]
-    procedure Insert_SuccessfullyInsert_WillNotRaiseException;
-
-    [Test]
-    [TestCase('Zero ID', '0')]
-    [TestCase('Negative ID', '-1')]
-    [TestCase('Exceeding ID', '100')]
-    procedure Insert_InvalidIdRange_RaiseException(const ID: Integer);
-
-    [Test]
-    [TestCase('Zero ID Message', '0,Invalid ID')]
-    [TestCase('Negative ID Message', '-1,Invalid ID')]
-    [TestCase('Exceeding ID Message', '100,ID Out of bound')]
-    procedure Insert_MatchingErrorMessage_True(const ID: Integer; const ErrorStr: string);
-
+    procedure GetBook_SucessfullyRetrieveBook_True;
 
     [Test]
     procedure GetAllBooks_DatabaseHasData_True;
     [Test]
     procedure GetAllBooks_DataBaseIsEmpty_True;
+
+//    [Test]
+    procedure GetAllBooks_UseActualDatabase_True;
   end;
 
 implementation
 
 uses
-  TestBookDao, BookService, Book, SysUtils, Generics.Collections;
+  Book,
+  BookActiveRecord,
+  BookActiveRecordDao,
+  BookService,
+  TestBookDao,
+  SysUtils,
+  Generics.Collections;
 
 procedure TBookServiceTest.GetAllBooks_DatabaseHasData_True;
 var
@@ -87,8 +87,23 @@ begin
   Assert.AreEqual(BookList.Count, 0);
 end;
 
-procedure TBookServiceTest.Insert_InvalidIdRange_RaiseException(
-  const ID: Integer);
+procedure TBookServiceTest.GetAllBooks_UseActualDatabase_True;
+var
+  Books: TObjectList<TBook>;
+begin
+  //Arrange
+  var BookARDao := TBookActiveRecordDao.Create;
+  var Service := TBookService.Create(BookARDao);
+
+  //Act
+  Service.GetAllBooks(Books);
+
+  //Assert
+  Assert.IsTrue(Books.Count > 0);
+end;
+
+procedure TBookServiceTest.GetBook_InvalidIdRange_RaiseException
+  (const ID: Integer);
 var
   BookList: TObjectList<TBook>;
   Book: TBook;
@@ -102,22 +117,21 @@ begin
   var BookDao := TTestBookDao.Create(DB);
   var Service := TBookService.Create(BookDao);
 
-  //Assert
-  Assert.WillRaiseAny(procedure
-  begin
-    Service.GetBook(ID, Book);
-  end);
+  // Assert
+  Assert.WillRaiseAny(
+    procedure
+    begin
+      Service.GetBook(ID, Book);
+    end);
 end;
 
-procedure TBookServiceTest.Insert_MatchingErrorMessage_True(const ID: Integer;
-  const ErrorStr: string);
+procedure TBookServiceTest.GetBook_MatchingErrorMessage_True(const ID: Integer;
+const ErrorStr: string);
 var
-  BookList: TObjectList<TBook>;
   Book: TBook;
   ErrorMsg: string;
 begin
   // Arrange
-  BookList := TObjectList<TBook>.Create;
   var DB := TDictionary<Integer, TBook>.Create;
   DB.Add(1, TBook.Create('Book A', 'Synopsis for Book A', 1));
   DB.Add(2, TBook.Create('Book B', 'Synopsis for Book B', 2));
@@ -125,77 +139,74 @@ begin
   var BookDao := TTestBookDao.Create(DB);
   var Service := TBookService.Create(BookDao);
 
-  //Act
+  // Act
   try
     Service.GetBook(ID, Book);
-  except on E: Exception do
-    ErrorMsg := E.Message;
+  except
+    on E: Exception do
+      ErrorMsg := E.Message;
   end;
 
-  //Assert
+  // Assert
   Assert.AreEqual(ErrorStr, ErrorMsg);
 end;
 
-procedure TBookServiceTest.Insert_SuccessfullyInsert_WillNotRaiseException;
-begin
-    // Arrange
-  var BookList := TObjectList<TBook>.Create;
-  var DB := TDictionary<Integer, TBook>.Create;
-  var BookDao := TTestBookDao.Create(DB);
-  var Service := TBookService.Create(BookDao);
-
-  var Book := TBook.Create('Title Test','Synopsis Test',1);
-
-  //Assert
-  Assert.WillNotRaiseAny(procedure
-  begin
-    Service.CreateBook(Book);
-  end);
-end;
-
-procedure TBookServiceTest.Insert_SynopsisIsEmpty_RaiseException;
+procedure TBookServiceTest.CreateBook_SuccessfullyInsert_WillNotRaiseException;
 begin
   // Arrange
-  var BookList := TObjectList<TBook>.Create;
   var DB := TDictionary<Integer, TBook>.Create;
   var BookDao := TTestBookDao.Create(DB);
   var Service := TBookService.Create(BookDao);
 
-  var Book := TBook.Create('Title Test','',1);
+  var Book := TBook.Create('Title Test', 'Synopsis Test', 1);
 
-  //Assert
-  Assert.WillRaiseAny(procedure
-  begin
-    Service.CreateBook(Book);
-  end);
+  // Assert
+  Assert.WillNotRaiseAny(
+    procedure
+    begin
+      Service.CreateBook(Book);
+    end);
 end;
 
-procedure TBookServiceTest.Insert_TitleIsEmpty_RaiseException;
+procedure TBookServiceTest.CreateBook_SynopsisIsEmpty_RaiseException;
 begin
   // Arrange
-  var BookList := TObjectList<TBook>.Create;
   var DB := TDictionary<Integer, TBook>.Create;
   var BookDao := TTestBookDao.Create(DB);
   var Service := TBookService.Create(BookDao);
 
-  var Book := TBook.Create('','Synopsis Test',1);
+  var Book := TBook.Create('Title Test', '', 1);
 
-  //Assert
-  Assert.WillRaiseAny(procedure
-  begin
-    Service.CreateBook(Book);
-  end);
+  // Assert
+  Assert.WillRaiseAny(
+    procedure
+    begin
+      Service.CreateBook(Book);
+    end);
 end;
 
+procedure TBookServiceTest.CreateBook_TitleIsEmpty_RaiseException;
+begin
+  // Arrange
+  var DB := TDictionary<Integer, TBook>.Create;
+  var BookDao := TTestBookDao.Create(DB);
+  var Service := TBookService.Create(BookDao);
 
-procedure TBookServiceTest.Select_SucessfullyRetrieveBook_True;
+  var Book := TBook.Create('', 'Synopsis Test', 1);
+
+  // Assert
+  Assert.WillRaiseAny(
+    procedure
+    begin
+      Service.CreateBook(Book);
+    end);
+end;
+
+procedure TBookServiceTest.GetBook_SucessfullyRetrieveBook_True;
 var
-  BookList: TObjectList<TBook>;
   Book: TBook;
-  ErrorMsg: string;
 begin
   // Arrange
-  BookList := TObjectList<TBook>.Create;
   var DB := TDictionary<Integer, TBook>.Create;
   var ExpectedBook := TBook.Create('Book A', 'Synopsis for Book A', 1);
   DB.Add(1, ExpectedBook);
@@ -204,15 +215,14 @@ begin
   var BookDao := TTestBookDao.Create(DB);
   var Service := TBookService.Create(BookDao);
 
-  //Act
+  // Act
   Service.GetBook(1, Book);
 
-  //Assert
+  // Assert
   Assert.AreEqual(ExpectedBook, Book);
 end;
 
 initialization
-
 TDUnitX.RegisterTestFixture(TBookServiceTest);
 
 end.

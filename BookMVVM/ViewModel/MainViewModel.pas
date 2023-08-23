@@ -21,20 +21,31 @@ type
     property ItemList: TListItem read FItemList write FItemList;
 
     procedure LoadBooks;
+
+    procedure ShowBookDetail;
   end;
 
 implementation
 
 uses
-  AuthService,
+//  AuthService,
   Vcl.Dialogs,
-  Vcl.Forms;
+  Vcl.Forms,
+  BookDetailsForm,
+  BookDetailsViewModel;
 
 { TMainViewModel }
 
 constructor TMainViewModel.Create;
 begin
   inherited Create;
+
+  FBookList := TList<TBook>.Create;
+  FBookList.Add(TBook.Create('Book A', 'Synopsis for Book A', 1));
+  FBookList.Add(TBook.Create('Book B', 'Synopsis for Book B', 2));
+  FBookList.Add(TBook.Create('Book C', 'Synopsis for Book C', 3));
+
+  FSelectedBook := FBookList.First;
 
 //  FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
 //  FRestClient.SetBasicAuthorization('Admin', 'admin');
@@ -55,13 +66,6 @@ end;
 
 procedure TMainViewModel.LoadBooks;
 begin
-  FBookList := TList<TBook>.Create;
-  FBookList.Add(TBook.Create('Book A', 'Synopsis for Book A', 1));
-  FBookList.Add(TBook.Create('Book B', 'Synopsis for Book B', 2));
-  FBookList.Add(TBook.Create('Book C', 'Synopsis for Book C', 3));
-
-  SelectedBook := FBookList.First;
-
 
 
 //  FRestClient.Async(
@@ -69,6 +73,14 @@ begin
 //    begin
 //
 //    end, nil, True).Get('/api/books');
+end;
+
+procedure TMainViewModel.ShowBookDetail;
+begin
+  var BookDetailsVM := TBookDetailsViewModel.Create(FSelectedBook);
+  var BookDetailFrm := TBookDetailsFrm.Create(BookDetailsVM);
+
+  BookDetailFrm.Show;
 end;
 
 end.

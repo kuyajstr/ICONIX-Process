@@ -7,7 +7,8 @@ uses
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.StdCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, ViewModelIntf, Vcl.Mask,
   Vcl.ExtCtrls, Data.Bind.EngExt, Vcl.Bind.DBEngExt, Data.Bind.Components,
-  ViewIntf, MainViewModel, Vcl.ComCtrls;
+  ViewIntf, MainViewModel, Vcl.ComCtrls, System.Rtti, System.Bindings.Outputs,
+  Vcl.Bind.Editors;
 
 type
   TMainFrm = class(TForm)
@@ -18,13 +19,15 @@ type
     BindlingList: TBindingsList;
     ViewModelBindScope: TBindScope;
     ListView1: TListView;
+    BookIdBinding: TBindExpression;
+    BookTitleBinding: TBindExpression;
+    btnViewBook: TButton;
+    procedure btnViewBookClick(Sender: TObject);
   private
     FViewModel: TMainViewModel;
-    function GetFMainViewModel: TMainViewModel;
-    procedure SetFMainViewModel(const AViewModel: TMainViewModel);
+
   public
-    constructor Create;
-    property MainViewModel: TMainViewModel read GetFMainViewModel write SetFMainViewModel;
+    procedure SetViewModel(const AViewModel: TMainViewModel);
   end;
 
 implementation
@@ -34,22 +37,17 @@ implementation
 
 { TMainFrm }
 
-constructor TMainFrm.Create;
+
+procedure TMainFrm.btnViewBookClick(Sender: TObject);
 begin
-  
+   FViewModel.ShowBookDetail;
 end;
 
-function TMainFrm.GetFMainViewModel: TMainViewModel;
+procedure TMainFrm.SetViewModel(const AViewModel: TMainViewModel);
 begin
-  Result := FViewModel;
-end;
-
-procedure TMainFrm.SetFMainViewModel(const AViewModel: TMainViewModel);
-begin
-  FViewModel := AViewModel;  
+  FViewModel := AViewModel;
 
   ViewModelBindScope.DataObject := FViewModel;
-
   ViewModelBindScope.Active := True;
 end;
 

@@ -1,0 +1,31 @@
+﻿unit BookDetailsForm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
+  Vcl.DBCtrls, ViewIntf, BookDetailsViewModel;
+
+type
+  TBookDetailsFrm = class(TForm)
+    lblTitle: TLabel;
+    lblSynopsis: TLabel;
+    btnWriteReview: TButton;
+    edtTitle: TEdit;
+    memSynopsis: TMemo;
+    procedure btnWriteReviewClick(Sender: TObject);
+  private
+    FViewModel: TBookDetailsViewModel;
+    procedure SetViewModel(AController: TBookDetailsViewModel);
+  public
+    constructor Create(AController: TBookDetailsViewModel);
+  end;
+
+implementation
+
+{$R *.dfm}
+
+
+end.

@@ -1,0 +1,12 @@
+unit BookDetailsViewModel;
+
+interface
+
+type
+TBookDetailsViewModel = class
+
+end;
+
+implementation
+
+end.

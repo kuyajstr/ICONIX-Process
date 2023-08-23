@@ -1,0 +1,54 @@
+unit MainForm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, ViewModelIntf, Vcl.Mask,
+  Vcl.ExtCtrls, Data.Bind.EngExt, Vcl.Bind.DBEngExt, Data.Bind.Components,
+  ViewIntf, MainViewModel, Vcl.ComCtrls;
+
+type
+  TMainFrm = class(TForm)
+    lblHeader: TLabel;
+    edtId: TLabeledEdit;
+    edtTItle: TLabeledEdit;
+    lblBookList: TLabel;
+    BindlingList: TBindingsList;
+    ViewModelBindScope: TBindScope;
+    ListView1: TListView;
+  private
+    FViewModel: TMainViewModel;
+
+  public
+    constructor Create(AOwner: TComponent); override;
+    procedure SetViewModel(const AViewModel: TMainViewModel);
+  end;
+
+implementation
+
+{$R *.dfm}
+
+
+{ TMainFrm }
+
+constructor TMainFrm.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  var ViewModel := TMainViewModel.Create;
+
+  SetViewModel(ViewModel);
+end;
+
+procedure TMainFrm.SetViewModel(const AViewModel: TMainViewModel);
+begin
+  FViewModel := AViewModel;  
+
+  ViewModelBindScope.DataObject := FViewModel;
+
+  ViewModelBindScope.Active := True;
+end;
+
+end.

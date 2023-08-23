@@ -1,0 +1,23 @@
+program BookMVVM;
+
+uses
+  Vcl.Forms,
+  MainForm in 'View\MainForm.pas' {MainFrm},
+  ViewIntf in 'View\ViewIntf.pas',
+  ViewModelIntf in 'ViewModel\ViewModelIntf.pas',
+  MainViewModel in 'ViewModel\MainViewModel.pas',
+  AuthService in 'AuthService.pas',
+  Book in '..\Domain\Book\Book.pas',
+  BookContextIntf in '..\Domain\Book\BookContextIntf.pas';
+
+{$R *.res}
+
+var
+  MainForm: TMainFrm;
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+
+  Application.CreateForm(TMainFrm, MainForm);
+  Application.Run;
+end.

@@ -6,55 +6,50 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
-  Vcl.DBCtrls, ViewIntf, ControllerIntf;
+  Vcl.DBCtrls, ViewIntf, BookDetailsViewModel, Data.Bind.EngExt,
+  Vcl.Bind.DBEngExt, Data.Bind.Components, System.Rtti, System.Bindings.Outputs,
+  Vcl.Bind.Editors;
 
 type
-  TBookDetailsFrm = class(TForm,IView)
+  TBookDetailsFrm = class(TForm)
     lblTitle: TLabel;
     lblSynopsis: TLabel;
     btnWriteReview: TButton;
     edtTitle: TEdit;
     memSynopsis: TMemo;
-    procedure btnWriteReviewClick(Sender: TObject);
+    ViewModelBindingScope: TBindScope;
+    BindingList: TBindingsList;
+    BookDetailTitleBinding: TBindExpression;
+    BookDetailSynopsisBinding: TBindExpression;
   private
-    FController: IController;
-    function GetController: IController;
-    procedure SetController(AController: IController);
+    FViewModel: TBookDetailsViewModel;
+    procedure SetViewModel(AViewModel: TBookDetailsViewModel);
   public
-    constructor Create(AController: IController);
-    property Controller: IController read GetController write SetController;
+    constructor Create(AViewModel: TBookDetailsViewModel);
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses
-  BookstoreDM,
-  WriteReviewForm,
-  BookDetailsController;
 
-procedure TBookDetailsFrm.btnWriteReviewClick(Sender: TObject);
-begin
-  (FController as TBookDetailsController).WriteReview;
-end;
+{ TBookDetailsFrm }
 
-constructor TBookDetailsFrm.Create(AController: IController);
+
+
+constructor TBookDetailsFrm.Create(AViewModel: TBookDetailsViewModel);
 begin
   inherited Create(Application);
 
-  FController := AController;
-  FController.View := Self;
+  SetViewModel(AViewModel);
 end;
 
-function TBookDetailsFrm.GetController: IController;
+procedure TBookDetailsFrm.SetViewModel(AViewModel: TBookDetailsViewModel);
 begin
-  Result := FController;
-end;
+  FViewModel := AViewModel;
 
-procedure TBookDetailsFrm.SetController(AController: IController);
-begin
-  FController := AController;
+  ViewModelBindingScope.DataObject := FViewModel;
+  ViewModelBindingScope.Active := True;
 end;
 
 end.

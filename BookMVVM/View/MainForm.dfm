@@ -2,7 +2,7 @@ object MainFrm: TMainFrm
   Left = 0
   Top = 0
   Caption = 'MainPage'
-  ClientHeight = 384
+  ClientHeight = 431
   ClientWidth = 328
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -62,11 +62,38 @@ object MainFrm: TMainFrm
     Columns = <>
     TabOrder = 2
   end
+  object btnViewBook: TButton
+    Left = 238
+    Top = 387
+    Width = 75
+    Height = 25
+    Caption = 'View'
+    TabOrder = 3
+    OnClick = btnViewBookClick
+  end
   object BindlingList: TBindingsList
     Methods = <>
     OutputConverters = <>
     Left = 160
     Top = 8
+    object BookIdBinding: TBindExpression
+      Category = 'Binding Expressions'
+      ControlComponent = edtId
+      SourceComponent = ViewModelBindScope
+      SourceExpression = 'SelectedBook.Id'
+      ControlExpression = 'Text'
+      NotifyOutputs = True
+      Direction = dirBidirectional
+    end
+    object BookTitleBinding: TBindExpression
+      Category = 'Binding Expressions'
+      ControlComponent = edtTItle
+      SourceComponent = ViewModelBindScope
+      SourceExpression = 'SelectedBook.Title'
+      ControlExpression = 'Text'
+      NotifyOutputs = True
+      Direction = dirBidirectional
+    end
   end
   object ViewModelBindScope: TBindScope
     ScopeMappings = <>

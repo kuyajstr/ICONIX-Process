@@ -2,8 +2,8 @@ object BookDetailsFrm: TBookDetailsFrm
   Left = 0
   Top = 0
   Caption = 'Book Details'
-  ClientHeight = 387
-  ClientWidth = 399
+  ClientHeight = 386
+  ClientWidth = 395
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -32,7 +32,6 @@ object BookDetailsFrm: TBookDetailsFrm
     Height = 25
     Caption = 'Write Review'
     TabOrder = 0
-    OnClick = btnWriteReviewClick
   end
   object edtTitle: TEdit
     Left = 16
@@ -51,5 +50,34 @@ object BookDetailsFrm: TBookDetailsFrm
       'memSynopsis')
     ReadOnly = True
     TabOrder = 2
+  end
+  object ViewModelBindingScope: TBindScope
+    ScopeMappings = <>
+    Left = 208
+    Top = 16
+  end
+  object BindingList: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 328
+    Top = 16
+    object BookDetailTitleBinding: TBindExpression
+      Category = 'Binding Expressions'
+      ControlComponent = edtTitle
+      SourceComponent = ViewModelBindingScope
+      SourceExpression = 'Book.Title'
+      ControlExpression = 'Text'
+      NotifyOutputs = True
+      Direction = dirSourceToControl
+    end
+    object BookDetailSynopsisBinding: TBindExpression
+      Category = 'Binding Expressions'
+      ControlComponent = memSynopsis
+      SourceComponent = ViewModelBindingScope
+      SourceExpression = 'Book.Synopsis'
+      ControlExpression = 'Text'
+      NotifyOutputs = True
+      Direction = dirBidirectional
+    end
   end
 end

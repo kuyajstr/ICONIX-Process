@@ -88,7 +88,9 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="TestBookDao.pas"/>
-        <DCCReference Include="BookServiceTestWithStub.pas"/>
+        <DCCReference Include="BookServiceTest.pas"/>
+        <DCCReference Include="CustomerReviewServiceTest.pas"/>
+        <DCCReference Include="TestCustomerReviewDao.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

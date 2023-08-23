@@ -1,0 +1,80 @@
+unit CustomerReviewServiceTest;
+
+interface
+
+uses
+  DUnitX.TestFramework,
+  Generics.Collections,
+  CustomerReview;
+
+type
+
+  [TestFixture]
+  TCustomerReviewServiceTest = class
+  private
+    FMockDB: TList<TCustomerReview>;
+  public
+    [Setup]
+    procedure Setup;
+
+    [Test]
+    procedure Validate_SucessfullyValidateReview_WillNotRaiseException;
+
+    [TestCase('Review is less than 10 char', 'Test,4')]
+    [TestCase('Rating is equal to 0', 'Review Test,0')]
+    [TestCase('Rating is less than 0', 'Review Test,-1')]
+    [TestCase('Rating is more than 5', 'Review Test,6')]
+    [TestCase('Rating is floating point', 'Review Test,4.5')]
+    procedure Validate_InputInvalidCustomerReview_RaiseException(
+      const ReviewStr : string; const Rating: Integer);
+  end;
+
+implementation
+
+uses
+  TestCustomerReviewDao,
+  CustomerReviewService;
+
+{ TCustomerReviewService }
+
+procedure TCustomerReviewServiceTest.Setup;
+begin
+  FMockDB := TList<TCustomerReview>.Create;
+end;
+
+procedure TCustomerReviewServiceTest.
+  Validate_InputInvalidCustomerReview_RaiseException(const ReviewStr: string;
+  const Rating: Integer);
+begin
+  // Arrange
+  var ReviewDao := TTestCustomerReviewDao.Create(FMockDB);
+  var Service := TCustomerReviewService.Create(ReviewDao);
+  var Review := TCustomerReview.Create(0, 0, 0, ReviewStr, Rating, True);
+
+  // Act and Assert
+  Assert.WillRaiseAny(
+    procedure
+    begin
+      Service.ValidateCustomerReview(Review);
+    end);
+end;
+
+ procedure TCustomerReviewServiceTest.Validate_SucessfullyValidateReview_WillNotRaiseException;
+begin
+  //Arrange
+  var ReviewDao := TTestCustomerReviewDao.Create(FMockDB);
+  var Service := TCustomerReviewService.Create(ReviewDao);
+  var Review := TCustomerReview.Create(0, 0, 0, 'Valid Review Test', 4, True);
+
+  // Act and Assert
+  Assert.WillNotRaiseAny(
+    procedure
+    begin
+      Service.ValidateCustomerReview(Review);
+    end);
+end;
+
+initialization
+ TDUnitX.RegisterTestFixture(TCustomerReviewServiceTest);
+
+end.

@@ -18,6 +18,12 @@
         <Projects Include="Unit Test\UnitTest.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="..\..\..\..\Downloads\MVVM Sample\MVVMSample.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="BookMVVM\BookMVVM.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -71,14 +77,32 @@
     <Target Name="UnitTest:Make">
         <MSBuild Projects="Unit Test\UnitTest.dproj" Targets="Make"/>
     </Target>
+    <Target Name="MVVMSample">
+        <MSBuild Projects="..\..\..\..\Downloads\MVVM Sample\MVVMSample.dproj"/>
+    </Target>
+    <Target Name="MVVMSample:Clean">
+        <MSBuild Projects="..\..\..\..\Downloads\MVVM Sample\MVVMSample.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MVVMSample:Make">
+        <MSBuild Projects="..\..\..\..\Downloads\MVVM Sample\MVVMSample.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BookMVVM">
+        <MSBuild Projects="BookMVVM\BookMVVM.dproj"/>
+    </Target>
+    <Target Name="BookMVVM:Clean">
+        <MSBuild Projects="BookMVVM\BookMVVM.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BookMVVM:Make">
+        <MSBuild Projects="BookMVVM\BookMVVM.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="DomainLayer;DataLayer;BookstoreServer;BookstoreClient;UnitTest"/>
+        <CallTarget Targets="DomainLayer;DataLayer;BookstoreServer;BookstoreClient;UnitTest;MVVMSample;BookMVVM"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="DomainLayer:Clean;DataLayer:Clean;BookstoreServer:Clean;BookstoreClient:Clean;UnitTest:Clean"/>
+        <CallTarget Targets="DomainLayer:Clean;DataLayer:Clean;BookstoreServer:Clean;BookstoreClient:Clean;UnitTest:Clean;MVVMSample:Clean;BookMVVM:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="DomainLayer:Make;DataLayer:Make;BookstoreServer:Make;BookstoreClient:Make;UnitTest:Make"/>
+        <CallTarget Targets="DomainLayer:Make;DataLayer:Make;BookstoreServer:Make;BookstoreClient:Make;UnitTest:Make;MVVMSample:Make;BookMVVM:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

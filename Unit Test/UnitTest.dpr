@@ -14,7 +14,9 @@ uses
   {$ENDIF }
   DUnitX.TestFramework,
   TestBookDao in 'TestBookDao.pas',
-  BookServiceTestWithStub in 'BookServiceTestWithStub.pas';
+  BookServiceTest in 'BookServiceTest.pas',
+  CustomerReviewServiceTest in 'CustomerReviewServiceTest.pas',
+  TestCustomerReviewDao in 'TestCustomerReviewDao.pas';
 
 {$IFNDEF TESTINSIGHT}
 var

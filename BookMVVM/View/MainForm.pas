@@ -24,15 +24,17 @@ type
     btnLoadBooks: TButton;
     lsbBooklist: TListBox;
     BooklistBinding: TBindExpression;
+    SelectionChangeBinding: TBindExpression;
     procedure btnViewBookClick(Sender: TObject);
     procedure btnLoadBooksClick(Sender: TObject);
     procedure OnPropertyChanged(Sender: TObject);
-    procedure lsbBooklistClick(Sender: TObject);
   private
     FViewModel: TMainViewModel;
 
+
   public
     procedure SetViewModel(const AViewModel: TMainViewModel);
+    constructor Create(AOwner: TComponent); override;
   end;
 
 implementation
@@ -48,9 +50,12 @@ begin
    FViewModel.ShowBookDetail;
 end;
 
-procedure TMainFrm.lsbBooklistClick(Sender: TObject);
+constructor TMainFrm.Create(AOwner: TComponent);
 begin
-//  var Index := lsbBooklist.ItemIndex;
+  var MainViewModel := TMainViewModel.Create;
+  SetViewModel(MainViewModel);
+
+  inherited Create(AOwner);
 end;
 
 procedure TMainFrm.OnPropertyChanged(Sender: TObject);

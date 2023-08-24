@@ -43,13 +43,16 @@ uses
 
 constructor TMainViewModel.Create;
 begin
-  inherited Create;
   FBookList := TList<TBook>.Create;
+  FItemList := TStringList.Create;
   FBookList.Add(TBook.Create('Book A', 'Synopsis for Book A', 1));
   FBookList.Add(TBook.Create('Book B', 'Synopsis for Book B', 2));
   FBookList.Add(TBook.Create('Book C', 'Synopsis for Book C', 3));
 
   FSelectedBook := FBookList.First;
+  SelectedIndex := 0;
+
+  inherited Create;
   // FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
   // FRestClient.SetBasicAuthorization('Admin', 'admin');
   //
@@ -94,9 +97,11 @@ end;
 
 procedure TMainViewModel.SetSelectedIndex(const Value: Integer);
 begin
-  SelectedBook := FItemList.Objects[Value] as TBook;
-  
-  OnPropertyChanged('SelectedBook');
+  if FItemList.Count <> 0 then
+  begin
+    SelectedBook := FItemList.Objects[Value] as TBook;
+    OnPropertyChanged('SelectedBook');
+  end;
 end;
 
 procedure TMainViewModel.ShowBookDetail;

@@ -14,15 +14,12 @@ uses
 
 var
   MainForm: TMainFrm;
-  MainViewModel: TMainViewModel;
+//  MainViewModel: TMainViewModel;
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
 
   Application.CreateForm(TMainFrm, MainForm);
-  MainViewModel := TMainViewModel.Create;
-
-  MainForm.SetViewModel(MainViewModel);
 
   Application.Run;
 end.

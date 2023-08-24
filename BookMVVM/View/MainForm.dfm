@@ -81,7 +81,7 @@ object MainFrm: TMainFrm
     Height = 220
     ItemHeight = 15
     TabOrder = 4
-    OnClick = lsbBooklistClick
+    OnClick = OnPropertyChanged
   end
   object BindlingList: TBindingsList
     Methods = <>
@@ -114,6 +114,15 @@ object MainFrm: TMainFrm
       ControlExpression = 'Items'
       NotifyOutputs = False
       Direction = dirSourceToControl
+    end
+    object SelectionChangeBinding: TBindExpression
+      Category = 'Binding Expressions'
+      ControlComponent = lsbBooklist
+      SourceComponent = ViewModelBindScope
+      SourceExpression = 'SelectedIndex'
+      ControlExpression = 'ItemIndex'
+      NotifyOutputs = False
+      Direction = dirBidirectional
     end
   end
   object ViewModelBindScope: TBindScope

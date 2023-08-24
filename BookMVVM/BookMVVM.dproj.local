@@ -2,38 +2,38 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2023/08/23 13:25:24.000.273,=C:\Users\Nathan\Desktop\Training Programs\Coding\Unit1.pas</Transaction>
-    <Transaction>2023/08/23 13:26:08.000.040,C:\Users\Nathan\Desktop\Training Programs\Coding\Project1.dproj=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\BookMVVM.dproj</Transaction>
-    <Transaction>2023/08/23 13:26:41.000.762,=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\View\ViewIntf.pas</Transaction>
+    <Transaction>2023/08/23 13:26:08.000.040,C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\BookMVVM.dproj=C:\Users\Nathan\Desktop\Training Programs\Coding\Project1.dproj</Transaction>
     <Transaction>2023/08/23 13:26:41.000.036,=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\View\BookDetailsForm.pas</Transaction>
     <Transaction>2023/08/23 13:26:41.000.716,=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\View\MainForm.pas</Transaction>
+    <Transaction>2023/08/23 13:26:41.000.762,=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\View\ViewIntf.pas</Transaction>
     <Transaction>2023/08/23 13:32:56.000.023,C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\View\BookDetailsForm.pas=</Transaction>
     <Transaction>2023/08/23 13:33:48.000.159,=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\Unit1.pas</Transaction>
-    <Transaction>2023/08/23 13:33:56.000.529,C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\Unit1.pas=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\ViewModel\ViewModelIntf.pas</Transaction>
+    <Transaction>2023/08/23 13:33:56.000.529,C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\ViewModel\ViewModelIntf.pas=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\Unit1.pas</Transaction>
     <Transaction>2023/08/23 13:54:55.000.884,=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\Unit1.pas</Transaction>
-    <Transaction>2023/08/23 13:55:14.000.896,C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\Unit1.pas=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\ViewModel\MainViewModel.pas</Transaction>
+    <Transaction>2023/08/23 13:55:14.000.896,C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\ViewModel\MainViewModel.pas=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\Unit1.pas</Transaction>
     <Transaction>2023/08/23 15:05:10.000.728,=C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\AuthService.pas</Transaction>
     <Transaction>2023/08/23 20:37:18.000.136,=C:\Users\Admin\Desktop\ICONIX-Process\Domain\Book\Book.pas</Transaction>
     <Transaction>2023/08/23 20:37:35.000.399,=C:\Users\Admin\Desktop\ICONIX-Process\Domain\Book\BookContextIntf.pas</Transaction>
     <Transaction>2023/08/23 22:44:28.000.916,=C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\View\BookDetailsForm.pas</Transaction>
     <Transaction>2023/08/23 22:46:26.000.279,C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\View\BookDetailsForm.pas=</Transaction>
     <Transaction>2023/08/23 23:21:25.000.151,=C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\Unit1.pas</Transaction>
-    <Transaction>2023/08/23 23:22:21.000.849,C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\Unit1.pas=C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\ViewModel\ViewBookViewModel.pas</Transaction>
-    <Transaction>2023/08/23 23:24:33.000.727,C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\ViewModel\ViewBookViewModel.pas=C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\ViewModel\BookDetailsViewModel.pas</Transaction>
+    <Transaction>2023/08/23 23:22:21.000.849,C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\ViewModel\ViewBookViewModel.pas=C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\Unit1.pas</Transaction>
+    <Transaction>2023/08/23 23:24:33.000.727,C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\ViewModel\BookDetailsViewModel.pas=C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\ViewModel\ViewBookViewModel.pas</Transaction>
     <Transaction>2023/08/23 23:28:50.000.390,=C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\View\BookDetailsForm.pas</Transaction>
     <Transaction>2023/08/24 00:44:59.000.813,C:\Users\Admin\Desktop\ICONIX-Process\Domain\Book\Book.pas=</Transaction>
     <Transaction>2023/08/24 00:45:02.000.552,C:\Users\Admin\Desktop\ICONIX-Process\Domain\Book\BookContextIntf.pas=</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="ViewModel"/>
-    <File Path="ViewModel\BookDetailsViewModel.pas"/>
-    <File Path="ViewModel\MainViewModel.pas"/>
-    <File Path="ViewModel\ViewModelIntf.pas"/>
     <File Path="View"/>
     <File Path="View\BookDetailsForm.pas"/>
     <File Path="View\BookDetailsForm.dfm"/>
     <File Path="View\MainForm.pas"/>
     <File Path="View\MainForm.dfm"/>
     <File Path="View\ViewIntf.pas"/>
+    <File Path="ViewModel"/>
+    <File Path="ViewModel\BookDetailsViewModel.pas"/>
+    <File Path="ViewModel\MainViewModel.pas"/>
+    <File Path="ViewModel\ViewModelIntf.pas"/>
     <File Path="AuthService.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

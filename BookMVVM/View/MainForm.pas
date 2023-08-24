@@ -13,16 +13,21 @@ uses
 type
   TMainFrm = class(TForm)
     lblHeader: TLabel;
-    edtId: TLabeledEdit;
+    edtEdit: TLabeledEdit;
     edtTItle: TLabeledEdit;
     lblBookList: TLabel;
     BindlingList: TBindingsList;
     ViewModelBindScope: TBindScope;
-    ListView1: TListView;
     BookIdBinding: TBindExpression;
     BookTitleBinding: TBindExpression;
     btnViewBook: TButton;
+    btnLoadBooks: TButton;
+    lsbBooklist: TListBox;
+    BooklistBinding: TBindExpression;
     procedure btnViewBookClick(Sender: TObject);
+    procedure btnLoadBooksClick(Sender: TObject);
+    procedure OnPropertyChanged(Sender: TObject);
+    procedure lsbBooklistClick(Sender: TObject);
   private
     FViewModel: TMainViewModel;
 
@@ -41,6 +46,22 @@ implementation
 procedure TMainFrm.btnViewBookClick(Sender: TObject);
 begin
    FViewModel.ShowBookDetail;
+end;
+
+procedure TMainFrm.lsbBooklistClick(Sender: TObject);
+begin
+//  var Index := lsbBooklist.ItemIndex;
+end;
+
+procedure TMainFrm.OnPropertyChanged(Sender: TObject);
+begin
+  if Self.Visible then
+    BindlingList.Notify(Sender, '');
+end;
+
+procedure TMainFrm.btnLoadBooksClick(Sender: TObject);
+begin
+  FViewModel.LoadBooks;
 end;
 
 procedure TMainFrm.SetViewModel(const AViewModel: TMainViewModel);

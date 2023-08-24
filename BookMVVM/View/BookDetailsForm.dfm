@@ -34,11 +34,10 @@ object BookDetailsFrm: TBookDetailsFrm
     TabOrder = 0
   end
   object edtTitle: TEdit
-    Left = 16
+    Left = 18
     Top = 37
     Width = 369
     Height = 23
-    ReadOnly = True
     TabOrder = 1
   end
   object memSynopsis: TMemo

@@ -20,19 +20,20 @@
     <Transaction>2023/08/23 23:22:21.000.849,C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\Unit1.pas=C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\ViewModel\ViewBookViewModel.pas</Transaction>
     <Transaction>2023/08/23 23:24:33.000.727,C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\ViewModel\ViewBookViewModel.pas=C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\ViewModel\BookDetailsViewModel.pas</Transaction>
     <Transaction>2023/08/23 23:28:50.000.390,=C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\View\BookDetailsForm.pas</Transaction>
-    <Transaction>2023/08/24 00:44:59.813,C:\Users\Admin\Desktop\ICONIX-Process\Domain\Book\Book.pas=</Transaction>
-    <Transaction>2023/08/24 00:45:02.552,C:\Users\Admin\Desktop\ICONIX-Process\Domain\Book\BookContextIntf.pas=</Transaction>
-  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <Transaction>2023/08/24 00:44:59.000.813,C:\Users\Admin\Desktop\ICONIX-Process\Domain\Book\Book.pas=</Transaction>
+    <Transaction>2023/08/24 00:45:02.000.552,C:\Users\Admin\Desktop\ICONIX-Process\Domain\Book\BookContextIntf.pas=</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="ViewModel"/>
+    <File Path="ViewModel\BookDetailsViewModel.pas"/>
+    <File Path="ViewModel\MainViewModel.pas"/>
+    <File Path="ViewModel\ViewModelIntf.pas"/>
     <File Path="View"/>
     <File Path="View\BookDetailsForm.pas"/>
     <File Path="View\BookDetailsForm.dfm"/>
     <File Path="View\MainForm.pas"/>
     <File Path="View\MainForm.dfm"/>
     <File Path="View\ViewIntf.pas"/>
-    <File Path="ViewModel"/>
-    <File Path="ViewModel\BookDetailsViewModel.pas"/>
-    <File Path="ViewModel\MainViewModel.pas"/>
-    <File Path="ViewModel\ViewModelIntf.pas"/>
     <File Path="AuthService.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

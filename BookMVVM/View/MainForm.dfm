@@ -32,7 +32,7 @@ object MainFrm: TMainFrm
     Height = 15
     Caption = 'Book List'
   end
-  object edtId: TLabeledEdit
+  object edtEdit: TLabeledEdit
     Left = 8
     Top = 80
     Width = 33
@@ -42,6 +42,7 @@ object MainFrm: TMainFrm
     EditLabel.Caption = 'ID'
     TabOrder = 0
     Text = ''
+    OnChange = OnPropertyChanged
   end
   object edtTItle: TLabeledEdit
     Left = 57
@@ -53,14 +54,7 @@ object MainFrm: TMainFrm
     EditLabel.Caption = 'Title'
     TabOrder = 1
     Text = ''
-  end
-  object ListView1: TListView
-    Left = 8
-    Top = 149
-    Width = 305
-    Height = 212
-    Columns = <>
-    TabOrder = 2
+    OnChange = OnPropertyChanged
   end
   object btnViewBook: TButton
     Left = 238
@@ -68,17 +62,35 @@ object MainFrm: TMainFrm
     Width = 75
     Height = 25
     Caption = 'View'
-    TabOrder = 3
+    TabOrder = 2
     OnClick = btnViewBookClick
+  end
+  object btnLoadBooks: TButton
+    Left = 8
+    Top = 387
+    Width = 75
+    Height = 25
+    Caption = 'Load Books'
+    TabOrder = 3
+    OnClick = btnLoadBooksClick
+  end
+  object lsbBooklist: TListBox
+    Left = 8
+    Top = 149
+    Width = 305
+    Height = 220
+    ItemHeight = 15
+    TabOrder = 4
+    OnClick = lsbBooklistClick
   end
   object BindlingList: TBindingsList
     Methods = <>
     OutputConverters = <>
-    Left = 160
+    Left = 272
     Top = 8
     object BookIdBinding: TBindExpression
       Category = 'Binding Expressions'
-      ControlComponent = edtId
+      ControlComponent = edtEdit
       SourceComponent = ViewModelBindScope
       SourceExpression = 'SelectedBook.Id'
       ControlExpression = 'Text'
@@ -94,10 +106,19 @@ object MainFrm: TMainFrm
       NotifyOutputs = True
       Direction = dirBidirectional
     end
+    object BooklistBinding: TBindExpression
+      Category = 'Binding Expressions'
+      ControlComponent = lsbBooklist
+      SourceComponent = ViewModelBindScope
+      SourceExpression = 'ItemList'
+      ControlExpression = 'Items'
+      NotifyOutputs = False
+      Direction = dirSourceToControl
+    end
   end
   object ViewModelBindScope: TBindScope
     ScopeMappings = <>
-    Left = 56
-    Top = 8
+    Left = 248
+    Top = 112
   end
 end

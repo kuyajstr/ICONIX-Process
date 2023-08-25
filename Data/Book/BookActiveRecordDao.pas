@@ -26,12 +26,13 @@ implementation
 
 { TBookActiveRecordDao }
 
-function TBookActiveRecordDao.ARtoBook(List: TObjectList<TMVCActiveRecord>): TObjectList<TBook>;
-var 
+function TBookActiveRecordDao.ARtoBook(List: TObjectList<TMVCActiveRecord>)
+  : TObjectList<TBook>;
+var
   BookList: TObjectList<TBook>;
   AR: TMVCActiveRecord;
   BookAR: TBookActiveRecord;
-begin                                                                                                                     
+begin
   BookList := TObjectList<TBook>.Create;
 
   for AR in List do
@@ -70,7 +71,7 @@ begin
   var BookAR := TBookActiveRecord.Create;
   try
     BookAR.LoadByPk(AId);
-    Obj := TBook.create(BookAR);
+    Obj := TBook.Create(BookAR);
   finally
     BookAR.Free;
   end;

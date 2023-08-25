@@ -58,8 +58,6 @@ uses
 
 { TCustomerReviewController }
 
-{ TCustomerReviewController }
-
 constructor TCustomerReviewController.Create(const AService
   : TCustomerReviewService);
 begin
@@ -67,7 +65,6 @@ begin
     raise EArgumentNilException.Create('Customer Review Service is nil');
 
   inherited Create;
-
   FService := AService;
 end;
 
@@ -108,7 +105,7 @@ procedure TCustomerReviewController.UpdateCustomerReview(const ID: Integer);
 begin
   var CustomerReview := Context.Request.BodyAs<TCustomerReview>;
   try
-    CustomerReview.Id := ID;
+    CustomerReview.ID := ID;
     FService.UpdateCustomerReview(CustomerReview);
   finally
     CustomerReview.Free;
@@ -122,8 +119,9 @@ begin
     try
       FService.ValidateCustomerReview(CustomerReview);
       Render(200, 'Customer Review is Valid');
-    except on E: Exception do
-      Render(400, E.Message);
+    except
+      on E: Exception do
+        Render(400, E.Message);
     end;
   finally
     CustomerReview.Free;

@@ -6,6 +6,7 @@ uses
   DUnitX.TestFramework;
 
 type
+
   [TestFixture]
   TBookServiceTest = class
   public
@@ -35,7 +36,7 @@ type
     [Test]
     procedure GetAllBooks_DataBaseIsEmpty_True;
 
-//    [Test]
+    // [Test]
     procedure GetAllBooks_UseActualDatabase_True;
   end;
 
@@ -91,14 +92,14 @@ procedure TBookServiceTest.GetAllBooks_UseActualDatabase_True;
 var
   Books: TObjectList<TBook>;
 begin
-  //Arrange
+  // Arrange
   var BookARDao := TBookActiveRecordDao.Create;
   var Service := TBookService.Create(BookARDao);
 
-  //Act
+  // Act
   Service.GetAllBooks(Books);
 
-  //Assert
+  // Assert
   Assert.IsTrue(Books.Count > 0);
 end;
 
@@ -157,7 +158,6 @@ begin
   var DB := TDictionary<Integer, TBook>.Create;
   var BookDao := TTestBookDao.Create(DB);
   var Service := TBookService.Create(BookDao);
-
   var Book := TBook.Create('Title Test', 'Synopsis Test', 1);
 
   // Assert
@@ -174,7 +174,6 @@ begin
   var DB := TDictionary<Integer, TBook>.Create;
   var BookDao := TTestBookDao.Create(DB);
   var Service := TBookService.Create(BookDao);
-
   var Book := TBook.Create('Title Test', '', 1);
 
   // Assert
@@ -191,7 +190,6 @@ begin
   var DB := TDictionary<Integer, TBook>.Create;
   var BookDao := TTestBookDao.Create(DB);
   var Service := TBookService.Create(BookDao);
-
   var Book := TBook.Create('', 'Synopsis Test', 1);
 
   // Assert
@@ -223,6 +221,7 @@ begin
 end;
 
 initialization
+
 TDUnitX.RegisterTestFixture(TBookServiceTest);
 
 end.

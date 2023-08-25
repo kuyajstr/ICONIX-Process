@@ -98,17 +98,15 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="View\MainForm.pas">
-            <Form>MainFrm</Form>
+        <DCCReference Include="View\MainView.pas">
+            <Form>MainForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="View\ViewIntf.pas"/>
-        <DCCReference Include="ViewModel\ViewModelIntf.pas"/>
         <DCCReference Include="ViewModel\MainViewModel.pas"/>
         <DCCReference Include="AuthService.pas"/>
         <DCCReference Include="ViewModel\BookDetailsViewModel.pas"/>
-        <DCCReference Include="View\BookDetailsForm.pas">
-            <Form>BookDetailsFrm</Form>
+        <DCCReference Include="View\BookDetailsView.pas">
+            <Form>BookDetailsForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

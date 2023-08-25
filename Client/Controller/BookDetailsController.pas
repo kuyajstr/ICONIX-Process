@@ -7,7 +7,7 @@ uses
   Vcl.Forms,
   Book,
   MVCFramework.RESTClient,
-  BookDetailsForm;
+  BookDetailsView;
 
 type
   TBookDetailsController = class(TinterfacedObject, IController)
@@ -24,7 +24,6 @@ type
 
     property View: TForm read GetView write SetView;
   end;
-
 
 implementation
 
@@ -44,15 +43,15 @@ begin
   RESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
   RESTClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
   FBook := ABook;
-  FView := TBookDetailsFrm.Create(Self);
+  FView := TBookDetailsForm.Create(Self);
 end;
 
 procedure TBookDetailsController.Display;
 begin
-  var BookDetailsView := FView as TBookDetailsFrm;
+  var BookDetailsView := FView as TBookDetailsForm;
 
-  BookDetailsView.edtTitle.Text := FBook.Title;
-  BookDetailsView.memSynopsis.Text := FBook.Synopsis;
+  BookDetailsView.TitleEdit.Text := FBook.Title;
+  BookDetailsView.SynopsisMemo.Text := FBook.Synopsis;
   BookDetailsView.Show;
 end;
 
@@ -70,15 +69,14 @@ procedure TBookDetailsController.WriteReview;
 begin
   RESTClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
 
-  var CheckUserRequest := RESTClient.Post('/api/customer_reviews','{}');
-
-  //Check if ReasonString is Unauthorized
+  var CheckUserRequest := RESTClient.Post('/api/customer_reviews', '{}');
+  // Check if ReasonString is Unauthorized
   if CheckUserRequest.StatusCode <> 403 then
   begin
     var WriteReviewController := TWriteReviewController.Create;
     WriteReviewController.Display(FBook);
   end
-  else //if CheckUserRequest.Content then
+  else
   begin
     if MessageDlg('Please Login first, would you like to proceed?',
       mtConfirmation, [mbYes, mbNo], 0) = mrYes then

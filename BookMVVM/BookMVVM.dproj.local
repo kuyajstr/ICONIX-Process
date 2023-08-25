@@ -4,8 +4,8 @@
     <Transaction>2023/08/23 13:25:24.000.273,=C:\Users\Nathan\Desktop\Training Programs\Coding\Unit1.pas</Transaction>
     <Transaction>2023/08/23 13:26:08.000.040,C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\BookMVVM.dproj=C:\Users\Nathan\Desktop\Training Programs\Coding\Project1.dproj</Transaction>
     <Transaction>2023/08/23 13:26:41.000.036,=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\View\BookDetailsForm.pas</Transaction>
-    <Transaction>2023/08/23 13:26:41.000.716,=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\View\MainForm.pas</Transaction>
     <Transaction>2023/08/23 13:26:41.000.762,=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\View\ViewIntf.pas</Transaction>
+    <Transaction>2023/08/23 13:26:41.000.716,=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\View\MainForm.pas</Transaction>
     <Transaction>2023/08/23 13:32:56.000.023,C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\View\BookDetailsForm.pas=</Transaction>
     <Transaction>2023/08/23 13:33:48.000.159,=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\Unit1.pas</Transaction>
     <Transaction>2023/08/23 13:33:56.000.529,C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\ViewModel\ViewModelIntf.pas=C:\Users\Nathan\Desktop\Training Programs\Coding\BookMVVM\Unit1.pas</Transaction>
@@ -22,18 +22,25 @@
     <Transaction>2023/08/23 23:28:50.000.390,=C:\Users\Admin\Desktop\ICONIX-Process\BookMVVM\View\BookDetailsForm.pas</Transaction>
     <Transaction>2023/08/24 00:44:59.000.813,C:\Users\Admin\Desktop\ICONIX-Process\Domain\Book\Book.pas=</Transaction>
     <Transaction>2023/08/24 00:45:02.000.552,C:\Users\Admin\Desktop\ICONIX-Process\Domain\Book\BookContextIntf.pas=</Transaction>
+    <Transaction>2023/08/25 08:39:58.000.352,C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\ViewModel\ViewModelIntf.pas=</Transaction>
+    <Transaction>2023/08/25 08:40:15.000.950,C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\View\ViewIntf.pas=</Transaction>
+    <Transaction>2023/08/25 15:48:21.197,C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\View\MainView.pas=C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\View\MainForm.pas</Transaction>
+    <Transaction>2023/08/25 15:48:21.197,C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\View\MainView.dfm=C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\View\MainForm.dfm</Transaction>
+    <Transaction>2023/08/25 15:51:46.662,C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\View\BookDetailsView.dfm=C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\View\BookDetailsForm.dfm</Transaction>
+    <Transaction>2023/08/25 15:51:46.662,C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\View\BookDetailsView.pas=C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\View\BookDetailsForm.pas</Transaction>
+    <Transaction>2023/08/25 16:05:08.202,=C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\Unit1.pas</Transaction>
+    <Transaction>2023/08/25 16:05:44.939,C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\Utility.pas=C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\Unit1.pas</Transaction>
+    <Transaction>2023/08/25 16:46:01.890,C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\BookMVVM\Utility.pas=</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="View"/>
-    <File Path="View\BookDetailsForm.pas"/>
-    <File Path="View\BookDetailsForm.dfm"/>
-    <File Path="View\MainForm.pas"/>
-    <File Path="View\MainForm.dfm"/>
-    <File Path="View\ViewIntf.pas"/>
     <File Path="ViewModel"/>
     <File Path="ViewModel\BookDetailsViewModel.pas"/>
     <File Path="ViewModel\MainViewModel.pas"/>
-    <File Path="ViewModel\ViewModelIntf.pas"/>
+    <File Path="View"/>
+    <File Path="View\BookDetailsView.pas"/>
+    <File Path="View\BookDetailsView.dfm"/>
+    <File Path="View\MainView.pas"/>
+    <File Path="View\MainView.dfm"/>
     <File Path="AuthService.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

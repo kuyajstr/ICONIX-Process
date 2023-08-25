@@ -15,17 +15,14 @@ type
     FView: TForm;
     FBookList: TObjectList<TBook>;
     RESTClient: IMVCRESTClient;
-
     function GetView: TForm;
     procedure SetView(AView: TForm);
   public
     constructor Create;
-
     procedure LoadBooks;
     procedure ClearBooks;
     procedure ShowBookDetails;
     procedure PromptLogin;
-
     property View: TForm read GetView write SetView;
   end;
 
@@ -35,11 +32,10 @@ uses
   BookstoreDM,
   MVCFramework.DataSet.Utils,
   MVCFramework.Serializer.Commons,
-  BookDetailsForm,
+  BookDetailsView,
   BookDetailsController,
   AuthService,
   LoginController,
-
   MVCFramework.Serializer.JsonDataObjects,
   JsonDataObjects;
 
@@ -48,7 +44,6 @@ uses
 procedure TMainController.ClearBooks;
 begin
   var MemTable := dmolBookstore.dsBooks;
-
   MemTable.Close;
   MemTable.Open;
 end;
@@ -108,7 +103,6 @@ begin
   BookDetail.Synopsis := dmolBookstore.dsBooksSynopsis.Value;
 
   var BookDetailsController := TBookDetailsController.Create(BookDetail);
-
   BookDetailsController.Display;
 end;
 

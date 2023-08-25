@@ -1,0 +1,44 @@
+unit Utility;
+
+interface
+
+type
+  TUtility<T: class> = class
+    class function CloneObject<T: class>(SourceObject: TObject): T;
+  end;
+
+
+implementation
+
+uses
+  Rtti;
+
+{ TUtility<T> }
+
+class function TUtility<T>.CloneObject<T>(SourceObject: TObject): T;
+var
+  SourceValue : TValue;
+begin
+  var Context := TRttiContext.Create;
+  try
+    var RttiType := Context.GetType(SourceObject.ClassType);
+
+    var Clone := RttiType.GetMethod('Create').Invoke(
+      RttiType.AsInstance.MetaclassType, []).AsObject;
+
+    for var RttiProperty in RttiType.GetProperties do
+    begin
+      if RttiProperty.IsWritable then
+      begin
+        SourceValue := RttiProperty.GetValue(SourceObject);
+        RttiProperty.SetValue(Clone,SourceValue);
+      end;
+    end;
+
+    Result := Clone as T;
+  finally
+    Context.Free;
+  end;
+end;
+
+end.

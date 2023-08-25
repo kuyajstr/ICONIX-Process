@@ -111,7 +111,7 @@ procedure TCustomerController.UpdateCustomer(const ID: Integer);
 begin
   var Customer := Context.Request.BodyAs<TCustomer>;
   try
-    Customer.Id := ID;
+    Customer.ID := ID;
     FService.UpdateCustomer(Customer);
     Render(200, 'Book Updated');
   finally

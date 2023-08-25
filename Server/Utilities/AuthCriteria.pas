@@ -62,8 +62,9 @@ begin
         CustomerDAO.SelectByFirstName(AUserName, Customer);
         AIsValid := True;
         AUserRoles.Add('customer')
-      except on E: Exception do
-        AIsValid := False;
+      except
+        on E: Exception do
+          AIsValid := False;
       end;
     finally
       CustomerDAO.Free;
@@ -84,7 +85,7 @@ begin
     if AContext.Request.HTTPMethodAsString = 'GET' then
       AIsAuthorized := True
     else if (AActionName = 'CreateCustomerReview') or
-        (AActionName = 'ValidateReview') then
+      (AActionName = 'ValidateReview') then
       AIsAuthorized := True;
   end
   else
@@ -95,7 +96,7 @@ procedure TAuthCriteria.OnRequest(const AContext: TWebContext;
   const AControllerQualifiedClassName, AActionName: string;
   var AAuthenticationRequired: Boolean);
 begin
-  AAuthenticationRequired := True; // Set to false to ignore authentication
+  AAuthenticationRequired := True;
 end;
 
 end.

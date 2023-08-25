@@ -46,7 +46,7 @@ constructor TBookActiveRecord.Create(const ABook: TBook);
 begin
   inherited Create(True);
 
-  ID := ABook.Id;
+  Id := ABook.Id;
   Title := ABook.Title;
   Synopsis := ABook.Synopsis;
 end;

@@ -69,8 +69,8 @@ begin
   FCustomerReviewDao.Update(ACustomerReview);
 end;
 
-procedure TCustomerReviewService.ValidateCustomerReview(
-  const ACustomerReview: TCustomerReview);
+procedure TCustomerReviewService.ValidateCustomerReview(const ACustomerReview
+  : TCustomerReview);
 begin
   ACustomerReview.CheckRating;
   ACustomerReview.CheckReview;

@@ -1,0 +1,55 @@
+unit BookDetailsForm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
+  Vcl.DBCtrls, BookDetailsViewModel, Data.Bind.EngExt,
+  Vcl.Bind.DBEngExt, Data.Bind.Components, System.Rtti, System.Bindings.Outputs,
+  Vcl.Bind.Editors;
+
+type
+  TBookDetailsFrm = class(TForm)
+    lblTitle: TLabel;
+    lblSynopsis: TLabel;
+    btnWriteReview: TButton;
+    edtTitle: TEdit;
+    memSynopsis: TMemo;
+    ViewModelBindingScope: TBindScope;
+    BindingList: TBindingsList;
+    BookDetailTitleBinding: TBindExpression;
+    BookDetailSynopsisBinding: TBindExpression;
+  private
+    FViewModel: TBookDetailsViewModel;
+    procedure SetViewModel(AViewModel: TBookDetailsViewModel);
+  public
+    constructor Create(AViewModel: TBookDetailsViewModel);
+  end;
+
+implementation
+
+{$R *.dfm}
+
+
+{ TBookDetailsFrm }
+
+
+
+constructor TBookDetailsFrm.Create(AViewModel: TBookDetailsViewModel);
+begin
+  inherited Create(Application);
+
+  SetViewModel(AViewModel);
+end;
+
+procedure TBookDetailsFrm.SetViewModel(AViewModel: TBookDetailsViewModel);
+begin
+  FViewModel := AViewModel;
+
+  ViewModelBindingScope.DataObject := FViewModel;
+  ViewModelBindingScope.Active := True;
+end;
+
+end.

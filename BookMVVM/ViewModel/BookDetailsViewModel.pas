@@ -11,7 +11,6 @@ type
     FBook: TBook;
   public
     constructor Create(const ABook: TBook);
-
     property Book: TBook read FBook write FBook;
   end;
 
@@ -22,7 +21,6 @@ implementation
 constructor TBookDetailsViewModel.Create(const ABook: TBook);
 begin
   inherited Create;
-
   FBook := ABook;
 end;
 

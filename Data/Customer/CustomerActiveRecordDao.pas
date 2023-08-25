@@ -21,15 +21,16 @@ type
     procedure Update(var Obj: TCustomer);
     procedure Delete(const AId: Integer);
     procedure SelectAll(var AList: TObjectList<TCustomer>);
-    procedure SelectByFirstName(const AFirstName: string; var ACustomer: TCustomer);
+    procedure SelectByFirstName(const AFirstName: string;
+      var ACustomer: TCustomer);
   end;
 
 implementation
 
 { TCustomerActiveRecordDao }
 
-function TCustomerActiveRecordDao.ARtoCustomer(
-  List: TObjectList<TMVCActiveRecord>): TObjectList<TCustomer>;
+function TCustomerActiveRecordDao.ARtoCustomer
+  (List: TObjectList<TMVCActiveRecord>): TObjectList<TCustomer>;
 var
   CustomerAR: TCustomerActiveRecord;
 begin
@@ -38,7 +39,7 @@ begin
   for var AR in List do
   begin
     CustomerAR := AR as TCustomerActiveRecord;
-    Result.Add(TCustomer.Create(CustomerAR));   
+    Result.Add(TCustomer.Create(CustomerAR));
   end;
 end;
 
@@ -47,7 +48,7 @@ begin
   var CustomerAR := TCustomerActiveRecord.Create;
   try
     CustomerAR.Id := AId;
-    CustomerAR.Delete(True);        
+    CustomerAR.Delete(True);
   finally
     CustomerAR.Free;
   end;
@@ -58,7 +59,7 @@ begin
   var CustomerAR := TCustomerActiveRecord.Create(Obj);
   try
     CustomerAR.Insert;
-    Obj := TCustomer.Create(CustomerAR);       
+    Obj := TCustomer.Create(CustomerAR);
   finally
     CustomerAR.Free;
   end;
@@ -70,10 +71,10 @@ begin
   var CustomerAR := TCustomerActiveRecord.Create;
   try
     CustomerAR.LoadByPK(AId);
-    Obj := TCustomer.Create(CustomerAR);        
+    Obj := TCustomer.Create(CustomerAR);
   finally
     CustomerAR.Free;
-  end;  
+  end;
 end;
 
 procedure TCustomerActiveRecordDao.SelectAll(var AList: TObjectList<TCustomer>);
@@ -95,7 +96,8 @@ begin
   try
     if Assigned(Customer) then
     begin
-      var CustomerList := ARtoCustomer(Customer);
+      var
+      CustomerList := ARtoCustomer(Customer);
       ACustomer := CustomerList.First;
     end;
   finally
@@ -108,7 +110,7 @@ begin
   var CustomerAR := TCustomerActiveRecord.Create(Obj);
   try
     CustomerAR.Update;
-    Obj := TCustomer.Create(CustomerAR);  
+    Obj := TCustomer.Create(CustomerAR);
   finally
     CustomerAR.Free;
   end;

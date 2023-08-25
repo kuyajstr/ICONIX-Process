@@ -31,7 +31,7 @@ type
 implementation
 
 uses
-  WriteReviewForm,
+  WriteReviewView,
   Vcl.Dialogs,
   Vcl.Controls,
   AuthService;
@@ -43,17 +43,14 @@ begin
   inherited Create;
   RESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
   RESTClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
-
-  FView := TWriteReviewFrm.Create(Self);
+  FView := TWriteReviewForm.Create(Self);
 end;
 
 procedure TWriteReviewController.Display(ABook: TBook);
 begin
-  var WriteReviewView := FView as TWriteReviewFrm;
-
+  var WriteReviewView := FView as TWriteReviewForm;
   FBook := ABook;
-
-  WriteReviewView.edtBookTitle.Text := FBook.Title;
+  WriteReviewView.BookTitleEdit.Text := FBook.Title;
   WriteReviewView.Show;
 end;
 
@@ -69,9 +66,7 @@ end;
 
 procedure TWriteReviewController.SubmitReview(JSONBody: TJSONObject);
 begin
-  var Resp := RESTClient.Post('/api/customer_reviews',
-    JSONBody.ToString);
-
+  var Resp := RESTClient.Post('/api/customer_reviews', JSONBody.ToString);
   if Resp.Success then
     ShowMessage('Review submitted! :)')
   else
@@ -82,18 +77,14 @@ procedure TWriteReviewController.ValidateReview(Review: string;
   Rating: Integer);
 begin
   var JSONBody := TJSONObject.Create;
-
   JSONBody.AddPair('BookId', FBook.Id);
   JSONBody.AddPair('Review', Review);
   JSONBody.AddPair('Rating', Rating);
 
-  var Resp := RESTClient.Post('/api/customer_reviews/validate',
-    JSONBody.ToString);
-
+  var Resp := RESTClient.Post('/api/customer_reviews/validate', JSONBody.ToString);
   if Resp.Success then
   begin
-    if MessageDlg('Submit Review?', mtConfirmation,
-      [mbYes, mbNo], 0) = mrYes then
+    if MessageDlg('Submit Review?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
       FView.Close;
       SubmitReview(JSONBody);
@@ -101,7 +92,6 @@ begin
   end
   else
     ShowMessage(Resp.Content);
-
 end;
 
 end.

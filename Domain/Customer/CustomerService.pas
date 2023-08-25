@@ -13,11 +13,12 @@ type
     constructor Create(const ACustomerDao: IDAO<TCustomer>);
 
     procedure CreateCustomer(var ACustomer: TCustomer);
-    procedure GetCustomer(const AId: Integer; var ACustomer:  TCustomer);
-    procedure UpdateCustomer(var ACustomer:  TCustomer);
+    procedure GetCustomer(const AId: Integer; var ACustomer: TCustomer);
+    procedure UpdateCustomer(var ACustomer: TCustomer);
     procedure DeleteCustomer(const AId: Integer);
     procedure GetAllCustomer(var AList: TObjectList<TCustomer>);
-    procedure GetCustomerByName(const AFirstName: string; var ACustomer: TCustomer);
+    procedure GetCustomerByName(const AFirstName: string;
+      var ACustomer: TCustomer);
   end;
 
 implementation
@@ -37,7 +38,6 @@ begin
   FCustomerDao := ACustomerDao;
 end;
 
-
 procedure TCustomerService.CreateCustomer(var ACustomer: TCustomer);
 begin
   FCustomerDao.Insert(ACustomer);
@@ -56,13 +56,14 @@ end;
 procedure TCustomerService.GetCustomer(const AId: Integer;
   var ACustomer: TCustomer);
 begin
-  FCustomerDao.Select(AId,ACustomer);
+  FCustomerDao.Select(AId, ACustomer);
 end;
 
 procedure TCustomerService.GetCustomerByName(const AFirstName: string;
   var ACustomer: TCustomer);
 begin
-  (FCustomerDao as TCustomerActiveRecordDao).SelectByFirstName(AFirstName, ACustomer)
+  (FCustomerDao as TCustomerActiveRecordDao).SelectByFirstName(AFirstName,
+    ACustomer)
 end;
 
 procedure TCustomerService.UpdateCustomer(var ACustomer: TCustomer);

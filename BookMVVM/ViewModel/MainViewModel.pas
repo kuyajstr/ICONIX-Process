@@ -4,7 +4,6 @@ interface
 
 uses
   Generics.Collections, Book, Vcl.ComCtrls, Classes, Bindings.Helper;
-// MVCFramework.RESTClient;
 
 type
   TMainViewModel = class
@@ -12,62 +11,40 @@ type
     FBookList: TList<TBook>;
     FSelectedBook: TBook;
     FItemList: TStringList ;
-    // FRestClient: IMVCRESTClient;
     procedure OnPropertyChanged(const PropertyName: string);
     function GetSelectedIndex: Integer;
     procedure SetSelectedIndex(const Value: Integer);
-
   public
     constructor Create;
-
-    property SelectedBook: TBook read FSelectedBook write FSelectedBook;
-    property ItemList: TStringList read FItemList write FItemList;
-
-    property SelectedIndex: Integer read GetSelectedIndex write SetSelectedIndex;
-
     procedure LoadBooks;
     procedure ShowBookDetail;
+    property SelectedBook: TBook read FSelectedBook write FSelectedBook;
+    property ItemList: TStringList read FItemList write FItemList;
+    property SelectedIndex: Integer read GetSelectedIndex write SetSelectedIndex;
   end;
 
 implementation
 
 uses
-  // AuthService,
   Vcl.Dialogs,
   Vcl.Forms,
-  BookDetailsForm,
+  BookDetailsView,
   BookDetailsViewModel,
-  SysUtils;
+  SysUtils,
+  Utility;
 
 { TMainViewModel }
 
 constructor TMainViewModel.Create;
 begin
+  inherited Create;
+
   FBookList := TList<TBook>.Create;
   FItemList := TStringList.Create;
+
   FBookList.Add(TBook.Create('Book A', 'Synopsis for Book A', 1));
   FBookList.Add(TBook.Create('Book B', 'Synopsis for Book B', 2));
   FBookList.Add(TBook.Create('Book C', 'Synopsis for Book C', 3));
-
-  FSelectedBook := FBookList.First;
-  SelectedIndex := 0;
-
-  inherited Create;
-  // FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
-  // FRestClient.SetBasicAuthorization('Admin', 'admin');
-  //
-  // FRestClient.Async(
-  // procedure(Resp: IMVCRESTResponse)
-  // begin
-  // if Resp.Success then
-  // begin
-  // var Token: string := Resp.ToJSONObject.Values['token'];
-  // TAuthService.GetInstance.SetToken(Token);
-  // FRestClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken)
-  // end
-  // else
-  // ShowMessage('Login Failed');
-  // end, nil, True).Get('/api/login');
 end;
 
 function TMainViewModel.GetSelectedIndex: Integer;
@@ -82,12 +59,6 @@ begin
     FItemList.AddObject(BookDetails.Title, BookDetails);
 
   OnPropertyChanged('ItemList');
-
-  // FRestClient.Async(
-  // procedure(Resp: IMVCRESTResponse)
-  // begin
-  //
-  // end, nil, True).Get('/api/books');
 end;
 
 procedure TMainViewModel.OnPropertyChanged(const PropertyName: string);
@@ -106,12 +77,15 @@ end;
 
 procedure TMainViewModel.ShowBookDetail;
 begin
-  var
-  BookDetailsVM := TBookDetailsViewModel.Create(FSelectedBook);
-  var
-  BookDetailFrm := TBookDetailsFrm.Create(BookDetailsVM);
+  var Book := TBook.Create;
+  Book.Id := FSelectedBook.Id;
+  Book.Title := FSelectedBook.Title;
+  Book.Synopsis := FSelectedBook.Synopsis;
 
-  BookDetailFrm.Show;
+  var BookDetailsVM := TBookDetailsViewModel.Create(Book);
+  var BookDetailForm := TBookDetailsForm.Create(BookDetailsVM);
+
+  BookDetailForm.Show;
 end;
 
 end.

@@ -1,0 +1,63 @@
+unit WriteReviewForm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
+  Vcl.DBCtrls, Vcl.Samples.Spin, ViewIntf, ControllerIntf, WriteReviewController;
+
+type
+  TWriteReviewFrm = class(TForm, IView)
+    BookTitleLabel: TLabel;
+    ReviewLabel: TLabel;
+    RatingLabel: TLabel;
+    btnSubmit: TButton;
+    BookTitleEdit: TEdit;
+    ReviewMemo: TMemo;
+    RatingSpinEdit: TSpinEdit;
+    procedure btnSubmitClick(Sender: TObject);
+  private
+    FController: IController;
+    function GetController: IController;
+    procedure SetController(AController: IController);
+  public
+    constructor Create(AController: IController);
+
+    property Controller: IController read GetController write SetController;
+  end;
+
+implementation
+
+{$R *.dfm}
+
+uses
+  BookstoreDM;
+
+{ TWriteReviewFrm }
+
+procedure TWriteReviewFrm.btnSubmitClick(Sender: TObject);
+begin
+  (FController as TWriteReviewController).ValidateReview(
+    memReview.Text, sedRating.Value);
+end;
+
+constructor TWriteReviewFrm.Create(AController: IController);
+begin
+  inherited Create(Application);
+
+  Controller := AController;
+  Controller.View := Self;
+end;
+
+function TWriteReviewFrm.GetController: IController;
+begin
+  Result := FController;
+end;
+
+procedure TWriteReviewFrm.SetController(AController: IController);
+begin
+  FController := AController;
+end;
+
+end.

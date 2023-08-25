@@ -42,7 +42,7 @@ begin
   Result := TObjectList<TCustomerReview>.Create;
 
   for var AR in List do
-  begin      
+  begin
     CustomerReviewAR := AR as TCustomerReviewActiveRecord;
     Result.Add(TCustomerReview.Create(CustomerReviewAR));
   end;
@@ -71,11 +71,10 @@ begin
   end;
 end;
 
-procedure TCustomerReviewActiveRecordDao.InsertValidation
-  (CustomerReview: TCustomerReview);
-begin    
-  TMVCActiveRecord.GetByPK(TBookActiveRecord,
-    CustomerReview.BookId, True);
+procedure TCustomerReviewActiveRecordDao.InsertValidation(CustomerReview
+  : TCustomerReview);
+begin
+  TMVCActiveRecord.GetByPK(TBookActiveRecord, CustomerReview.BookId, True);
   CustomerReview.CheckRating;
   CustomerReview.CheckReview;
 end;
@@ -106,8 +105,7 @@ end;
 
 procedure TCustomerReviewActiveRecordDao.Update(var Obj: TCustomerReview);
 begin
-  var
-  CustomerReviewAR := TCustomerReviewActiveRecord.Create(Obj);
+  var CustomerReviewAR := TCustomerReviewActiveRecord.Create(Obj);
   try
     CustomerReviewAR.Update;
     Obj := TCustomerReview.Create(CustomerReviewAR);

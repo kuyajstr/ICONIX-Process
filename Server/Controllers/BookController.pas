@@ -99,7 +99,7 @@ procedure TBookController.UpdateBook(const ID: Integer);
 begin
   var Book := Context.Request.BodyAs<TBook>;
   try
-    Book.Id := ID;
+    Book.ID := ID;
     FService.UpdateBook(Book);
     Render(200, 'Book Updated');
   finally

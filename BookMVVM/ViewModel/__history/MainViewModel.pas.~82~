@@ -1,0 +1,95 @@
+unit MainViewModel;
+
+interface
+
+uses
+  Generics.Collections, Book, Vcl.ComCtrls, Classes, Bindings.Helper;
+
+type
+  TMainViewModel = class
+  private
+    FBookList: TList<TBook>;
+    FSelectedBook: TBook;
+    FItemList: TStringList ;
+    procedure OnPropertyChanged(const PropertyName: string);
+    function GetSelectedIndex: Integer;
+    procedure SetSelectedIndex(const Value: Integer);
+
+  public
+    constructor Create;
+
+    property SelectedBook: TBook read FSelectedBook write FSelectedBook;
+    property ItemList: TStringList read FItemList write FItemList;
+
+    property SelectedIndex: Integer read GetSelectedIndex write SetSelectedIndex;
+
+    procedure LoadBooks;
+    procedure ShowBookDetail;
+  end;
+
+implementation
+
+uses
+  Vcl.Dialogs,
+  Vcl.Forms,
+  BookDetailsForm,
+  BookDetailsViewModel,
+  SysUtils;
+
+{ TMainViewModel }
+
+constructor TMainViewModel.Create;
+begin
+  inherited Create;
+
+  FBookList := TList<TBook>.Create;
+//  FItemList := TStringList.Create;
+//  FItemList.AddObject('', TBook.Create);
+
+  FBookList.Add(TBook.Create('Book A', 'Synopsis for Book A', 1));
+  FBookList.Add(TBook.Create('Book B', 'Synopsis for Book B', 2));
+  FBookList.Add(TBook.Create('Book C', 'Synopsis for Book C', 3));
+
+  FSelectedBook := FBookList.First;
+  SelectedIndex := 0;
+end;
+
+function TMainViewModel.GetSelectedIndex: Integer;
+begin
+  Result := FItemList.IndexOfObject(SelectedBook);
+end;
+
+procedure TMainViewModel.LoadBooks;
+begin
+  FItemList := TStringList.Create;
+  for var BookDetails in FBookList do
+    FItemList.AddObject(BookDetails.Title, BookDetails);
+
+  OnPropertyChanged('ItemList');
+end;
+
+procedure TMainViewModel.OnPropertyChanged(const PropertyName: string);
+begin
+  TBindings.Notify(Self, PropertyName);
+end;
+
+procedure TMainViewModel.SetSelectedIndex(const Value: Integer);
+begin
+//  if FItemList.Count <> 0 then
+//  begin
+    SelectedBook := FItemList.Objects[Value] as TBook;
+    OnPropertyChanged('SelectedBook');
+//  end;
+end;
+
+procedure TMainViewModel.ShowBookDetail;
+begin
+  var
+  BookDetailsVM := TBookDetailsViewModel.Create(FSelectedBook);
+  var
+  BookDetailFrm := TBookDetailsFrm.Create(BookDetailsVM);
+
+  BookDetailFrm.Show;
+end;
+
+end.

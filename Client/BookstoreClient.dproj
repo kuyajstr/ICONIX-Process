@@ -98,8 +98,8 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="View\MainForm.pas">
-            <Form>MainFrm</Form>
+        <DCCReference Include="View\MainView.pas">
+            <Form>MainForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="BookstoreDM.pas">
@@ -107,12 +107,12 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="View\BookDetailsForm.pas">
-            <Form>BookDetailsFrm</Form>
+        <DCCReference Include="View\BookDetailsView.pas">
+            <Form>BookDetailsForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="View\WriteReviewForm.pas">
-            <Form>WriteReviewFrm</Form>
+        <DCCReference Include="View\WriteReviewView.pas">
+            <Form>WriteReviewForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Controller\ControllerIntf.pas"/>
@@ -120,8 +120,8 @@
         <DCCReference Include="View\ViewIntf.pas"/>
         <DCCReference Include="Controller\BookDetailsController.pas"/>
         <DCCReference Include="Controller\WriteReviewController.pas"/>
-        <DCCReference Include="View\LoginForm.pas">
-            <Form>frmLogin</Form>
+        <DCCReference Include="View\LoginView.pas">
+            <Form>LoginForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Controller\LoginController.pas"/>

@@ -1,0 +1,9 @@
+unit Utility;
+
+interface
+
+function CloneObject<T: class>(SourceObject: T): T;
+
+implementation
+
+end.

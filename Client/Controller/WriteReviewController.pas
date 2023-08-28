@@ -22,7 +22,6 @@ type
     procedure SubmitReview(JSONBody: TJSONObject);
   public
     constructor Create;
-
     procedure Display(ABook: TBook);
     procedure ValidateReview(Review: string; Rating: Integer);
     property View: TForm read GetView write SetView;

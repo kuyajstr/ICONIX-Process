@@ -36,7 +36,7 @@ type
     [Test]
     procedure GetAllBooks_DataBaseIsEmpty_True;
 
-    // [Test]
+    [Test]
     procedure GetAllBooks_UseActualDatabase_True;
   end;
 

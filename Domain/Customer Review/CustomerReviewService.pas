@@ -18,9 +18,7 @@ type
     procedure UpdateCustomerReview(var ACustomerReview: TCustomerReview);
     procedure DeleteCustomerReview(const AId: Integer);
     procedure GetAllCustomerReview(var AList: TObjectList<TCustomerReview>);
-
     procedure ValidateCustomerReview(const ACustomerReview: TCustomerReview);
-
   end;
 
 implementation

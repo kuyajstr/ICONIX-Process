@@ -9,15 +9,12 @@ type
   TAuthService = class
   private 
     FToken: string;
-
     class var FInstance: TAuthService;     
     class var FLock : TObject;
-
     class function NewInstance: TObject; override;
   public
     class function GetInstance: TAuthService;
     class procedure ReleaseInstance;
-
     procedure SetToken(const AToken: string);
     function GetToken: string;
   end;

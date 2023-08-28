@@ -16,7 +16,7 @@ type
     FView: TForm;
     FCustomerReview: TCustomerReview;
     FBook: TBook;
-    RESTClient: IMVCRESTClient;
+    FRestClient: IMVCRESTClient;
     function GetView: TForm;
     procedure SetView(AView: TForm);
     procedure SubmitReview(JSONBody: TJSONObject);
@@ -41,8 +41,8 @@ uses
 constructor TWriteReviewController.Create;
 begin
   inherited Create;
-  RESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
-  RESTClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
+  FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
+  FRestClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
   FView := TWriteReviewForm.Create(Self);
 end;
 
@@ -66,7 +66,7 @@ end;
 
 procedure TWriteReviewController.SubmitReview(JSONBody: TJSONObject);
 begin
-  var Resp := RESTClient.Post('/api/customer_reviews', JSONBody.ToString);
+  var Resp := FRestClient.Post('/api/customer_reviews', JSONBody.ToString);
   if Resp.Success then
     ShowMessage('Review submitted! :)')
   else
@@ -81,7 +81,7 @@ begin
   JSONBody.AddPair('Review', Review);
   JSONBody.AddPair('Rating', Rating);
 
-  var Resp := RESTClient.Post('/api/customer_reviews/validate', JSONBody.ToString);
+  var Resp := FRestClient.Post('/api/customer_reviews/validate', JSONBody.ToString);
   if Resp.Success then
   begin
     if MessageDlg('Submit Review?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then

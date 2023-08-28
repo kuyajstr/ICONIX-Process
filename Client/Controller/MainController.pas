@@ -14,7 +14,7 @@ type
   private
     FView: TForm;
     FBookList: TObjectList<TBook>;
-    RESTClient: IMVCRESTClient;
+    FRestClient: IMVCRESTClient;
     function GetView: TForm;
     procedure SetView(AView: TForm);
   public
@@ -52,16 +52,16 @@ constructor TMainController.Create;
 begin
   inherited Create;
   FBookList := TObjectList<TBook>.Create;
-  RESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
-  RESTClient.SetBasicAuthorization('Guest', 'guest');
+  FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
+  FRestClient.SetBasicAuthorization('Guest', 'guest');
 
-  var Response := RESTClient.Get('/api/login') as TMVCRESTResponse;
+  var Response := FRestClient.Get('/api/login') as TMVCRESTResponse;
   if Response.Success then
   begin
     var Token: string := Response.ToJSONObject.Values['token'];
     var AuthService := TAuthService.GetInstance;
     AuthService.SetToken(Token);
-    RESTClient.SetBearerAuthorization(AuthService.GetToken);
+    FRestClient.SetBearerAuthorization(AuthService.GetToken);
   end;
 end;
 
@@ -74,7 +74,7 @@ procedure TMainController.LoadBooks;
 begin
   var MemTable := dmolBookstore.dsBooks;
 
-  RESTClient.Async(
+  FRestClient.Async(
     procedure(Resp: IMVCRESTResponse)
     begin
       MemTable.Close;

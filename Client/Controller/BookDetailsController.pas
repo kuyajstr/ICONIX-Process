@@ -14,14 +14,13 @@ type
   private
     FBook: TBook;
     FView: TForm;
-    RESTClient: IMVCRestClient;
+    FRestClient: IMVCRestClient;
     function GetView: TForm;
     procedure SetView(AView: TForm);
   public
     constructor Create(ABook: TBook);
     procedure Display;
     procedure WriteReview;
-
     property View: TForm read GetView write SetView;
   end;
 
@@ -40,8 +39,8 @@ uses
 constructor TBookDetailsController.Create(ABook: TBook);
 begin
   inherited Create;
-  RESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
-  RESTClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
+  FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
+  FRestClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
   FBook := ABook;
   FView := TBookDetailsForm.Create(Self);
 end;
@@ -67,9 +66,9 @@ end;
 
 procedure TBookDetailsController.WriteReview;
 begin
-  RESTClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
+  FRestClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
 
-  var CheckUserRequest := RESTClient.Post('/api/customer_reviews', '{}');
+  var CheckUserRequest := FRestClient.Post('/api/customer_reviews', '{}');
   // Check if ReasonString is Unauthorized
   if CheckUserRequest.StatusCode <> 403 then
   begin

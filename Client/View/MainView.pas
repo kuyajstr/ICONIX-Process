@@ -16,8 +16,6 @@ type
     procedure BookDBGridDblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
-    RESTClient: IMVCRESTClient;
-    IsLoading: Boolean;
     FController: IController;
     function GetController: IController;
     procedure SetController(AController: IController);

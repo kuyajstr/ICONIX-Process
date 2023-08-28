@@ -12,7 +12,7 @@ type
   TLoginController = class(TInterfacedObject, IController)
   private
     FView: TForm;
-    RESTClient: IMVCRESTClient;
+    FRestClient: IMVCRESTClient;
     function GetView: TForm;
     procedure SetView(AView: TForm);
   public
@@ -32,7 +32,7 @@ uses
 constructor TLoginController.Create;
 begin
   inherited Create;
-  RESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
+  FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
   FView := TLoginForm.Create(Self);
 end;
 
@@ -43,9 +43,9 @@ end;
 
 procedure TLoginController.Login(const Username, Password: string);
 begin
-  RESTClient.SetBasicAuthorization(Username, Password);
+  FRestClient.SetBasicAuthorization(Username, Password);
 
-  var Response := RESTClient.Get('/api/login') as TMVCRESTResponse;
+  var Response := FRestClient.Get('/api/login') as TMVCRESTResponse;
   if Response.Success then
   begin
     var Token: string := Response.ToJSONObject.Values['token'];

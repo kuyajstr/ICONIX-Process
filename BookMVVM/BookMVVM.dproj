@@ -103,7 +103,6 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="ViewModel\MainViewModel.pas"/>
-        <DCCReference Include="AuthService.pas"/>
         <DCCReference Include="ViewModel\BookDetailsViewModel.pas"/>
         <DCCReference Include="View\BookDetailsView.pas">
             <Form>BookDetailsForm</Form>

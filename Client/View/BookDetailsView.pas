@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
-  Vcl.DBCtrls, ViewIntf, ControllerIntf;
+  Vcl.DBCtrls, ViewIntf, PresenterIntf;
 
 type
   TBookDetailsForm = class(TForm,IView)
@@ -17,12 +17,8 @@ type
     SynopsisMemo: TMemo;
     procedure WriteReviewButtonClick(Sender: TObject);
   private
-    FController: IController;
-    function GetController: IController;
-    procedure SetController(AController: IController);
-  public
-    constructor Create(AController: IController);
-    property Controller: IController read GetController write SetController;
+    FPresenter: IPresenter;
+    procedure SetPresenter(APresenter: IPresenter);
   end;
 
 implementation
@@ -30,31 +26,16 @@ implementation
 {$R *.dfm}
 
 uses
-  BookstoreDM,
-  WriteReviewView,
-  BookDetailsController;
+  BookDetailsPresenter;
 
 procedure TBookDetailsForm.WriteReviewButtonClick(Sender: TObject);
 begin
-  (FController as TBookDetailsController).WriteReview;
+  (FPresenter as TBookDetailsPresenter).ValidateWriteReview;
 end;
 
-constructor TBookDetailsForm.Create(AController: IController);
+procedure TBookDetailsForm.SetPresenter(APresenter: IPresenter);
 begin
-  inherited Create(Application);
-
-  FController := AController;
-  FController.View := Self;
-end;
-
-function TBookDetailsForm.GetController: IController;
-begin
-  Result := FController;
-end;
-
-procedure TBookDetailsForm.SetController(AController: IController);
-begin
-  FController := AController;
+  FPresenter := APresenter;
 end;
 
 end.

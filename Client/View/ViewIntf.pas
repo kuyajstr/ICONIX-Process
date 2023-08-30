@@ -3,15 +3,12 @@ unit ViewIntf;
 interface
 
 uses
-  ControllerIntf;
+  PresenterIntf;
 
 type
-  IView= interface
+  IView = interface
     ['{24CA421D-C6BA-4DFD-AE63-127ABFF1EC8D}']
-    function GetController: IController;
-    procedure SetController(AController: IController);
-
-    property Controller: IController read GetController write SetController;
+    procedure SetPresenter(AController: IPresenter);
   end;
 
 implementation

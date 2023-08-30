@@ -1,0 +1,19 @@
+﻿unit ViewIntf;
+
+interface
+
+uses
+  PresenterIntf;
+
+type
+  IView= interface
+    ['{24CA421D-C6BA-4DFD-AE63-127ABFF1EC8D}']
+    function GetController: ;
+    procedure SetController(AController: IController);
+
+    property Controller: IController read GetController write SetController;
+  end;
+
+implementation
+
+end.

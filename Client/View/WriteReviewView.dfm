@@ -2,8 +2,8 @@ object WriteReviewForm: TWriteReviewForm
   Left = 0
   Top = 0
   Caption = 'Write Book Review'
-  ClientHeight = 378
-  ClientWidth = 431
+  ClientHeight = 375
+  ClientWidth = 419
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

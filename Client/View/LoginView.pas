@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons,
-  ViewIntf, ControllerIntf;
+  ViewIntf, PresenterIntf;
 
 type
   TLoginForm = class(TForm, IView)
@@ -17,14 +17,9 @@ type
     procedure LoginButtonClick(Sender: TObject);
   private
     SucessfulLogin : boolean;
-    FController: IController;
-    function GetController: IController;
-    procedure SetController(AController: IController);
-  public
-    constructor Create(AController: IController);
-    property Controller: IController read GetController write SetController;
+    FPresenter: IPresenter;
+    procedure SetPresenter(APresenter: IPresenter);
   end;
-
 
 implementation
 
@@ -33,28 +28,16 @@ uses
   MVCFramework.RESTClient,
   JsonDataObjects,
   System.UITypes,
-  LoginController;
+  LoginPresenter;
 
 procedure TLoginForm.LoginButtonClick(Sender: TObject);
 begin
-  (FController as TLoginController).Login(UsernameEdit.Text,PasswordEdit.Text);
+  (FPresenter as TLoginPresenter).Login;
 end;
 
-constructor TLoginForm.Create(AController: IController);
+procedure TLoginForm.SetPresenter(APresenter: IPresenter);
 begin
-  inherited Create(Application);
-  FController := AController;
-  FController.View := Self;
-end;
-
-function TLoginForm.GetController: IController;
-begin
-  Result := FController;
-end;
-
-procedure TLoginForm.SetController(AController: IController);
-begin
-  FController := AController;
+  FPresenter := APresenter;
 end;
 
 end.

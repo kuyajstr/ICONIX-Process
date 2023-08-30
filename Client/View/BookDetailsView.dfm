@@ -2,8 +2,8 @@ object BookDetailsForm: TBookDetailsForm
   Left = 0
   Top = 0
   Caption = 'Book Details'
-  ClientHeight = 387
-  ClientWidth = 399
+  ClientHeight = 386
+  ClientWidth = 395
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

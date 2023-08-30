@@ -107,25 +107,25 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="Controller\PresenterIntf.pas"/>
+        <DCCReference Include="Controller\MainPresenter.pas"/>
+        <DCCReference Include="View\ViewIntf.pas"/>
+        <DCCReference Include="AuthService.pas"/>
         <DCCReference Include="View\BookDetailsView.pas">
             <Form>BookDetailsForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Controller\BookDetailsPresenter.pas"/>
+        <DCCReference Include="Controller\LoginPresenter.pas"/>
+        <DCCReference Include="View\LoginView.pas">
+            <Form>LoginForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="View\WriteReviewView.pas">
             <Form>WriteReviewForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Controller\ControllerIntf.pas"/>
-        <DCCReference Include="Controller\MainController.pas"/>
-        <DCCReference Include="View\ViewIntf.pas"/>
-        <DCCReference Include="Controller\BookDetailsController.pas"/>
-        <DCCReference Include="Controller\WriteReviewController.pas"/>
-        <DCCReference Include="View\LoginView.pas">
-            <Form>LoginForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Controller\LoginController.pas"/>
-        <DCCReference Include="AuthService.pas"/>
+        <DCCReference Include="Controller\WriteReviewPresenter.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

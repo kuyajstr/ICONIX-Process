@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
-  Vcl.DBCtrls, Vcl.Samples.Spin, ViewIntf, ControllerIntf, WriteReviewController;
+  Vcl.DBCtrls, Vcl.Samples.Spin, ViewIntf, PresenterIntf, WriteReviewPresenter;
 
 type
   TWriteReviewForm = class(TForm, IView)
@@ -18,12 +18,8 @@ type
     RatingSpinEdit: TSpinEdit;
     procedure SubmitButtonClick(Sender: TObject);
   private
-    FController: IController;
-    function GetController: IController;
-    procedure SetController(AController: IController);
-  public
-    constructor Create(AController: IController);
-    property Controller: IController read GetController write SetController;
+    FPresenter: IPresenter;
+    procedure SetPresenter(APresenter: IPresenter);
   end;
 
 implementation
@@ -37,25 +33,12 @@ uses
 
 procedure TWriteReviewForm.SubmitButtonClick(Sender: TObject);
 begin
-  (FController as TWriteReviewController).ValidateReview(
-    ReviewMemo.Text, RatingSpinEdit.Value);
+  (FPresenter as TWriteReviewPresenter).ValidateReview;
 end;
 
-constructor TWriteReviewForm.Create(AController: IController);
+procedure TWriteReviewForm.SetPresenter(APresenter: IPresenter);
 begin
-  inherited Create(Application);
-  Controller := AController;
-  Controller.View := Self;
-end;
-
-function TWriteReviewForm.GetController: IController;
-begin
-  Result := FController;
-end;
-
-procedure TWriteReviewForm.SetController(AController: IController);
-begin
-  FController := AController;
+  FPresenter := APresenter;
 end;
 
 end.

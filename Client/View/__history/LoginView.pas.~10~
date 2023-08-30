@@ -1,0 +1,58 @@
+﻿unit LoginView;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons,
+  ViewIntf, PresenterIntf;
+
+type
+  TLoginForm = class(TForm, IView)
+    UsernameEdit: TEdit;
+    PasswordEdit: TEdit;
+    PasswordLabel: TLabel;
+    UsernameLabel: TLabel;
+    LoginButton: TButton;
+    procedure LoginButtonClick(Sender: TObject);
+  private
+    SucessfulLogin : boolean;
+    FController: IPresenter;
+    procedure SetPresenter(AController: IPresenter);
+  public
+    constructor Create(AController: IPresenter);
+  end;
+
+
+implementation
+
+{$R *.dfm}
+uses
+  MVCFramework.RESTClient,
+  JsonDataObjects,
+  System.UITypes,
+  LoginPresenter;
+
+procedure TLoginForm.LoginButtonClick(Sender: TObject);
+begin
+  (FController as TLoginPresenter).Login(UsernameEdit.Text,PasswordEdit.Text);
+end;
+
+constructor TLoginForm.Create(AController: IPresenter);
+begin
+  inherited Create(Application);
+  FController := AController;
+  FController.View := Self;
+end;
+
+function TLoginForm.GetController: IPresenter;
+begin
+  Result := FController;
+end;
+
+procedure TLoginForm.SetPresenter(AController: IPresenter);
+begin
+  FController := AController;
+end;
+
+end.

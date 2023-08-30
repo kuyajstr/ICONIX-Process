@@ -3,8 +3,8 @@ object LoginForm: TLoginForm
   Top = 0
   BorderIcons = []
   Caption = 'Login'
-  ClientHeight = 142
-  ClientWidth = 288
+  ClientHeight = 141
+  ClientWidth = 284
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

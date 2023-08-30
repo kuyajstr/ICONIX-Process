@@ -71,10 +71,8 @@ begin
   if ARating = 0 then
     ARating := FRating;
 
-  if ARating < 1 then
-    raise Exception.Create('Rating must be greater than 0')
-  else if ARating > 5 then
-    raise Exception.Create('Rating must be less than 5');
+  if (ARating < 1) or (ARating > 5) then
+    raise Exception.Create('Rating outside allowed range')
 end;
 
 procedure TCustomerReview.CheckReview(AReview: string);

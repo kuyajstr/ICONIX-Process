@@ -58,6 +58,9 @@ begin
   for var BookDetails in FBookList do
     FItemList.AddObject(BookDetails.Title, BookDetails);
 
+  if FItemList.Count > 0 then
+    SelectedIndex := 0;
+
   OnPropertyChanged('ItemList');
 end;
 
@@ -68,11 +71,8 @@ end;
 
 procedure TMainViewModel.SetSelectedIndex(const Value: Integer);
 begin
-  if FItemList.Count <> 0 then
-  begin
-    SelectedBook := FItemList.Objects[Value] as TBook;
-    OnPropertyChanged('SelectedBook');
-  end;
+  SelectedBook := FItemList.Objects[Value] as TBook;
+  OnPropertyChanged('SelectedBook');
 end;
 
 procedure TMainViewModel.ShowBookDetail;

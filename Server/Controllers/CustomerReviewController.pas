@@ -72,6 +72,7 @@ procedure TCustomerReviewController.CreateCustomerReview;
 begin
   var CustomerReview := Context.Request.BodyAs<TCustomerReview>;
   try
+    CustomerReview.IsPending := True;
     FService.CreateCustomerReview(CustomerReview);
     Render201Created('Review submitted');
   finally

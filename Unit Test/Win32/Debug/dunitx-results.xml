@@ -1,31 +1,41 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<test-results name="C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\Unit Test\Win32\Debug\UnitTest.exe" total="18" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2023-08-28" time="0.155">
+<test-results name="C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\Unit Test\Win32\Debug\UnitTest.exe" total="19" errors="1" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2023-08-30" time="0.165">
   <culture-info current-culture="en" current-uiculture="en" />
-  <test-suite type="Assembly" name="UnitTest.exe" executed="true" result="Success" success="True" time="0.155" asserts="0">
+  <test-suite type="Assembly" name="UnitTest.exe" executed="true" result="Failure" success="False" time="0.165" asserts="0">
     <results>
-        <test-suite type="Namespace" name="BookServiceTest" executed="true" result="Success" success="True" time="0.154" asserts="0" >
+        <test-suite type="Namespace" name="BookServiceTest" executed="true" result="Success" success="True" time="0.164" asserts="0" >
           <results>
-              <test-suite type="Fixture" name="TBookServiceTest" executed="True" result="Success" success="True" time="0.154" >
+              <test-suite type="Fixture" name="TBookServiceTest" executed="True" result="Success" success="True" time="0.164" >
                 <results>
                   <test-case name="CreateBook_TitleIsEmpty_RaiseException" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="CreateBook_SynopsisIsEmpty_RaiseException" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="CreateBook_SuccessfullyInsert_WillNotRaiseException" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="GetBook_InvalidIdRange_RaiseException.ZeroID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="GetBook_InvalidIdRange_RaiseException.NegativeID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="GetBook_InvalidIdRange_RaiseException.ExceedingID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="GetBook_InvalidIdRange_RaiseException.ExceedingID" executed="True" result="Success" success="True" time="0.002" asserts="0" />
                   <test-case name="GetBook_MatchingErrorMessage_True.ZeroIdMessage" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="GetBook_MatchingErrorMessage_True.NegativeIdMessage" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="GetBook_MatchingErrorMessage_True.ExceedingIdMessage" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="GetBook_SucessfullyRetrieveBook_True" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="GetAllBooks_DatabaseHasData_True" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="GetAllBooks_DataBaseIsEmpty_True" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="GetAllBooks_UseActualDatabase_True" executed="True" result="Error" success="False" time="0.002" asserts="0" >
+                    <failure>
+                      <message>
+                        <![CDATA[ No current connection for thread ]]>
+                      </message>
+                      <stack-trace>
+                        <![CDATA[  ]]>
+                      </stack-trace>
+                    </failure>
+                  </test-case>
                 </results>
               </test-suite>
           </results>
         </test-suite>
-        <test-suite type="Namespace" name="CustomerReviewServiceTest" executed="true" result="Success" success="True" time="0.079" asserts="0" >
+        <test-suite type="Namespace" name="CustomerReviewServiceTest" executed="true" result="Success" success="True" time="0.056" asserts="0" >
           <results>
-              <test-suite type="Fixture" name="TCustomerReviewServiceTest" executed="True" result="Success" success="True" time="0.079" >
+              <test-suite type="Fixture" name="TCustomerReviewServiceTest" executed="True" result="Success" success="True" time="0.056" >
                 <results>
                   <test-case name="Validate_SucessfullyValidateReview_WillNotRaiseException" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="Validate_InputInvalidCustomerReview_MatchingErrorMessage.Review is less than 10 char" executed="True" result="Success" success="True" time="0.000" asserts="0" />

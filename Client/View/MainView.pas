@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Data.DB, Vcl.Grids,
   Vcl.DBGrids,
-  MVCFramework.RESTClient, ViewIntf, ControllerIntf, MainController;
+  MVCFramework.RESTClient, ViewIntf, PresenterIntf, MainPresenter;
 
 type
   TMainForm = class(TForm, IView)
@@ -16,11 +16,8 @@ type
     procedure BookDBGridDblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
-    FController: IController;
-    function GetController: IController;
-    procedure SetController(AController: IController);
-  public
-    property Controller: IController read GetController write SetController;
+    FPresenter: IPresenter;
+    procedure SetPresenter(APresenter: IPresenter);
   end;
 
 implementation
@@ -30,28 +27,21 @@ implementation
 uses
   BookstoreDM,
   MVCFramework.DataSet.Utils,
-  MVCFramework.Serializer.Commons,
-  BookDetailsView;
+  MVCFramework.Serializer.Commons;
 
 procedure TMainForm.BookDBGridDblClick(Sender: TObject);
 begin
-  (FController as TMainController).ShowBookDetails();
+  (FPresenter as TMainPresenter).ShowBookDetails();
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
-  (FController as TMainController).LoadBooks;
+  (FPresenter as TMainPresenter).LoadBooks;
 end;
 
-function TMainForm.GetController: IController;
+procedure TMainForm.SetPresenter(APresenter: IPresenter);
 begin
-  Result := FController;
-end;
-
-procedure TMainForm.SetController(AController: IController);
-begin
-  FController := AController;
-  Controller.View := Self;
+  FPresenter := APresenter;
 end;
 
 end.

@@ -9,7 +9,7 @@ uses
   Vcl.DBCtrls, ViewIntf, PresenterIntf;
 
 type
-  TBookDetailsForm = class(TForm,IView)
+  TBookDetailsForm = class(TForm, IBookDetailsView)
     TitleLabel: TLabel;
     SynopsisLabel: TLabel;
     WriteReviewButton: TButton;
@@ -17,8 +17,11 @@ type
     SynopsisMemo: TMemo;
     procedure WriteReviewButtonClick(Sender: TObject);
   private
-    FPresenter: IPresenter;
-    procedure SetPresenter(APresenter: IPresenter);
+    FPresenter: IBookDetailsPresenter;
+    procedure SetPresenter(APresenter: IBookDetailsPresenter);
+  public
+    procedure SetTitle(const Value: string);
+    procedure SetSynopsis(const Value: string);
   end;
 
 implementation
@@ -28,12 +31,22 @@ implementation
 uses
   BookDetailsPresenter;
 
-procedure TBookDetailsForm.WriteReviewButtonClick(Sender: TObject);
+procedure TBookDetailsForm.SetSynopsis(const Value: string);
 begin
-  (FPresenter as TBookDetailsPresenter).ValidateWriteReview;
+  SynopsisMemo.Text := Value;
 end;
 
-procedure TBookDetailsForm.SetPresenter(APresenter: IPresenter);
+procedure TBookDetailsForm.SetTitle(const Value: string);
+begin
+  TitleEdit.Text := Value;
+end;
+
+procedure TBookDetailsForm.WriteReviewButtonClick(Sender: TObject);
+begin
+  FPresenter.ComposeReview;
+end;
+
+procedure TBookDetailsForm.SetPresenter(APresenter: IBookDetailsPresenter);
 begin
   FPresenter := APresenter;
 end;

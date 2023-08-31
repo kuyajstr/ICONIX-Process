@@ -3,10 +3,10 @@ unit CustomerService;
 interface
 
 uses
-  Customer, DAOIntf, Generics.Collections;
+  Customer, DAOIntf, CustomerServiceIntf, Generics.Collections;
 
 type
-  TCustomerService = class
+  TCustomerService = class(TInterfacedObject, ICustomerService)
   private
     FCustomerDao: IDAO<TCustomer>;
   public

@@ -8,7 +8,7 @@ uses
   Vcl.DBCtrls, Vcl.Samples.Spin, ViewIntf, PresenterIntf, WriteReviewPresenter;
 
 type
-  TWriteReviewForm = class(TForm, IView)
+  TWriteReviewForm = class(TForm, IWriteReviewView)
     BookTitleLabel: TLabel;
     ReviewLabel: TLabel;
     RatingLabel: TLabel;
@@ -18,8 +18,12 @@ type
     RatingSpinEdit: TSpinEdit;
     procedure SubmitButtonClick(Sender: TObject);
   private
-    FPresenter: IPresenter;
-    procedure SetPresenter(APresenter: IPresenter);
+    FPresenter: IWriteReviewPresenter;
+    procedure SetPresenter(APresenter: IWriteReviewPresenter);
+  public
+    procedure SetTitle(const Value: string);
+    function GetReview: string;
+    function GetRating: Integer;
   end;
 
 implementation
@@ -31,12 +35,27 @@ uses
 
 { TWriteReviewFrm }
 
-procedure TWriteReviewForm.SubmitButtonClick(Sender: TObject);
+procedure TWriteReviewForm.SetTitle(const Value: string);
 begin
-  (FPresenter as TWriteReviewPresenter).ValidateReview;
+  BookTitleEdit.Text := Value;
 end;
 
-procedure TWriteReviewForm.SetPresenter(APresenter: IPresenter);
+procedure TWriteReviewForm.SubmitButtonClick(Sender: TObject);
+begin
+  FPresenter.ValidateReview;
+end;
+
+function TWriteReviewForm.GetRating: Integer;
+begin
+  Result := RatingSpinEdit.Value;
+end;
+
+function TWriteReviewForm.GetReview: string;
+begin
+  Result := ReviewMemo.Text;
+end;
+
+procedure TWriteReviewForm.SetPresenter(APresenter: IWriteReviewPresenter);
 begin
   FPresenter := APresenter;
 end;

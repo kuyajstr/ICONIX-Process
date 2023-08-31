@@ -9,14 +9,15 @@ uses
 
   Customer,
   CustomerService,
+  CustomerServiceIntf,
   CustomerActiveRecord;
 
 type
   TCustomerController = class(TMVCController)
   private
-    FService: TCustomerService;
+    FService: ICustomerService;
   public
-    constructor Create(const AService: TCustomerService);
+    constructor Create(const AService: ICustomerService);
 
     [MVCPath]
     [MVCHTTPMethod([httpPOST])]
@@ -57,7 +58,7 @@ uses
 
 { TCustomerController }
 
-constructor TCustomerController.Create(const AService: TCustomerService);
+constructor TCustomerController.Create(const AService: ICustomerService);
 begin
   if not assigned(AService) then
     raise EArgumentNilException.Create('Customer Service is nill');

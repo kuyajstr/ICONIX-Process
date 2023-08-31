@@ -51,6 +51,9 @@ contains
   CustomerService in 'Customer\CustomerService.pas',
   CustomerReview in 'Customer Review\CustomerReview.pas',
   CustomerReviewContextIntf in 'Customer Review\CustomerReviewContextIntf.pas',
-  CustomerReviewService in 'Customer Review\CustomerReviewService.pas';
+  CustomerReviewService in 'Customer Review\CustomerReviewService.pas',
+  BookServiceIntf in 'Book\BookServiceIntf.pas',
+  CustomerServiceIntf in 'Customer\CustomerServiceIntf.pas',
+  CustomerReviewServiceIntf in 'Customer Review\CustomerReviewServiceIntf.pas';
 
 end.

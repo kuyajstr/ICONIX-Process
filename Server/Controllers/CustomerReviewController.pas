@@ -9,14 +9,15 @@ uses
 
   CustomerReview,
   CustomerReviewService,
+  CustomerReviewServiceIntf,
   CustomerReviewActiveRecord;
 
 type
   TCustomerReviewController = class(TMVCController)
   private
-    FService: TCustomerReviewService;
+    FService: ICustomerReviewService;
   public
-    constructor Create(const AService: TCustomerReviewService);
+    constructor Create(const AService: ICustomerReviewService);
 
     [MVCPath]
     [MVCHTTPMethod([httpPOST])]
@@ -58,8 +59,7 @@ uses
 
 { TCustomerReviewController }
 
-constructor TCustomerReviewController.Create(const AService
-  : TCustomerReviewService);
+constructor TCustomerReviewController.Create(const AService: ICustomerReviewService);
 begin
   if not assigned(AService) then
     raise EArgumentNilException.Create('Customer Review Service is nil');

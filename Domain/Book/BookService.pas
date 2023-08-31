@@ -3,10 +3,10 @@ unit BookService;
 interface
 
 uses
-  Book, DAOIntf, Generics.Collections;
+  Book, DAOIntf, BookServiceIntf, Generics.Collections;
 
 type
-  TBookService = class
+  TBookService = class(TInterfacedObject, IBookService)
   private
     FBookDao: IDAO<TBook>;
   public

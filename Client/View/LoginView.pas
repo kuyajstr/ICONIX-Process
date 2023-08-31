@@ -8,7 +8,7 @@ uses
   ViewIntf, PresenterIntf;
 
 type
-  TLoginForm = class(TForm, IView)
+  TLoginForm = class(TForm, ILoginView)
     UsernameEdit: TEdit;
     PasswordEdit: TEdit;
     PasswordLabel: TLabel;
@@ -17,8 +17,11 @@ type
     procedure LoginButtonClick(Sender: TObject);
   private
     SucessfulLogin : boolean;
-    FPresenter: IPresenter;
-    procedure SetPresenter(APresenter: IPresenter);
+    FPresenter: ILoginPresenter;
+    procedure SetPresenter(APresenter: ILoginPresenter);
+  public
+    function GetUsername: string;
+    function GetPassword: string;
   end;
 
 implementation
@@ -30,12 +33,22 @@ uses
   System.UITypes,
   LoginPresenter;
 
-procedure TLoginForm.LoginButtonClick(Sender: TObject);
+function TLoginForm.GetPassword: string;
 begin
-  (FPresenter as TLoginPresenter).Login;
+  Result := PasswordEdit.Text;
 end;
 
-procedure TLoginForm.SetPresenter(APresenter: IPresenter);
+function TLoginForm.GetUsername: string;
+begin
+  Result := UsernameEdit.Text;
+end;
+
+procedure TLoginForm.LoginButtonClick(Sender: TObject);
+begin
+  FPresenter.Login;
+end;
+
+procedure TLoginForm.SetPresenter(APresenter: ILoginPresenter);
 begin
   FPresenter := APresenter;
 end;

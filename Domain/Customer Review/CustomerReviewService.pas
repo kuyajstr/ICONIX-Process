@@ -3,15 +3,15 @@ unit CustomerReviewService;
 interface
 
 uses
-  CustomerReview, DAOIntf, Generics.Collections;
+  CustomerReview, DAOIntf, CustomerReviewServiceIntf, Generics.Collections,
+  SysUtils;
 
 type
-  TCustomerReviewService = class
+  TCustomerReviewService = class(TInterfacedObject, ICustomerReviewService)
   private
     FCustomerReviewDao: IDAO<TCustomerReview>;
   public
     constructor Create(const ACustomerReviewDao: IDAO<TCustomerReview>);
-
     procedure CreateCustomerReview(var ACustomerReview: TCustomerReview);
     procedure GetCustomerReview(const AId: Integer;
       var ACustomer: TCustomerReview);
@@ -22,9 +22,6 @@ type
   end;
 
 implementation
-
-uses
-  SysUtils;
 
 { TCustomerReviewService }
 
@@ -73,5 +70,4 @@ begin
   ACustomerReview.CheckRating;
   ACustomerReview.CheckReview;
 end;
-
 end.

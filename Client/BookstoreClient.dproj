@@ -102,21 +102,16 @@
             <Form>MainForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="BookstoreDM.pas">
-            <Form>dmolBookstore</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="Controller\PresenterIntf.pas"/>
-        <DCCReference Include="Controller\MainPresenter.pas"/>
+        <DCCReference Include="Presenter\PresenterIntf.pas"/>
+        <DCCReference Include="Presenter\MainPresenter.pas"/>
         <DCCReference Include="View\ViewIntf.pas"/>
         <DCCReference Include="AuthService.pas"/>
         <DCCReference Include="View\BookDetailsView.pas">
             <Form>BookDetailsForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Controller\BookDetailsPresenter.pas"/>
-        <DCCReference Include="Controller\LoginPresenter.pas"/>
+        <DCCReference Include="Presenter\BookDetailsPresenter.pas"/>
+        <DCCReference Include="Presenter\LoginPresenter.pas"/>
         <DCCReference Include="View\LoginView.pas">
             <Form>LoginForm</Form>
             <FormType>dfm</FormType>
@@ -125,7 +120,7 @@
             <Form>WriteReviewForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Controller\WriteReviewPresenter.pas"/>
+        <DCCReference Include="Presenter\WriteReviewPresenter.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

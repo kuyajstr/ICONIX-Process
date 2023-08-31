@@ -8,14 +8,15 @@ uses
   MVCFramework.Serializer.Commons,
   Book,
   BookService,
+  BookServiceIntf,
   BookActiveRecord;
 
 type
   TBookController = class(TMVCController)
   private
-    FService: TBookService;
+    FService: IBookService;
   public
-    constructor Create(const AService: TBookService);
+    constructor Create(const AService: IBookService);
 
     [MVCPath]
     [MVCHTTPMethod([httpPOST])]
@@ -51,7 +52,7 @@ uses
 
 { TBookController }
 
-constructor TBookController.Create(const AService: TBookService);
+constructor TBookController.Create(const AService: IBookService);
 begin
   if not assigned(AService) then
     raise EArgumentNilException.Create('Book Service is nill');

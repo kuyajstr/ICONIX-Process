@@ -1,0 +1,22 @@
+unit CustomerReviewServiceIntf;
+
+interface
+
+uses
+  CustomerReview, DAOIntf, Generics.Collections, SysUtils;
+
+type
+  ICustomerReviewService = interface
+    ['{B502BB65-8475-49A4-B098-94C03DD9AB00}']
+    procedure CreateCustomerReview(var ACustomerReview: TCustomerReview);
+    procedure GetCustomerReview(const AId: Integer;
+      var ACustomer: TCustomerReview);
+    procedure UpdateCustomerReview(var ACustomerReview: TCustomerReview);
+    procedure DeleteCustomerReview(const AId: Integer);
+    procedure GetAllCustomerReview(var AList: TObjectList<TCustomerReview>);
+    procedure ValidateCustomerReview(const ACustomerReview: TCustomerReview);
+  end;
+
+implementation
+
+end.

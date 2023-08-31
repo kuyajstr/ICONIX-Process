@@ -24,6 +24,8 @@ type
     procedure SetTitle(const Value: string);
     function GetReview: string;
     function GetRating: Integer;
+    procedure ShowMessageBox(const MessageStr: string);
+    function ShowConfirmationDialog(const MessageStr: string): Integer;
   end;
 
 implementation
@@ -38,6 +40,16 @@ uses
 procedure TWriteReviewForm.SetTitle(const Value: string);
 begin
   BookTitleEdit.Text := Value;
+end;
+
+function TWriteReviewForm.ShowConfirmationDialog(const MessageStr: string): Integer;
+begin
+  Result := MessageDlg(MessageStr, mtConfirmation, [mbYes, mbNo], 0);
+end;
+
+procedure TWriteReviewForm.ShowMessageBox(const MessageStr: string);
+begin
+  ShowMessage(MessageStr);
 end;
 
 procedure TWriteReviewForm.SubmitButtonClick(Sender: TObject);

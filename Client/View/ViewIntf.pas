@@ -3,7 +3,7 @@ unit ViewIntf;
 interface
 
 uses
-  PresenterIntf, FireDAC.Comp.Client;
+  PresenterIntf, FireDAC.Comp.Client, Vcl.Controls;
 
 type
   IView = interface
@@ -18,6 +18,7 @@ type
     function GetBookTitle: string;
     function GetBookSynopsis: string;
     procedure SetPresenter(APresenter: IMainPresenter);
+    procedure ShowMessageBox(const MessageStr: string);
   end;
 
   IBookDetailsView = interface
@@ -45,6 +46,8 @@ type
     function GetReview: string;
     function GetRating: Integer;
     procedure SetPresenter(APresenter: IWriteReviewPresenter);
+    procedure ShowMessageBox(const MessageStr: string);
+    function ShowConfirmationDialog(const MessageStr: string): Integer;
   end;
 
 implementation

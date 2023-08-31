@@ -33,6 +33,7 @@ uses
   Vcl.Controls,
   AuthService;
 
+
 constructor TWriteReviewPresenter.Create(AView: IWriteReviewView; ABook: TBook);
 begin
   inherited Create;
@@ -53,9 +54,9 @@ procedure TWriteReviewPresenter.SubmitReview(JSONBody: TJSONObject);
 begin
   var Resp := FRestClient.Post('/api/customer_reviews', JSONBody.ToString);
   if Resp.Success then
-    ShowMessage('Review submitted!')
+    FView.ShowMessageBox('Review submitted!')
   else
-    ShowMessage('Submission failed');
+    FView.ShowMessageBox('Submission failed');
 end;
 
 procedure TWriteReviewPresenter.ValidateReview;
@@ -74,14 +75,14 @@ begin
   var Resp := FRestClient.Post('/api/customer_reviews/validate', JSONBody.ToString);
   if Resp.Success then
   begin
-    if MessageDlg('Submit Review?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    if FView.ShowConfirmationDialog('Submit Review?') = mrYes then
     begin
       SubmitReview(JSONBody);
       FView.Close;
     end;
   end
   else
-    ShowMessage(Resp.Content);
+    FView.ShowMessageBox(Resp.Content);
 end;
 
 end.

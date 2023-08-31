@@ -14,7 +14,6 @@ type
     ['{76881BDD-9BE0-4835-821F-C8A58692C25D}']
     procedure ShowBookDetails;
     procedure LoadBooks;
-    procedure ShowError(const ErrorMsg: string);
   end;
 
   IBookDetailsPresenter = interface

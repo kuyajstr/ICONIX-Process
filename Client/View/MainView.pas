@@ -31,6 +31,7 @@ type
     function GetBookId: Integer;
     function GetBookTitle: string;
     function GetBookSynopsis: string;
+    procedure ShowMessageBox(const MessageStr: string);
   end;
 
 implementation
@@ -75,6 +76,11 @@ end;
 procedure TMainForm.SetPresenter(APresenter: IMainPresenter);
 begin
   FPresenter := APresenter;
+end;
+
+procedure TMainForm.ShowMessageBox(const MessageStr: string);
+begin
+  ShowMessage(MessageStr);
 end;
 
 end.

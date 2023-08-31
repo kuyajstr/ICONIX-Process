@@ -20,7 +20,6 @@ type
     constructor Create(AView: IMainView);
     procedure LoadBooks;
     procedure ShowBookDetails;
-    procedure ShowError(const ErrorMsg: string);
   end;
 
 implementation
@@ -72,7 +71,7 @@ begin
         TMVCNameCase.ncPascalCase);
 
       if MemTable.RecordCount <= 0 then
-        ShowError('No record found');
+        FView.ShowMessageBox('No record found');
 
       MemTable.First;
     end, nil, True).Get('/api/books');
@@ -90,11 +89,6 @@ begin
   var BookDetailsView := TBookDetailsForm.Create(Application);
   var BookDetailsController := TBookDetailsPresenter.Create(BookDetailsView, BookDetail);
   BookDetailsController.DisplayView;
-end;
-
-procedure TMainPresenter.ShowError(const ErrorMsg: string);
-begin
-  ShowMessage(ErrorMsg);
 end;
 
 end.

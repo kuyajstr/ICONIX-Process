@@ -17,13 +17,12 @@ type
     FView: IMainView;
     FBookList: TList<TBook>;
     FRestClient: IMVCRESTClient;
+  public
     function RetrieveBooks: TList<TBook>;
     function CreateAdapter: TBindSourceAdapter;
-  public
     constructor Create(AView: IMainView);
     procedure LoadBooks;
     procedure ShowBookDetails;
-    procedure BookSelection;
   end;
 
 implementation
@@ -43,11 +42,6 @@ uses
   Vcl.Dialogs;
 
 { TMainCOntroller }
-
-procedure TMainPresenter.BookSelection;
-begin
-
-end;
 
 constructor TMainPresenter.Create(AView: IMainView);
 begin
@@ -70,7 +64,7 @@ end;
 procedure TMainPresenter.LoadBooks;
 begin
   FBookList := RetrieveBooks;
-  var BindSourceAdapter := FView.GetAdapter;
+  var BindSourceAdapter := FView.GetBindSource;
   BindSourceAdapter.Adapter := CreateAdapter;
   BindSourceAdapter.Active := True;
 end;
@@ -85,7 +79,7 @@ function TMainPresenter.RetrieveBooks: TList<TBook>;
 begin
   Result := TList<TBook>.Create;
 
-  var Response := FRestClient.Get('/api/books') as TMVCRESTResponse;
+  var Response := FRestClient.Get('/api/books');
   var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
   var BookArray := JSONValue.GetValue<TJSONArray>('data');
 
@@ -98,7 +92,7 @@ end;
 
 procedure TMainPresenter.ShowBookDetails;
 begin
-  var SelectedBook := FView.GetAdapter.Adapter.Current as TBook;
+  var SelectedBook := FView.GetBindSource.Adapter.Current as TBook;
   var BookDetailsView := TBookDetailsForm.Create(FView as TForm);
   var BookDetailsController := TBookDetailsPresenter.Create(BookDetailsView,
     SelectedBook);

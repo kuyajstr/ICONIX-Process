@@ -33,7 +33,6 @@ uses
   Vcl.Controls,
   AuthService;
 
-
 constructor TWriteReviewPresenter.Create(AView: IWriteReviewView; ABook: TBook);
 begin
   inherited Create;
@@ -60,17 +59,11 @@ begin
 end;
 
 procedure TWriteReviewPresenter.ValidateReview;
-var
-  Review: string;
-  Rating: Integer;
 begin
-  Review := FView.GetReview;
-  Rating := FView.GetRating;
-
   var JSONBody := TJSONObject.Create;
   JSONBody.AddPair('BookId', FBook.Id);
-  JSONBody.AddPair('Review', Review);
-  JSONBody.AddPair('Rating', Rating);
+  JSONBody.AddPair('Review', FView.GetReview);
+  JSONBody.AddPair('Rating', FView.GetRating);
 
   var Resp := FRestClient.Post('/api/customer_reviews/validate', JSONBody.ToString);
   if Resp.Success then

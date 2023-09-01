@@ -15,7 +15,7 @@ type
     ['{E01B055C-B339-4195-B452-D1B4A1F05204}']
     procedure SetPresenter(APresenter: IMainPresenter);
     procedure ShowMessageBox(const MessageStr: string);
-    function GetAdapter: TAdapterBindSource;
+    function GetBindSource: TAdapterBindSource;
   end;
 
   IBookDetailsView = interface

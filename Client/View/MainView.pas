@@ -26,7 +26,7 @@ type
   private
     FPresenter: IMainPresenter;
     procedure SetPresenter(APresenter: IMainPresenter);
-    function GetAdapter: TAdapterBindSource;
+    function GetBindSource: TAdapterBindSource;
   public
     procedure ShowMessageBox(const MessageStr: string);
   end;
@@ -40,7 +40,7 @@ uses
   MVCFramework.DataSet.Utils,
   MVCFramework.Serializer.Commons;
 
-function TMainForm.GetAdapter: TAdapterBindSource;
+function TMainForm.GetBindSource: TAdapterBindSource;
 begin
   Result := BookAdapterBindSource;
 end;

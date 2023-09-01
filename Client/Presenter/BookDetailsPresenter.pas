@@ -69,7 +69,6 @@ begin
   FRestClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
 
   Result := True;
-
   var CheckUserRequest := FRestClient.Post('/api/customer_reviews', '{}');
   // Check if ReasonString is Unauthorized
   if CheckUserRequest.StatusCode = 403 then

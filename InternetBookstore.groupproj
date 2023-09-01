@@ -21,6 +21,9 @@
         <Projects Include="BookMVVM\BookMVVM.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="..\..\..\TStringGridDEmo\StringGridDemo.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -83,14 +86,23 @@
     <Target Name="BookMVVM:Make">
         <MSBuild Projects="BookMVVM\BookMVVM.dproj" Targets="Make"/>
     </Target>
+    <Target Name="StringGridDemo">
+        <MSBuild Projects="..\..\..\TStringGridDEmo\StringGridDemo.dproj"/>
+    </Target>
+    <Target Name="StringGridDemo:Clean">
+        <MSBuild Projects="..\..\..\TStringGridDEmo\StringGridDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="StringGridDemo:Make">
+        <MSBuild Projects="..\..\..\TStringGridDEmo\StringGridDemo.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="DomainLayer;DataLayer;BookstoreServer;BookstoreClient;UnitTest;BookMVVM"/>
+        <CallTarget Targets="DomainLayer;DataLayer;BookstoreServer;BookstoreClient;UnitTest;BookMVVM;StringGridDemo"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="DomainLayer:Clean;DataLayer:Clean;BookstoreServer:Clean;BookstoreClient:Clean;UnitTest:Clean;BookMVVM:Clean"/>
+        <CallTarget Targets="DomainLayer:Clean;DataLayer:Clean;BookstoreServer:Clean;BookstoreClient:Clean;UnitTest:Clean;BookMVVM:Clean;StringGridDemo:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="DomainLayer:Make;DataLayer:Make;BookstoreServer:Make;BookstoreClient:Make;UnitTest:Make;BookMVVM:Make"/>
+        <CallTarget Targets="DomainLayer:Make;DataLayer:Make;BookstoreServer:Make;BookstoreClient:Make;UnitTest:Make;BookMVVM:Make;StringGridDemo:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

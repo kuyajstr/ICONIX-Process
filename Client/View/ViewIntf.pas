@@ -3,7 +3,7 @@ unit ViewIntf;
 interface
 
 uses
-  PresenterIntf, FireDAC.Comp.Client, Vcl.Controls;
+  PresenterIntf, FireDAC.Comp.Client, Vcl.Controls, Data.Bind.ObjectScope;
 
 type
   IView = interface
@@ -13,12 +13,9 @@ type
 
   IMainView = interface
     ['{E01B055C-B339-4195-B452-D1B4A1F05204}']
-    function GetDataSourceBooks: TFDMemTable;
-    function GetBookId: Integer;
-    function GetBookTitle: string;
-    function GetBookSynopsis: string;
     procedure SetPresenter(APresenter: IMainPresenter);
     procedure ShowMessageBox(const MessageStr: string);
+    function GetAdapter: TAdapterBindSource;
   end;
 
   IBookDetailsView = interface

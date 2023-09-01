@@ -3,7 +3,7 @@ unit PresenterIntf;
 interface
 
 uses
-  JSON;
+  JSON, Data.Bind.ObjectScope, Book, Generics.Collections;
 
 type
   IPresenter = interface
@@ -14,6 +14,9 @@ type
     ['{76881BDD-9BE0-4835-821F-C8A58692C25D}']
     procedure ShowBookDetails;
     procedure LoadBooks;
+    procedure BookSelection;
+    function CreateAdapter: TBindSourceAdapter;
+    function RetrieveBooks: TList<TBook>;
   end;
 
   IBookDetailsPresenter = interface

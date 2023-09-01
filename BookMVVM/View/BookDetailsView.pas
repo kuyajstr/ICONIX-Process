@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
   Vcl.DBCtrls, BookDetailsViewModel, Data.Bind.EngExt,
   Vcl.Bind.DBEngExt, Data.Bind.Components, System.Rtti, System.Bindings.Outputs,
-  Vcl.Bind.Editors;
+  Vcl.Bind.Editors, Vcl.Grids;
 
 type
   TBookDetailsForm = class(TForm)

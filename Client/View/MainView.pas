@@ -10,27 +10,24 @@ uses
   MVCFramework.RESTClient, ViewIntf, PresenterIntf, MainPresenter,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Data.Bind.Components,
+  Data.Bind.ObjectScope, Data.Bind.EngExt, Vcl.Bind.DBEngExt, Vcl.Bind.Grid,
+  System.Rtti, System.Bindings.Outputs, Vcl.Bind.Editors, Data.Bind.Grid;
 
 type
   TMainForm = class(TForm, IMainView)
     HeaderLabel: TLabel;
-    BookDBGrid: TDBGrid;
-    dsrcBooks: TDataSource;
-    dsBooks: TFDMemTable;
-    dsBooksId: TIntegerField;
-    dsBooksTItle: TStringField;
-    dsBooksSynopsis: TStringField;
-    procedure BookDBGridDblClick(Sender: TObject);
+    BookGrid: TStringGrid;
+    BookAdapterBindSource: TAdapterBindSource;
+    BindingList: TBindingsList;
+    LinkGridToDataSourceBookAdapterBindSource: TLinkGridToDataSource;
     procedure FormShow(Sender: TObject);
+    procedure BookGridDblClick(Sender: TObject);
   private
     FPresenter: IMainPresenter;
     procedure SetPresenter(APresenter: IMainPresenter);
+    function GetAdapter: TAdapterBindSource;
   public
-    function GetDataSourceBooks: TFDMemTable;
-    function GetBookId: Integer;
-    function GetBookTitle: string;
-    function GetBookSynopsis: string;
     procedure ShowMessageBox(const MessageStr: string);
   end;
 
@@ -43,7 +40,12 @@ uses
   MVCFramework.DataSet.Utils,
   MVCFramework.Serializer.Commons;
 
-procedure TMainForm.BookDBGridDblClick(Sender: TObject);
+function TMainForm.GetAdapter: TAdapterBindSource;
+begin
+  Result := BookAdapterBindSource;
+end;
+
+procedure TMainForm.BookGridDblClick(Sender: TObject);
 begin
   FPresenter.ShowBookDetails;
 end;
@@ -51,26 +53,6 @@ end;
 procedure TMainForm.FormShow(Sender: TObject);
 begin
   FPresenter.LoadBooks;
-end;
-
-function TMainForm.GetBookId: Integer;
-begin
-  Result := dsBooksId.Value;
-end;
-
-function TMainForm.GetBookSynopsis: string;
-begin
-  Result := dsBooksSynopsis.Value;
-end;
-
-function TMainForm.GetBookTitle: string;
-begin
-  Result := dsBooksTItle.Value;
-end;
-
-function TMainForm.GetDataSourceBooks: TFDMemTable;
-begin
-  Result := dsBooks;
 end;
 
 procedure TMainForm.SetPresenter(APresenter: IMainPresenter);

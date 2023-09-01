@@ -1,0 +1,17 @@
+﻿[HeaderLabel]
+Coordinates=10,10,76,51
+
+[BookAdapterBindSource]
+Coordinates=210,60,136,69
+Visible=True
+
+[]
+Coordinates=251,1,124,33
+Visible=False
+
+[BindingList]
+Coordinates=105,1,76,33
+
+[BookGrid]
+Coordinates=10,71,70,51
+

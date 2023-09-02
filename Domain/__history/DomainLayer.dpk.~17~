@@ -1,0 +1,61 @@
+package DomainLayer;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  dbrtl,
+  inet,
+  IndySystem,
+  IndyProtocols,
+  IndyCore,
+  FireDAC,
+  FireDACCommonDriver,
+  FireDACCommon,
+  FireDACMySQLDriver,
+  SwagDoc,
+  loggerproRT,
+  dmvcframeworkRT;
+
+contains
+  DAOIntf in 'DAOIntf.pas',
+  Book in 'Book\Book.pas',
+  BookContextIntf in 'Book\BookContextIntf.pas',
+  BookService in 'Book\BookService.pas',
+  Customer in 'Customer\Customer.pas',
+  CustomerContextIntf in 'Customer\CustomerContextIntf.pas',
+  CustomerService in 'Customer\CustomerService.pas',
+  CustomerReview in 'Customer Review\CustomerReview.pas',
+  CustomerReviewContextIntf in 'Customer Review\CustomerReviewContextIntf.pas',
+  CustomerReviewService in 'Customer Review\CustomerReviewService.pas',
+  BookServiceIntf in 'Book\BookServiceIntf.pas',
+  CustomerServiceIntf in 'Customer\CustomerServiceIntf.pas',
+  CustomerReviewServiceIntf in 'Customer Review\CustomerReviewServiceIntf.pas',
+  ICustomerDao in 'Customer\ICustomerDao.pas';
+
+end.

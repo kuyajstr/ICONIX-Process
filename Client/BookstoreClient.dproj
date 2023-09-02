@@ -105,7 +105,7 @@
         <DCCReference Include="Presenter\PresenterIntf.pas"/>
         <DCCReference Include="Presenter\MainPresenter.pas"/>
         <DCCReference Include="View\ViewIntf.pas"/>
-        <DCCReference Include="AuthService.pas"/>
+        <DCCReference Include="Utility\AuthService.pas"/>
         <DCCReference Include="View\BookDetailsView.pas">
             <Form>BookDetailsForm</Form>
             <FormType>dfm</FormType>
@@ -121,6 +121,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Presenter\WriteReviewPresenter.pas"/>
+        <DCCReference Include="Utility\RestClientManagerIntf.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

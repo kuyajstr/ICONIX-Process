@@ -15,12 +15,14 @@ type
   TMainPresenter = class(TInterfacedObject, IMainPresenter)
   private
     FView: IMainView;
-    FBookList: TList<TBook>;
+    FBookList: TList<TObject>;
     FRestClient: IMVCRESTClient;
+    procedure RetrieveBooks;
   public
-    function RetrieveBooks: TList<TBook>;
-    function CreateAdapter: TBindSourceAdapter;
     constructor Create(AView: IMainView);
+    function CreateAdapter: TBindSourceAdapter;
+    function GetModelClass: TClass;
+    function GetBookList: TList<TObject>;
     procedure LoadBooks;
     procedure ShowBookDetails;
   end;
@@ -49,6 +51,7 @@ begin
   FRestClient.SetBasicAuthorization('Guest', 'guest');
   FView := AView;
   FView.SetPresenter(Self);
+  FBookList := TList<TObject>.Create;
   inherited Create;
 
   var Response := FRestClient.Get('/api/login') as TMVCRESTResponse;
@@ -63,22 +66,36 @@ end;
 
 procedure TMainPresenter.LoadBooks;
 begin
-  FBookList := RetrieveBooks;
-  var BindSourceAdapter := FView.GetBindSource;
-  BindSourceAdapter.Adapter := CreateAdapter;
-  BindSourceAdapter.Active := True;
+  RetrieveBooks;
+//  var BindSourceAdapter := FView.GetBindSource;
+//  BindSourceAdapter.Adapter := CreateAdapter;
+//  BindSourceAdapter.Active := True;
+
+  if FBookList.Count = 0 then
+    FView.ShowMessageBox('No Record Found');
 end;
 
 function TMainPresenter.CreateAdapter: TBindSourceAdapter;
 begin
-  Result := TListBindSourceAdapter<TBook>.Create(
-    FView as TMainForm, FBookList, False);
+//  Result := TListBindSourceAdapter<TBook>.Create(
+//    FView as TMainForm, FBookList, False);
 end;
 
-function TMainPresenter.RetrieveBooks: TList<TBook>;
+function TMainPresenter.GetBookList: TList<TObject>;
 begin
-  Result := TList<TBook>.Create;
+  Result := FBookList;//TList<TObject>.Create;
 
+//  for var Book in FBookList do
+//    Result.Add(Book);
+end;
+
+function TMainPresenter.GetModelClass: TClass;
+begin
+  Result := TBook;
+end;
+
+procedure TMainPresenter.RetrieveBooks;
+begin
   var Response := FRestClient.Get('/api/books');
   var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
   var BookArray := JSONValue.GetValue<TJSONArray>('data');
@@ -86,7 +103,7 @@ begin
   for var BookJson in BookArray do
   begin
     var Book := TJSON.JsonToObject<TBook>(BookJson.ToString);
-    Result.Add(Book);
+    FBookList.Add(Book);
   end;
 end;
 
@@ -94,9 +111,9 @@ procedure TMainPresenter.ShowBookDetails;
 begin
   var SelectedBook := FView.GetBindSource.Adapter.Current as TBook;
   var BookDetailsView := TBookDetailsForm.Create(FView as TForm);
-  var BookDetailsController := TBookDetailsPresenter.Create(BookDetailsView,
+  var BookDetailsPresenter := TBookDetailsPresenter.Create(BookDetailsView,
     SelectedBook);
-  BookDetailsController.DisplayView;
+  BookDetailsPresenter.DisplayView;
 end;
 
 end.

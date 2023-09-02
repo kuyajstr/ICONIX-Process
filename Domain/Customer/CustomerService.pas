@@ -3,14 +3,17 @@ unit CustomerService;
 interface
 
 uses
-  Customer, DAOIntf, CustomerServiceIntf, Generics.Collections;
+  Customer,
+  CustomerDaoIntf,
+  CustomerServiceIntf,
+  Generics.Collections;
 
 type
   TCustomerService = class(TInterfacedObject, ICustomerService)
   private
-    FCustomerDao: IDAO<TCustomer>;
+    FCustomerDao: ICustomerDao;
   public
-    constructor Create(const ACustomerDao: IDAO<TCustomer>);
+    constructor Create(const ACustomerDao: ICustomerDao);
 
     procedure CreateCustomer(var ACustomer: TCustomer);
     procedure GetCustomer(const AId: Integer; var ACustomer: TCustomer);
@@ -24,12 +27,11 @@ type
 implementation
 
 uses
-  SysUtils,
-  CustomerActiveRecordDao;
+  SysUtils;
 
 { TCustomerService }
 
-constructor TCustomerService.Create(const ACustomerDao: IDAO<TCustomer>);
+constructor TCustomerService.Create(const ACustomerDao: ICustomerDao);
 begin
   if not Assigned(ACustomerDao) then
     raise EArgumentNilException.Create('Customer Data Access is nil');
@@ -62,8 +64,7 @@ end;
 procedure TCustomerService.GetCustomerByName(const AFirstName: string;
   var ACustomer: TCustomer);
 begin
-  (FCustomerDao as TCustomerActiveRecordDao).SelectByFirstName(AFirstName,
-    ACustomer)
+  FCustomerDao.SelectByFirstName(AFirstName, ACustomer)
 end;
 
 procedure TCustomerService.UpdateCustomer(var ACustomer: TCustomer);

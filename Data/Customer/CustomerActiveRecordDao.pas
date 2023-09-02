@@ -3,7 +3,7 @@ unit CustomerActiveRecordDao;
 interface
 
 uses
-  DAOIntf,
+  CustomerDaoIntf,
   Customer,
   CustomerActiveRecord,
   MVCFramework.ActiveRecord,
@@ -11,7 +11,7 @@ uses
   CustomerContextIntf;
 
 type
-  TCustomerActiveRecordDao = class(TInterfacedObject, IDAO<TCustomer>)
+  TCustomerActiveRecordDao = class(TInterfacedObject, ICustomerDao)
   private
     function ARtoCustomer(List: TObjectList<TMVCActiveRecord>)
       : TObjectList<TCustomer>;
@@ -96,8 +96,7 @@ begin
   try
     if Assigned(Customer) then
     begin
-      var
-      CustomerList := ARtoCustomer(Customer);
+      var CustomerList := ARtoCustomer(Customer);
       ACustomer := CustomerList.First;
     end;
   finally

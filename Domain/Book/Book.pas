@@ -40,7 +40,6 @@ begin
   FId := ABook.Id;
   FTitle := ABook.Title;
   FSynopsis := ABook.Synopsis;
-
 end;
 
 constructor TBook.Create(const ATitle, ASynopsis: string; const AId: Integer);

@@ -1,0 +1,19 @@
+unit RestClientManagerIntf;
+
+interface
+
+uses
+  Book, Generics.Collections;
+
+type
+  IRestClientManager = interface
+    procedure GuestLogin;
+    procedure AdminLogin;
+    function Login: Boolean;
+    function RetrieveBooks: TList<TBook>;
+
+  end;
+
+implementation
+
+end.

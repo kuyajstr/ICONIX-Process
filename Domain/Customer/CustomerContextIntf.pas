@@ -6,7 +6,6 @@ type
 
   ICustomerContext = interface
     ['{674925F0-515E-46C9-85C7-28AE730BD18B}']
-
     function GetId: Integer;
     procedure SetId(const AId: Integer);
     function GetFirstName: string;

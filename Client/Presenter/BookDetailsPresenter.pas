@@ -42,7 +42,7 @@ begin
   if not IsUserAuthorized then
     Exit;
 
-  var WriteReviewView := TWriteReviewForm.Create(Application);
+  var WriteReviewView := TWriteReviewForm.Create(FView as TForm);
   var WriteReviewPresenter := TWriteReviewPresenter.Create(WriteReviewView, FBook);
   WriteReviewPresenter.DisplayView;
 end;
@@ -77,7 +77,7 @@ begin
     if MessageDlg('Please Login first, would you like to proceed?',
       mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
-      var LoginView := TLoginForm.Create(Application);
+      var LoginView := TLoginForm.Create(FView as TForm);
       var LoginPresenter := TLoginPresenter.Create(LoginView);
       LoginView.Show;
     end;

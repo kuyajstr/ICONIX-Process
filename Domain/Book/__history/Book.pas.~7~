@@ -1,0 +1,55 @@
+unit Book;
+
+interface
+
+uses
+  BookContextIntf,
+  Generics.Collections;
+
+type
+
+  TBook = class
+  private
+    FId: Integer;
+    FTitle: string;
+    FSynopsis: string;
+  public
+    constructor Create(const ATitle, ASynopsis: string;
+      const AId: Integer); overload;
+    constructor Create(const ABook: IBookContext); overload;
+
+    property Id: Integer read FId write FId;
+    property Title: string read FTitle write FTitle;
+    property Synopsis: string read FSynopsis write FSynopsis;
+  end;
+
+implementation
+
+uses
+  SysUtils;
+
+{ TBook }
+
+constructor TBook.Create(const ABook: IBookContext);
+begin
+  if not Assigned(ABook) then
+    raise EArgumentNilException.Create('ABook');
+
+  inherited Create;
+
+  FId := ABook.Id;
+  FTitle := ABook.Title;
+  FSynopsis := ABook.Synopsis;
+
+end;
+
+constructor TBook.Create(const ATitle, ASynopsis: string; const AId: Integer);
+begin
+  inherited Create;
+
+  FId := AId;
+  FTitle := ATitle;
+  FSynopsis := ASynopsis;
+end;
+
+end.

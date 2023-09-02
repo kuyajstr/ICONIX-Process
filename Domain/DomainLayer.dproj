@@ -87,6 +87,7 @@
         <DCCReference Include="FireDAC.dcp"/>
         <DCCReference Include="FireDACCommonDriver.dcp"/>
         <DCCReference Include="FireDACCommon.dcp"/>
+        <DCCReference Include="FireDACMySQLDriver.dcp"/>
         <DCCReference Include="SwagDoc.dcp"/>
         <DCCReference Include="loggerproRT.dcp"/>
         <DCCReference Include="dmvcframeworkRT.dcp"/>
@@ -103,6 +104,7 @@
         <DCCReference Include="Book\BookServiceIntf.pas"/>
         <DCCReference Include="Customer\CustomerServiceIntf.pas"/>
         <DCCReference Include="Customer Review\CustomerReviewServiceIntf.pas"/>
+        <DCCReference Include="Customer\CustomerDaoIntf.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

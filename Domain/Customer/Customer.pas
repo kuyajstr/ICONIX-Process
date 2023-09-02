@@ -3,7 +3,6 @@ unit Customer;
 interface
 
 uses
-  MVCFramework.ActiveRecord,
   CustomerContextIntf;
 
 type

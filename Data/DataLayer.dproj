@@ -91,13 +91,13 @@
         <DCCReference Include="dmvcframeworkRT.dcp"/>
         <DCCReference Include="SwagDoc.dcp"/>
         <DCCReference Include="loggerproRT.dcp"/>
+        <DCCReference Include="DomainLayer.dcp"/>
         <DCCReference Include="Book\BookActiveRecord.pas"/>
         <DCCReference Include="Book\BookActiveRecordDao.pas"/>
-        <DCCReference Include="Customer\CustomerActiveRecord.pas"/>
-        <DCCReference Include="EntityActiveRecord.pas"/>
-        <DCCReference Include="Customer\CustomerActiveRecordDao.pas"/>
         <DCCReference Include="Customer Review\CustomerReviewActiveRecord.pas"/>
         <DCCReference Include="Customer Review\CustomerReviewActiveRecordDao.pas"/>
+        <DCCReference Include="Customer\CustomerActiveRecord.pas"/>
+        <DCCReference Include="Customer\CustomerActiveRecordDao.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

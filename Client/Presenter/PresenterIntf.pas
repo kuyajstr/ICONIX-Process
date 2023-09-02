@@ -15,7 +15,8 @@ type
     procedure ShowBookDetails;
     procedure LoadBooks;
     function CreateAdapter: TBindSourceAdapter;
-    function RetrieveBooks: TList<TBook>;
+    function GetModelClass: TClass;
+    function GetBookList: TList<TObject>;
   end;
 
   IBookDetailsPresenter = interface

@@ -53,6 +53,9 @@ end;
 procedure TMainForm.FormShow(Sender: TObject);
 begin
   FPresenter.LoadBooks;
+  BookAdapterBindSource.Adapter := TListBindSourceAdapter.Create(
+    Self, FPresenter.GetBookList, FPresenter.GetModelClass, False);
+  BookAdapterBindSource.Active := True;
 end;
 
 procedure TMainForm.SetPresenter(APresenter: IMainPresenter);

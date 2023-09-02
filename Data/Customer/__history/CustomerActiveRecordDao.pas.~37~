@@ -1,0 +1,119 @@
+unit CustomerActiveRecordDao;
+
+interface
+
+uses
+  CustomerDaoIntf,
+  Customer,
+  CustomerActiveRecord,
+  MVCFramework.ActiveRecord,
+  Generics.Collections,
+  CustomerContextIntf;
+
+type
+  TCustomerActiveRecordDao = class(TInterfacedObject, ICustomerDao)
+  private
+    function ARtoCustomer(List: TObjectList<TMVCActiveRecord>)
+      : TObjectList<TCustomer>;
+  public
+    procedure Insert(var Obj: TCustomer);
+    procedure Select(const AId: Integer; var Obj: TCustomer);
+    procedure Update(var Obj: TCustomer);
+    procedure Delete(const AId: Integer);
+    procedure SelectAll(var AList: TObjectList<TCustomer>);
+    procedure SelectByFirstName(const AFirstName: string;
+      var ACustomer: TCustomer);
+  end;
+
+implementation
+
+{ TCustomerActiveRecordDao }
+
+function TCustomerActiveRecordDao.ARtoCustomer
+  (List: TObjectList<TMVCActiveRecord>): TObjectList<TCustomer>;
+var
+  CustomerAR: TCustomerActiveRecord;
+begin
+  Result := TObjectList<TCustomer>.Create;
+
+  for var AR in List do
+  begin
+    CustomerAR := AR as TCustomerActiveRecord;
+    Result.Add(TCustomer.Create(CustomerAR));
+  end;
+end;
+
+procedure TCustomerActiveRecordDao.Delete(const AId: Integer);
+begin
+  var CustomerAR := TCustomerActiveRecord.Create;
+  try
+    CustomerAR.Id := AId;
+    CustomerAR.Delete(True);
+  finally
+    CustomerAR.Free;
+  end;
+end;
+
+procedure TCustomerActiveRecordDao.Insert(var Obj: TCustomer);
+begin
+  var CustomerAR := TCustomerActiveRecord.Create(Obj);
+  try
+    CustomerAR.Insert;
+    Obj := TCustomer.Create(CustomerAR);
+  finally
+    CustomerAR.Free;
+  end;
+end;
+
+procedure TCustomerActiveRecordDao.Select(const AId: Integer;
+  var Obj: TCustomer);
+begin
+  var CustomerAR := TCustomerActiveRecord.Create;
+  try
+    CustomerAR.LoadByPK(AId);
+    Obj := TCustomer.Create(CustomerAR);
+  finally
+    CustomerAR.Free;
+  end;
+end;
+
+procedure TCustomerActiveRecordDao.SelectAll(var AList: TObjectList<TCustomer>);
+begin
+  var Customers := TMVCActiveRecord.All(TCustomerActiveRecord);
+  try
+    AList := ARtoCustomer(Customers);
+  finally
+    Customers.Free;
+  end;
+
+end;
+
+procedure TCustomerActiveRecordDao.SelectByFirstName(const AFirstName: string;
+  var ACustomer: TCustomer);
+begin
+  var Customer := TMVCActiveRecord.Where(TCustomerActiveRecord,
+    ' WHERE FIRST_NAME = ?', [AFirstName]);
+  try
+    if Assigned(Customer) then
+    begin
+      var
+      CustomerList := ARtoCustomer(Customer);
+      ACustomer := CustomerList.First;
+    end;
+  finally
+    Customer.Free;
+  end;
+end;
+
+procedure TCustomerActiveRecordDao.Update(var Obj: TCustomer);
+begin
+  var CustomerAR := TCustomerActiveRecord.Create(Obj);
+  try
+    CustomerAR.Update;
+    Obj := TCustomer.Create(CustomerAR);
+  finally
+    CustomerAR.Free;
+  end;
+end;
+
+end.

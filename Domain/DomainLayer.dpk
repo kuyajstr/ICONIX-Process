@@ -37,6 +37,7 @@ requires
   FireDAC,
   FireDACCommonDriver,
   FireDACCommon,
+  FireDACMySQLDriver,
   SwagDoc,
   loggerproRT,
   dmvcframeworkRT;
@@ -54,6 +55,7 @@ contains
   CustomerReviewService in 'Customer Review\CustomerReviewService.pas',
   BookServiceIntf in 'Book\BookServiceIntf.pas',
   CustomerServiceIntf in 'Customer\CustomerServiceIntf.pas',
-  CustomerReviewServiceIntf in 'Customer Review\CustomerReviewServiceIntf.pas';
+  CustomerReviewServiceIntf in 'Customer Review\CustomerReviewServiceIntf.pas',
+  CustomerDaoIntf in 'Customer\CustomerDaoIntf.pas';
 
 end.

@@ -1,0 +1,264 @@
+unit MainPresenterTest;
+
+interface
+
+uses
+  DUnitX.TestFramework,
+  ViewIntf,
+  MainRestService,
+  ViewFactory,
+  Generics.Collections;
+
+type
+  [TestFixture]
+  TMainPresenterTest = class
+  private
+    FView: IMainView;
+    FRestService: IMainRestService;
+    FViewFactory: IViewFactory;
+    FBookList: TList<TObject>;
+    procedure ShowBookDetails_SucessfullyDiplayBookDetailsView;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+
+    [Test]
+    procedure LoadBooks_SuccessfullyRetrieveBooks_BookCountIsNotZero;
+    [Test]
+    procedure LoadBooks_SuccessfullyRetrieveBooks_BookCountShouldBeThree;
+
+    [Test]
+    procedure ShowBookDetails_SucessfullyRetrieveSelectedBook_ShouldMatchBookName;
+    [Test]
+    procedure ShowBookDetails_SucessfullyRetrieveSelectedBook_ShouldMatchBookSynopsis;
+    [Test]
+    procedure ShowBookDetails_SucessfullyRetrieveSelectedBook_ShouldMatchBookID;
+    [Test]
+    procedure ShowBookDetails_RetrieveNilBook_ShouldBeNil;
+
+    [Test]
+    procedure LoadBooks_NoBooksFound_CountShouldBeZero;
+    [Test]
+    procedure LoadBooks_NoBooksFound_ShowMessageMatchErrorMessage;
+
+    [Test]
+    procedure ShowBookDetails_SucessfullyDiplayBookDetailsView_MatchingDisplayMessage;
+  end;
+
+implementation
+
+uses
+  MainPresenter,
+  MainViewStub,
+  MainRestServiceStub,
+  SysUtils,
+  ViewFactoryStub,
+  Book,
+  DisplayException,
+  SetException;
+
+procedure TMainPresenterTest.LoadBooks_NoBooksFound_CountShouldBeZero;
+begin
+  //Arrange
+  var Books := TList<TObject>.Create;
+  var MainRestService := TMainRestServiceStub.Create(Books);
+
+  var MainPresenter := TMainPresenter.Create(FView, MainRestService, FViewFactory);
+
+  // Act
+  var RetrievedBooks := MainPresenter.GetBookList;
+
+  // Assert
+  Assert.AreEqual(0, RetrievedBooks.Count);
+end;
+
+procedure TMainPresenterTest.LoadBooks_NoBooksFound_ShowMessageMatchErrorMessage;
+var
+  ErrorMsg: string;
+begin
+  //Arrange
+  var Books := TList<TObject>.Create;
+  var MainRestService := TMainRestServiceStub.Create(Books);
+
+  var MainPresenter := TMainPresenter.Create(FView, MainRestService, FViewFactory);
+
+  // Act
+  try
+    MainPresenter.LoadBooks;
+  except
+    on E: Exception do
+      ErrorMsg := E.Message;
+  end;
+
+  // Assert
+  Assert.AreEqual(ErrorMsg, 'No Record Found');
+end;
+
+procedure TMainPresenterTest.LoadBooks_SuccessfullyRetrieveBooks_BookCountIsNotZero;
+begin
+  //Arrange
+  var MainRestService := TMainRestServiceStub.Create(FBookList);
+  var MainPresenter := TMainPresenter.Create(FView, MainRestService, FViewFactory);
+
+  // Act
+  MainPresenter.LoadBooks;
+  var RetrievedBooks := MainPresenter.GetBookList;
+
+  // Assert
+  Assert.AreNotEqual(0, RetrievedBooks.Count);
+end;
+
+procedure TMainPresenterTest.LoadBooks_SuccessfullyRetrieveBooks_BookCountShouldBeThree;
+begin
+  //Arrange
+  var MainRestService := TMainRestServiceStub.Create(FBookList);
+  var MainPresenter := TMainPresenter.Create(FView, MainRestService, FViewFactory);
+
+  // Act
+  MainPresenter.LoadBooks;
+  var RetrievedBooks := MainPresenter.GetBookList;
+
+  // Assert
+  Assert.AreEqual(3, RetrievedBooks.Count);
+end;
+
+procedure TMainPresenterTest.ShowBookDetails_RetrieveNilBook_ShouldBeNil;
+begin
+  //Arrange
+  var MainRestService := TMainRestServiceStub.Create(FBookList);
+  var AlternativeViewFactory := TViewFactoryStub.Create(False);
+  var AlternativeView := AlternativeViewFactory.CreateMainView(nil);
+  var MainPresenter := TMainPresenter.Create(AlternativeView, MainRestService,
+    AlternativeViewFactory);
+
+  // Act
+  var RetrievedBook := AlternativeView.GetSelectedBook;
+
+  // Assert
+  Assert.IsNull(RetrievedBook);
+end;
+
+procedure TMainPresenterTest.ShowBookDetails_SucessfullyDiplayBookDetailsView;
+var
+  ErrorMsg: string;
+begin
+  //Arrange
+  var Books := TList<TObject>.Create;
+  var MainRestService := TMainRestServiceStub.Create(Books);
+
+  var MainPresenter := TMainPresenter.Create(FView, MainRestService, FViewFactory);
+
+  // Act
+  try
+    MainPresenter.ShowBookDetails;
+  except
+    on E: TDisplayException do
+    begin
+      ErrorMsg := E.Message;
+    end;
+    on E: Exception do
+    begin
+      //do nothing
+    end;
+  end;
+
+  // Assert
+  Assert.AreEqual('BookDetailsView', ErrorMsg);
+end;
+
+procedure TMainPresenterTest.ShowBookDetails_SucessfullyDiplayBookDetailsView_MatchingDisplayMessage;
+var
+  ErrorMsg: string;
+begin
+  //Arrange
+  var Books := TList<TObject>.Create;
+  var MainRestService := TMainRestServiceStub.Create(Books);
+
+  var MainPresenter := TMainPresenter.Create(FView, MainRestService, FViewFactory);
+
+  // Act
+  try
+    MainPresenter.ShowBookDetails;
+  except
+    on E: TDisplayException do
+    begin
+      ErrorMsg := E.Message;
+    end;
+    on E: Exception do
+    begin
+      //do nothing
+    end;
+  end;
+
+  // Assert
+  Assert.AreEqual('BookDetailsView', ErrorMsg);
+end;
+
+procedure TMainPresenterTest.ShowBookDetails_SucessfullyRetrieveSelectedBook_ShouldMatchBookID;
+begin
+  //Arrange
+  var MainRestService := TMainRestServiceStub.Create(FBookList);
+  var MainPresenter := TMainPresenter.Create(FView, MainRestService,
+    FViewFactory);
+
+  // Act
+  var SelectedBook := FView.GetSelectedBook as TBook;
+
+  // Assert
+  Assert.AreEqual(1, SelectedBook.Id);
+end;
+
+procedure TMainPresenterTest.ShowBookDetails_SucessfullyRetrieveSelectedBook_ShouldMatchBookName;
+begin
+  //Arrange
+  var MainRestService := TMainRestServiceStub.Create(FBookList);
+  var MainPresenter := TMainPresenter.Create(FView, MainRestService,
+    FViewFactory);
+
+  // Act
+  var SelectedBook := FView.GetSelectedBook as TBook;
+
+  // Assert
+  Assert.AreEqual('Book A', SelectedBook.Title);
+end;
+
+procedure TMainPresenterTest.ShowBookDetails_SucessfullyRetrieveSelectedBook_ShouldMatchBookSynopsis;
+begin
+  //Arrange
+  var MainRestService := TMainRestServiceStub.Create(FBookList);
+  var MainPresenter := TMainPresenter.Create(FView, MainRestService,
+    FViewFactory);
+
+  // Act
+  var SelectedBook := FView.GetSelectedBook as TBook;
+
+  // Assert
+  Assert.AreEqual('Book A Synopsis', SelectedBook.Synopsis);
+end;
+
+procedure TMainPresenterTest.Setup;
+begin
+  FViewFactory := TViewFactoryStub.Create(True);
+  FView := FViewFactory.CreateMainView(nil);
+
+  FBookList := TList<TObject>.Create;
+  FBookList.AddRange([
+    TBook.Create('Book A', 'Book A Synopsis', 1),
+    TBook.Create('Book B', 'Book B Synopsis', 2),
+    TBook.Create('Book C', 'Book C Synopsis', 3)
+  ]);
+end;
+
+procedure TMainPresenterTest.TearDown;
+begin
+  FView := nil;
+  FRestService := nil;
+  FViewFactory := nil;
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TMainPresenterTest);
+
+end.

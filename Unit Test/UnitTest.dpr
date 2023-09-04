@@ -13,11 +13,24 @@ uses
   DUnitX.Loggers.Xml.NUnit,
   {$ENDIF }
   DUnitX.TestFramework,
-  MainPresenterTest in 'MainPresenter\MainPresenterTest.pas',
-  MainViewStub in 'ViewFactoryStub\MainViewStub.pas',
+  BasicCourseMainView in 'ViewFactoryStub\BasicCourseMainView.pas',
   MainRestServiceStub in 'MainPresenter\MainRestServiceStub.pas',
   BookDetailsViewStub in 'ViewFactoryStub\BookDetailsViewStub.pas',
-  ViewFactoryStub in 'ViewFactoryStub\ViewFactoryStub.pas';
+  ViewFactoryStub in 'ViewFactoryStub\ViewFactoryStub.pas',
+  DisplayException in 'Exceptions\DisplayException.pas',
+  SetException in 'Exceptions\SetException.pas',
+  AlternativeMainView in 'ViewFactoryStub\AlternativeMainView.pas',
+  BookDetailsServiceStub in 'BookDetailsPresenter\BookDetailsServiceStub.pas',
+  LoginViewStub in 'ViewFactoryStub\LoginViewStub.pas',
+  WriteReviewViewStub in 'ViewFactoryStub\WriteReviewViewStub.pas',
+  WriteReviewPresenterTest in 'WriteReviewPresenter\WriteReviewPresenterTest.pas',
+  WriteReviewRestServiceStub in 'WriteReviewPresenter\WriteReviewRestServiceStub.pas',
+  TestBookDao in 'Server\TestBookDao.pas',
+  TestCustomerReviewDao in 'Server\TestCustomerReviewDao.pas',
+  BookServiceTest in 'Server\BookServiceTest.pas',
+  CustomerReviewServiceTest in 'Server\CustomerReviewServiceTest.pas',
+  MainPresenterTest in 'MainPresenter\MainPresenterTest.pas',
+  BookDetailsPresenterTest in 'BookDetailsPresenter\BookDetailsPresenterTest.pas';
 
 {$IFNDEF TESTINSIGHT}
 var

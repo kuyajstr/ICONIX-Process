@@ -95,11 +95,24 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="MainPresenter\MainPresenterTest.pas"/>
-        <DCCReference Include="ViewFactoryStub\MainViewStub.pas"/>
+        <DCCReference Include="ViewFactoryStub\BasicCourseMainView.pas"/>
         <DCCReference Include="MainPresenter\MainRestServiceStub.pas"/>
         <DCCReference Include="ViewFactoryStub\BookDetailsViewStub.pas"/>
         <DCCReference Include="ViewFactoryStub\ViewFactoryStub.pas"/>
+        <DCCReference Include="Exceptions\DisplayException.pas"/>
+        <DCCReference Include="Exceptions\SetException.pas"/>
+        <DCCReference Include="ViewFactoryStub\AlternativeMainView.pas"/>
+        <DCCReference Include="BookDetailsPresenter\BookDetailsServiceStub.pas"/>
+        <DCCReference Include="ViewFactoryStub\LoginViewStub.pas"/>
+        <DCCReference Include="ViewFactoryStub\WriteReviewViewStub.pas"/>
+        <DCCReference Include="WriteReviewPresenter\WriteReviewPresenterTest.pas"/>
+        <DCCReference Include="WriteReviewPresenter\WriteReviewRestServiceStub.pas"/>
+        <DCCReference Include="Server\TestBookDao.pas"/>
+        <DCCReference Include="Server\TestCustomerReviewDao.pas"/>
+        <DCCReference Include="Server\BookServiceTest.pas"/>
+        <DCCReference Include="Server\CustomerReviewServiceTest.pas"/>
+        <DCCReference Include="MainPresenter\MainPresenterTest.pas"/>
+        <DCCReference Include="BookDetailsPresenter\BookDetailsPresenterTest.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

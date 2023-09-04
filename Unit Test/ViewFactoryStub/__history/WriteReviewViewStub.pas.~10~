@@ -1,0 +1,87 @@
+﻿unit WriteReviewViewStub;
+
+interface
+
+uses
+  ViewIntf,
+  PresenterIntf;
+
+type
+  TWriteReViewViewStub = class(TInterfacedObject, IWriteReviewView)
+  private
+    FTitle: string;
+    FPresenter: IWriteReviewPresenter;
+    IsBasicCourse: Boolean;
+  public
+    constructor Create(BasicCourse: Boolean);
+    procedure Show;
+    procedure Close;
+    procedure SetTitle(const Value: string);
+    function GetReview: string;
+    function GetRating: Integer;
+    procedure SetPresenter(APresenter: IWriteReviewPresenter);
+    procedure ShowMessageBox(const MessageStr: string);
+    function ShowConfirmationDialog(const MessageStr: string): Integer;
+  end;
+
+implementation
+
+uses
+  SysUtils,
+  DisplayException;
+
+{ TWriteReViewViewStub }
+
+procedure TWriteReViewViewStub.Close;
+begin
+
+end;
+
+constructor TWriteReViewViewStub.Create(BasicCourse: Boolean);
+begin
+  IsBasicCourse := BasicCourse;
+end;
+
+function TWriteReViewViewStub.GetRating: Integer;
+begin
+  if IsBasicCourse then
+    Result := 5
+  else
+    Result := 0;
+end;
+
+function TWriteReViewViewStub.GetReview: string;
+begin
+  //Do nothing
+end;
+
+procedure TWriteReViewViewStub.SetPresenter(APresenter: IWriteReviewPresenter);
+begin
+  FPresenter := APresenter;
+end;
+
+procedure TWriteReViewViewStub.SetTitle(const Value: string);
+begin
+  FTitle := Value;
+end;
+
+procedure TWriteReViewViewStub.Show;
+begin
+  raise TDisplayException.Create('WriteReviewView');
+end;
+
+function TWriteReViewViewStub.ShowConfirmationDialog(
+  const MessageStr: string): Integer;
+begin
+  if IsBasicCourse then
+    Result := 6
+  else
+    Result := 7;
+end;
+
+procedure TWriteReViewViewStub.ShowMessageBox(const MessageStr: string);
+begin
+  raise TDisplayException.Create(MessageStr);
+end;
+
+end.

@@ -1,0 +1,32 @@
+unit BookDetailsServiceStub;
+
+interface
+
+uses
+  BookDetailsRestService,
+  Generics.Collections;
+
+type
+  TBookDetailsRestServiceStub = class(TInterfacedObject, IBookDetailsRestService)
+  private
+    FList: TList<TObject>;
+  public
+    procedure RefreshToken;
+    function IsUserAuthorize: Boolean;
+  end;
+
+implementation
+
+{ TBookDetailsRestServiceStub }
+
+function TBookDetailsRestServiceStub.IsUserAuthorize: Boolean;
+begin
+
+end;
+
+procedure TBookDetailsRestServiceStub.RefreshToken;
+begin
+  //Do nothing
+end;
+
+end.

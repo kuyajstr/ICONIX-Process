@@ -1,0 +1,137 @@
+unit WriteReviewPresenterTest;
+
+interface
+
+uses
+  DUnitX.TestFramework,
+  PresenterIntf,
+  ViewIntf,
+  WriteReviewRestService,
+  ViewFactory,
+  WriteReviewPresenter;
+
+type
+  [TestFixture]
+  TWriteReviewPresenterTest = class
+  private
+    FRestService: IWriteReviewRestService;
+    FViewFactory: IViewFactory;
+    FView: IWriteReviewView;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+
+    [Test]
+    procedure Validate_SubmitValidReview_MatchingExceptionMessage;
+//    [Test]
+    procedure Validate_SubmitInvalidReview_MatchExceptionMessage;
+    
+//    [Test]
+    procedure SubmitReview_SubmitSucessfully_MatchingMessageWithView;
+//    [Test]
+    procedure SubmitReview_SubmissionFail_MatchingExceptionMessage;
+  end;
+
+implementation
+
+uses
+  WriteReviewRestServiceStub,
+  ViewFactoryStub,
+  Book,
+  DisplayException;
+
+procedure TWriteReviewPresenterTest.Setup;
+begin
+  FRestService := TWriteReviewRestServiceStub.Create(True);
+  FViewFactory := TViewFactoryStub.Create(True);
+  FView := FViewFactory.CreateWriteReviewView(nil);
+end;
+
+procedure TWriteReviewPresenterTest.SubmitReview_SubmissionFail_MatchingExceptionMessage;
+var
+  ViewMessageString: string;
+begin
+  //Arrange
+  var Book := TBook.Create('Book A', 'Synopsis A', 1);
+  var AltService := TWriteReviewRestServiceStub.Create(False);
+  var WriteReviewPresenter := TWriteReviewPresenter.Create(FView, Book, AltService);
+  
+  //Act
+  try
+    WriteReviewPresenter.SubmitReview(nil);
+  except on E: TDisplayException do
+    ViewMessageString := E.Message;
+  end;
+
+  //Assert
+  Assert.AreEqual('Submission failed', ViewMessageString);  
+end;
+
+procedure TWriteReviewPresenterTest.SubmitReview_SubmitSucessfully_MatchingMessageWithView;
+var
+  ViewMessageString: string;
+begin
+  //Arrange
+  var Book := TBook.Create('Book A', 'Synopsis A', 1);
+  var WriteReviewPresenter := TWriteReviewPresenter.Create(FView, Book, FRestService);
+  
+  //Act
+  try
+    WriteReviewPresenter.SubmitReview(nil);
+  except on E: TDisplayException do
+    ViewMessageString := E.Message;
+  end;
+
+  //Assert
+  Assert.AreEqual('Review submitted!', ViewMessageString);  
+end;
+
+procedure TWriteReviewPresenterTest.TearDown;
+begin
+end;
+
+procedure TWriteReviewPresenterTest.Validate_SubmitInvalidReview_MatchExceptionMessage;
+var
+  ErrorMsg: string;
+begin
+  //Arrange
+  var Book := TBook.Create('Book A', 'Synopsis A', 1);
+  var AltService := TWriteReviewRestServiceStub.Create(False);
+  var WriteReviewPresenter := TWriteReviewPresenter.Create(FView, Book, AltService);
+  
+  //Act
+  try
+    WriteReviewPresenter.ValidateReview;
+  except on E: TDisplayException do
+    ErrorMsg := E.Message;
+  end;
+
+  //Assert
+  Assert.AreEqual('Customer Review is Invalid', ErrorMsg);  
+end;
+
+procedure TWriteReviewPresenterTest.Validate_SubmitValidReview_NoException;
+var
+  ViewMessageString: string;
+begin
+  //Arrange
+  var Book := TBook.Create('Book A', 'Synopsis A', 1);
+  var WriteReviewPresenter := TWriteReviewPresenter.Create(FView, Book, FRestService);
+
+  //Act
+  try
+    WriteReviewPresenter.SubmitReview(nil);
+  except on E: TDisplayException do
+    ViewMessageString := E.Message;
+  end;
+
+  //Assert
+  Assert.AreEqual('Review submitted!', ViewMessageString);  
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TWriteReviewPresenterTest);
+
+end.

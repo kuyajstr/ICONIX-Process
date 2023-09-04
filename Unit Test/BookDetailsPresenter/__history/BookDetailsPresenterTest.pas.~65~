@@ -1,0 +1,111 @@
+unit BookDetailsPresenterTest;
+
+interface
+
+uses
+  DUnitX.TestFramework,
+  PresenterIntf,
+  ViewIntf,
+  BookDetailsRestService,
+  ViewFactory,
+  BookDetailsPresenter;
+
+type
+  [TestFixture]
+  TBookDetailsPresenterTest = class
+  private
+    FView: IBookDetailsView;
+    FRestService: IBookDetailsRestService;
+    FViewFactory: IViewFactory;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+
+    [Test]
+    procedure IsUserNotAuthorized_UserIsLoggedIn;
+
+    [Test]
+    procedure ComposeReview_DisplayWriteReview;
+
+    [Test]
+    procedure IsUserNotAuthorized_UserIsNotLoggedIn;
+  end;
+
+implementation
+
+uses
+  BookDetailsServiceStub,
+  ViewFactoryStub,
+  Book,
+  SysUtils,
+  DisplayException;
+
+{ TBookDetailsPresenterTest }
+
+procedure TBookDetailsPresenterTest.ComposeReview_DisplayWriteReview;
+var
+  ErroMsg: string;
+begin
+  //Arrange
+  var Book := TBook.Create('Book A', 'Synopsis A', 1);
+  var RestService := TBookDetailsRestServiceStub.Create(True);
+  var BookDetailsPresenter := TBookDetailsPresenter.Create(FView, Book,
+    RestService, FViewFactory);
+
+  //Act
+  try
+    BookDetailsPresenter.ComposeReview;
+  except on E: TDisplayException do
+    ErroMsg := E.Message;
+  end;
+
+  //Assert
+  Assert.AreEqual('WriteReviewView', ErroMsg);
+end;
+
+procedure TBookDetailsPresenterTest.IsUserNotAuthorized_UserIsLoggedIn;
+begin
+  //Arrange
+  var RestService := TBookDetailsRestServiceStub.Create(True);
+  var BookDetailsPresenter := TBookDetailsPresenter.Create(FView, nil,
+    RestService, FViewFactory);
+
+  //Act
+  var IsNotAuthorized := BookDetailsPresenter.IsUserNotAuthorized;
+
+  //Assert
+  Assert.IsFalse(IsNotAuthorized);
+end;
+
+procedure TBookDetailsPresenterTest.IsUserNotAuthorized_UserIsNotLoggedIn;
+begin
+  //Arrange
+  var RestService := TBookDetailsRestServiceStub.Create(True);
+  var BookDetailsPresenter := TBookDetailsPresenter.Create(FView, nil,
+    RestService, FViewFactory);
+
+  //Act
+  var IsNotAuthorized := BookDetailsPresenter.IsUserNotAuthorized;
+
+  //Assert
+  Assert.IsFalse(IsNotAuthorized);
+end;
+
+procedure TBookDetailsPresenterTest.Setup;
+begin
+  FViewFactory := TViewFactoryStub.Create(True);
+  FView := FViewFactory.CreateBookDetailView(nil);
+end;
+
+procedure TBookDetailsPresenterTest.TearDown;
+begin
+  FViewFactory := nil;
+  FView := nil;
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TBookDetailsPresenterTest);
+
+end.

@@ -1,0 +1,38 @@
+unit BookDetailsServiceStub;
+
+interface
+
+uses
+  BookDetailsRestService,
+  Generics.Collections;
+
+type
+  TBookDetailsRestServiceStub = class(TInterfacedObject, IBookDetailsRestService)
+  private
+    FIsAuthorized: Boolean;
+  public
+    constructor Create(IsAuthorized: Boolean);
+    procedure RefreshToken;
+    function IsUserAuthorize: Boolean;
+  end;
+
+implementation
+
+{ TBookDetailsRestServiceStub }
+
+constructor TBookDetailsRestServiceStub.Create(IsAuthorized: Boolean);
+begin
+  FIsAuthorized := IsAuthorized;
+end;
+
+function TBookDetailsRestServiceStub.IsUserAuthorize: Boolean;
+begin
+  Result := FIsAuthorized;
+end;
+
+procedure TBookDetailsRestServiceStub.RefreshToken;
+begin
+  //Do nothing
+end;
+
+end.

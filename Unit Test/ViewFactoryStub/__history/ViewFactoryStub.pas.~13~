@@ -1,0 +1,63 @@
+unit ViewFactoryStub;
+
+interface
+
+uses
+  ViewFactory,
+  ViewIntf,
+  Vcl.Forms,
+  Classes;
+
+type
+  TViewFactoryStub = class(TInterfacedObject, IViewFactory)
+  private
+    FBasicCourse: Boolean;
+  public
+    constructor Create(BasicCourse: Boolean);
+    function CreateMainView(AOwner: IInterface): IMainView;
+    function CreateBookDetailView(AOwner: IInterface): IBookDetailsView;
+    function CreateLoginView(AOwner: IInterface): ILoginView;
+    function CreateWriteReviewView(AOwner: IInterface): IWriteReviewView;
+  end;
+
+implementation
+
+uses
+  BasicCourseMainView,
+  AlternativeMainView,
+  BasicCourseBookDetailsView,
+  AlternativeBookDetailsView;
+
+{ TViewFactoryStub }
+
+constructor TViewFactoryStub.Create(BasicCourse: Boolean);
+begin
+  FBasicCourse := BasicCourse;
+end;
+
+function TViewFactoryStub.CreateBookDetailView(
+  AOwner: IInterface): IBookDetailsView;
+begin
+  if FBasicCourse then
+    Result := TBookDetailsViewStub.Create
+  else
+//    Result :=
+end;
+
+function TViewFactoryStub.CreateLoginView(AOwner: IInterface): ILoginView;
+begin
+
+end;
+
+function TViewFactoryStub.CreateMainView(AOwner: IInterface): IMainView;
+begin
+//  Result :=
+end;
+
+function TViewFactoryStub.CreateWriteReviewView(
+  AOwner: IInterface): IWriteReviewView;
+begin
+
+end;
+
+end.

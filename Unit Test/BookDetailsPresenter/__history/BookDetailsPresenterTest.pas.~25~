@@ -1,0 +1,99 @@
+﻿unit BookDetailsPresenterTest;
+
+interface
+
+uses
+  DUnitX.TestFramework,
+  PresenterIntf,
+  ViewIntf,
+  BookDetailsRestService,
+  ViewFactory,
+  BookDetailsPresenter;
+
+type
+  [TestFixture]
+  TBookDetailsPresenterTest = class
+  private
+    FView: IBookDetailsView;
+    FRestService: IBookDetailsRestService;
+    FViewFactory: IViewFactory;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+
+    [Test]
+    procedure IsUserNotAuthorized_UserIsLoggedIn_True;
+
+    [Test]
+    procedure ComposeReview_DisplayWriteReview;
+
+    [Test]
+    procedure IsUserAuthorized_UserIsNotLoggedIn_True;
+  end;
+
+implementation
+
+uses
+  BookDetailsServiceStub,
+  ViewFactoryStub,
+  Book;
+
+{ TBookDetailsPresenterTest }
+
+procedure TBookDetailsPresenterTest.ComposeReview_DisplayWriteReview;
+begin
+  //Arrange
+
+  //Act
+
+  //Assert
+end;
+
+procedure TBookDetailsPresenterTest.IsUserNotAuthorized_UserIsLoggedIn_True;
+begin
+  //Arrange
+  var RestService := TBookDetailsRestServiceStub.Create(False);
+  var AlternativeFactory := TViewFactoryStub.Create(False);
+  var AltView := AlternativeFactory.CreateBookDetailView(nil);
+  var BookDetailsPresenter := TBookDetailsPresenter.Create(AltView, nil,
+    RestService, FViewFactory);
+
+  //Act
+  var IsAuthorized := BookDetailsPresenter.IsUserNotAuthorized;
+
+  //Assert
+  Assert.IsFalse(IsAuthorized);
+end;
+
+procedure TBookDetailsPresenterTest.IsUserAuthorized_UserIsNotLoggedIn_True;
+begin
+  //Arrange
+  var RestService := TBookDetailsRestServiceStub.Create(True);
+  var BookDetailsPresenter := TBookDetailsPresenter.Create(FView, nil,
+    RestService, FViewFactory);
+
+  //Act
+  var IsAuthorized := BookDetailsPresenter.IsUserNotAuthorized;
+
+  //Assert
+  Assert.IsTrue(IsAuthorized);
+end;
+
+procedure TBookDetailsPresenterTest.Setup;
+begin
+//  FRestService := TBookDetailsRestServiceStub.Create(True);
+  FViewFactory := TViewFactoryStub.Create(True);
+  FView := FViewFactory.CreateBookDetailView(nil);
+end;
+
+procedure TBookDetailsPresenterTest.TearDown;
+begin
+
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TBookDetailsPresenterTest);
+
+end.

@@ -1,0 +1,60 @@
+unit BasicCourseBookDetailsView;
+
+interface
+
+uses
+  ViewIntf,
+  PresenterIntf,
+  Vcl.Forms;
+
+type
+  TBasicCourseBookDetailsView = class(TInterfacedObject, IBookDetailsView)
+  private
+    FPresenter: IBookDetailsPresenter;
+    FResponse: Integer;
+  public
+    procedure Show;
+    procedure SetTitle(const Value: string);
+    procedure SetSynopsis(const Value: string);
+    procedure SetPresenter(APresenter: IBookDetailsPresenter);
+    function ShowConfirmationDialog(const MessageStr: string): Integer;
+  end;
+
+
+implementation
+
+uses
+  SysUtils,
+  Vcl.Controls,
+  DisplayException,
+  SetException;
+
+{ TBookDetailsViewStub }
+
+procedure TBasicCourseBookDetailsView.SetPresenter(APresenter: IBookDetailsPresenter);
+begin
+  FPresenter := APresenter;
+end;
+
+procedure TBasicCourseBookDetailsView.SetSynopsis(const Value: string);
+begin
+//  raise TSetException.Create(Value);
+end;
+
+procedure TBasicCourseBookDetailsView.SetTitle(const Value: string);
+begin
+//  raise TSetException.Create(Value);
+end;
+
+procedure TBasicCourseBookDetailsView.Show;
+begin
+  raise TDisplayException.Create('BookDetailsView');
+end;
+
+function TBasicCourseBookDetailsView.ShowConfirmationDialog(
+  const MessageStr: string): Integer;
+begin
+  Result := FResponse;
+end;
+
+end.

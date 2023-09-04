@@ -17,12 +17,13 @@ type
     FView: IBookDetailsView;
     FViewFactory: IViewFactory;
     FRestService: IBookDetailsRestService;
+    procedure PromptLogin;
   public
     constructor Create(AView: IBookDetailsView; ABook: TBook;
       ARestService: IBookDetailsRestService; AViewFactory: IViewFactory);
     procedure ComposeReview;
     procedure DisplayView;
-    function IsUserAuthorized: Boolean;
+    function IsUserNotAuthorized: Boolean;
   end;
 
 implementation
@@ -42,10 +43,13 @@ uses
 
 procedure TBookDetailsPresenter.ComposeReview;
 begin
-  if not IsUserAuthorized then
+  if IsUserNotAuthorized then
+  begin
+    PromptLogin;
     Exit;
+  end;
 
-  var WriteReviewView := FViewFactory.CreateWriteReviewView(FView as TForm);
+  var WriteReviewView := FViewFactory.CreateWriteReviewView(FView);
   var WriteReviewRestService := TWriteReviewRestService.Create;
   var WriteReviewPresenter := TWriteReviewPresenter.Create(WriteReviewView,
     FBook, WriteReviewRestService);
@@ -70,24 +74,26 @@ begin
   FView.Show;
 end;
 
-function TBookDetailsPresenter.IsUserAuthorized: Boolean;
+function TBookDetailsPresenter.IsUserNotAuthorized: Boolean;
 begin
   FRestService.RefreshToken;
-  Result := True;
-  var IsUserAuthorized := FRestService.IsUserAuthorize;
-  if IsUserAuthorized then
-  begin
-    Result := False;
-    if FView.ShowConfirmationDialog(
+  Result := False;
+  var IsUserNotAuthorized := FRestService.IsUserNotAuthorize;
+  if IsUserNotAuthorized then
+    Result := True;
+end;
+
+
+procedure TBookDetailsPresenter.PromptLogin;
+begin
+  if FView.ShowConfirmationDialog(
       'Please Login first, would you like to proceed?') = 6 then
     begin
-      var LoginView := FViewFactory.CreateLoginView(FView as TForm);
+      var LoginView := FViewFactory.CreateLoginView(FView);
       var LoginService := TLoginRestService.Create;
       var LoginPresenter := TLoginPresenter.Create(LoginView, LoginService);
       LoginView.Show;
     end;
-  end;
 end;
-
 
 end.

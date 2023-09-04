@@ -1,0 +1,47 @@
+unit BasicCourseLoginView;
+
+interface
+
+uses
+  ViewIntf,
+  PresenterIntf;
+
+type
+  TBasicCourseLoginView = class(TInterfacedObject, ILoginView)
+    procedure Show;
+    procedure Close;
+    function GetUsername: string;
+    function GetPassword: string;
+    procedure SetPresenter(APresenter: ILoginPresenter);
+  end;
+
+implementation
+
+{ TBasicCourseLoginView }
+
+procedure TBasicCourseLoginView.Close;
+begin
+
+end;
+
+function TBasicCourseLoginView.GetPassword: string;
+begin
+
+end;
+
+function TBasicCourseLoginView.GetUsername: string;
+begin
+
+end;
+
+procedure TBasicCourseLoginView.SetPresenter(APresenter: ILoginPresenter);
+begin
+
+end;
+
+procedure TBasicCourseLoginView.Show;
+begin
+
+end;
+
+end.

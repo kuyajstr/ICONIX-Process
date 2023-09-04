@@ -1,0 +1,71 @@
+unit BasicCourseWriteReviewView;
+
+interface
+
+uses
+  ViewIntf,
+  PresenterIntf;
+
+type
+  TBasicCourseWriteReviewView = class(TInterfacedObject, IWriteReviewView)
+  private
+    FTitle: string;
+    FPresenter: IWriteReviewPresenter;
+  public
+    procedure Show;
+    procedure Close;
+    procedure SetTitle(const Value: string);
+    function GetReview: string;
+    function GetRating: Integer;
+    procedure SetPresenter(APresenter: IWriteReviewPresenter);
+    procedure ShowMessageBox(const MessageStr: string);
+    function ShowConfirmationDialog(const MessageStr: string): Integer;
+  end;
+
+implementation
+
+{ TBasicCourseWriteReviewView }
+
+procedure TBasicCourseWriteReviewView.Close;
+begin
+
+end;
+
+function TBasicCourseWriteReviewView.GetRating: Integer;
+begin
+
+end;
+
+function TBasicCourseWriteReviewView.GetReview: string;
+begin
+
+end;
+
+procedure TBasicCourseWriteReviewView.SetPresenter(
+  APresenter: IWriteReviewPresenter);
+begin
+
+end;
+
+procedure TBasicCourseWriteReviewView.SetTitle(const Value: string);
+begin
+  FTitle := Value;
+end;
+
+procedure TBasicCourseWriteReviewView.Show;
+begin
+
+end;
+
+function TBasicCourseWriteReviewView.ShowConfirmationDialog(
+  const MessageStr: string): Integer;
+begin
+  Result := 6;
+end;
+
+procedure TBasicCourseWriteReviewView.ShowMessageBox(const MessageStr: string);
+begin
+
+end;
+
+end.

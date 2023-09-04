@@ -9,7 +9,7 @@ type
   IBookDetailsRestService = interface
     ['{F50B4685-82B2-42BB-B821-95E25EDF0DEE}']
     procedure RefreshToken;
-    function IsUserAuthorize: Boolean;
+    function IsUserNotAuthorize: Boolean;
   end;
 
   TBookDetailsRestService = class(TInterfacedObject, IBookDetailsRestService)
@@ -19,7 +19,7 @@ type
   public
     constructor Create;
     procedure RefreshToken;
-    function IsUserAuthorize: Boolean;
+    function IsUserNotAuthorize: Boolean;
   end;
 
 implementation
@@ -34,7 +34,7 @@ begin
   FRestClient.SetBearerAuthorization(FAuthService.GetToken);
 end;
 
-function TBookDetailsRestService.IsUserAuthorize: Boolean;
+function TBookDetailsRestService.IsUserNotAuthorize: Boolean;
 begin
   var CheckUserRequest := FRestClient.Post('/api/customer_reviews', '{}');
   // Check if ReasonString is Unauthorized

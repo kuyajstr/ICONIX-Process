@@ -11,8 +11,10 @@ type
   TBookDetailsViewStub = class(TInterfacedObject, IBookDetailsView)
   private
     FPresenter: IBookDetailsPresenter;
-    FResponse: Integer;
+    FIsBasicCourse: Boolean;
+    FTitle, FSynopsis: string;
   public
+    constructor Create(IsBasicCourse: Boolean);
     procedure Show;
     procedure SetTitle(const Value: string);
     procedure SetSynopsis(const Value: string);
@@ -25,9 +27,16 @@ implementation
 
 uses
   SysUtils,
-  Vcl.Controls;
+  Vcl.Controls,
+  DisplayException,
+  SetException;
 
 { TBookDetailsViewStub }
+
+constructor TBookDetailsViewStub.Create(IsBasicCourse: Boolean);
+begin
+  FIsBasicCourse := IsBasicCourse;
+end;
 
 procedure TBookDetailsViewStub.SetPresenter(APresenter: IBookDetailsPresenter);
 begin
@@ -36,23 +45,26 @@ end;
 
 procedure TBookDetailsViewStub.SetSynopsis(const Value: string);
 begin
-  raise Exception.Create(Value);
+  FSynopsis := Value;
 end;
 
 procedure TBookDetailsViewStub.SetTitle(const Value: string);
 begin
-  raise Exception.Create(Value);
+  FTitle := Value;
 end;
 
 procedure TBookDetailsViewStub.Show;
 begin
-    raise Exception.Create('BookDetailsView');
+  raise TDisplayException.Create('BookDetailsView');
 end;
 
 function TBookDetailsViewStub.ShowConfirmationDialog(
   const MessageStr: string): Integer;
 begin
-  Result := FResponse;
+  if FIsBasicCourse then
+    Result := 6
+  else
+    Result := 7;
 end;
 
 end.

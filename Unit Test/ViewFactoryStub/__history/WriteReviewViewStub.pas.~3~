@@ -1,0 +1,83 @@
+unit WriteReviewViewStub;
+
+interface
+
+uses
+  ViewIntf,
+  PresenterIntf;
+
+type
+  TWriteReViewViewStub = class(TInterfacedObject, IWriteReviewView)
+  private
+    FTitle: string;
+    FPresenter: IWriteReviewPresenter;
+    FShouldConfirm: Boolean;
+  public
+    constructor Create(ShouldConfirm: Boolean);
+    procedure Show;
+    procedure Close;
+    procedure SetTitle(const Value: string);
+    function GetReview: string;
+    function GetRating: Integer;
+    procedure SetPresenter(APresenter: IWriteReviewPresenter);
+    procedure ShowMessageBox(const MessageStr: string);
+    function ShowConfirmationDialog(const MessageStr: string): Integer;
+  end;
+
+implementation
+
+uses
+  SysUtils;
+
+{ TWriteReViewViewStub }
+
+procedure TWriteReViewViewStub.Close;
+begin
+
+end;
+
+constructor TWriteReViewViewStub.Create(ShouldConfirm: Boolean);
+begin
+  FShouldConfirm := ShouldConfirm;
+end;
+
+function TWriteReViewViewStub.GetRating: Integer;
+begin
+
+end;
+
+function TWriteReViewViewStub.GetReview: string;
+begin
+
+end;
+
+procedure TWriteReViewViewStub.SetPresenter(APresenter: IWriteReviewPresenter);
+begin
+
+end;
+
+procedure TWriteReViewViewStub.SetTitle(const Value: string);
+begin
+
+end;
+
+procedure TWriteReViewViewStub.Show;
+begin
+
+end;
+
+function TWriteReViewViewStub.ShowConfirmationDialog(
+  const MessageStr: string): Integer;
+begin
+  if FShouldConfirm then
+    Result := 6
+  else
+    Result := 7;
+end;
+
+procedure TWriteReViewViewStub.ShowMessageBox(const MessageStr: string);
+begin
+
+end;
+
+end.

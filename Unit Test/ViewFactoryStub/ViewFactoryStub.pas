@@ -10,40 +10,55 @@ uses
 
 type
   TViewFactoryStub = class(TInterfacedObject, IViewFactory)
-    function CreateMainView(AOwner: TComponent): IMainView;
-    function CreateBookDetailView(AOwner: TComponent): IBookDetailsView;
-    function CreateLoginView(AOwner: TComponent): ILoginView;
-    function CreateWriteReviewView(AOwner: TComponent): IWriteReviewView;
+  private
+    FIsBasicCourse: Boolean;
+  public
+    constructor Create(IsBasicCourse: Boolean);
+    function CreateMainView(AOwner: IInterface): IMainView;
+    function CreateBookDetailView(AOwner: IInterface): IBookDetailsView;
+    function CreateLoginView(AOwner: IInterface): ILoginView;
+    function CreateWriteReviewView(AOwner: IInterface): IWriteReviewView;
   end;
 
 implementation
 
 uses
-  MainViewStub,
-  BookDetailsViewStub;
+  BasicCourseMainView,
+  AlternativeMainView,
+  BookDetailsViewStub,
+  LoginViewStub,
+  WriteReviewViewStub;
 
 { TViewFactoryStub }
 
+constructor TViewFactoryStub.Create(IsBasicCourse: Boolean);
+begin
+  FIsBasicCourse := IsBasicCourse;
+end;
+
 function TViewFactoryStub.CreateBookDetailView(
-  AOwner: TComponent): IBookDetailsView;
+  AOwner: IInterface): IBookDetailsView;
 begin
-  Result := TBookDetailsViewStub.Create;
+  Result := TBookDetailsViewStub.Create(FIsBasicCourse);
 end;
 
-function TViewFactoryStub.CreateLoginView(AOwner: TComponent): ILoginView;
+function TViewFactoryStub.CreateLoginView(AOwner: IInterface): ILoginView;
 begin
-
+  Result := TLoginViewStub.Create;
 end;
 
-function TViewFactoryStub.CreateMainView(AOwner: TComponent): IMainView;
+function TViewFactoryStub.CreateMainView(AOwner: IInterface): IMainView;
 begin
-  Result := TMainViewStub.Create;
+  if FIsBasicCourse then
+    Result := TBasicCourseMainView.Create
+  else
+    Result := TAlternativeMainView.Create;
 end;
 
 function TViewFactoryStub.CreateWriteReviewView(
-  AOwner: TComponent): IWriteReviewView;
+  AOwner: IInterface): IWriteReviewView;
 begin
-
+  Result := TWriteReViewViewStub.Create(FIsBasicCourse);
 end;
 
 end.

@@ -6,17 +6,20 @@ uses
   PresenterIntf,
   ViewIntf,
   Book,
-  MVCFramework.RESTClient,
-  BookDetailsView;
+  BookDetailsView,
+  BookDetailsRestService,
+  ViewFactory;
 
 type
   TBookDetailsPresenter = class(TinterfacedObject, IBookDetailsPresenter)
   private
     FBook: TBook;
     FView: IBookDetailsView;
-    FRestClient: IMVCRestClient;
+    FViewFactory: IViewFactory;
+    FRestService: IBookDetailsRestService;
   public
-    constructor Create(AView: IBookDetailsView; ABook: TBook);
+    constructor Create(AView: IBookDetailsView; ABook: TBook;
+      ARestService: IBookDetailsRestService; AViewFactory: IViewFactory);
     procedure ComposeReview;
     procedure DisplayView;
     function IsUserAuthorized: Boolean;
@@ -32,8 +35,8 @@ uses
   LoginPresenter,
   LoginView,
   Vcl.Forms,
-  Vcl.Dialogs,
-  Vcl.Controls;
+  LoginRestService,
+  WriteReviewRestService;
 
 { TBookDetailsController }
 
@@ -42,16 +45,19 @@ begin
   if not IsUserAuthorized then
     Exit;
 
-  var WriteReviewView := TWriteReviewForm.Create(FView as TForm);
-  var WriteReviewPresenter := TWriteReviewPresenter.Create(WriteReviewView, FBook);
+  var WriteReviewView := FViewFactory.CreateWriteReviewView(FView as TForm);
+  var WriteReviewRestService := TWriteReviewRestService.Create;
+  var WriteReviewPresenter := TWriteReviewPresenter.Create(WriteReviewView,
+    FBook, WriteReviewRestService);
   WriteReviewPresenter.DisplayView;
 end;
 
-constructor TBookDetailsPresenter.Create(AView: IBookDetailsView; ABook: TBook);
+constructor TBookDetailsPresenter.Create(AView: IBookDetailsView; ABook: TBook;
+  ARestService: IBookDetailsRestService; AViewFactory: IViewFactory);
 begin
   inherited Create;
-  FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
-  FRestClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
+  FRestService := ARestService;
+  FViewFactory := AViewFactory;
   FBook := ABook;
   FView := AView;
   FView.SetPresenter(Self);
@@ -66,22 +72,22 @@ end;
 
 function TBookDetailsPresenter.IsUserAuthorized: Boolean;
 begin
-  FRestClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
-
+  FRestService.RefreshToken;
   Result := True;
-  var CheckUserRequest := FRestClient.Post('/api/customer_reviews', '{}');
-  // Check if ReasonString is Unauthorized
-  if CheckUserRequest.StatusCode = 403 then
+  var IsUserAuthorized := FRestService.IsUserAuthorize;
+  if IsUserAuthorized then
   begin
     Result := False;
-    if MessageDlg('Please Login first, would you like to proceed?',
-      mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    if FView.ShowConfirmationDialog(
+      'Please Login first, would you like to proceed?') = 6 then
     begin
-      var LoginView := TLoginForm.Create(FView as TForm);
-      var LoginPresenter := TLoginPresenter.Create(LoginView);
+      var LoginView := FViewFactory.CreateLoginView(FView as TForm);
+      var LoginService := TLoginRestService.Create;
+      var LoginPresenter := TLoginPresenter.Create(LoginView, LoginService);
       LoginView.Show;
     end;
   end;
 end;
+
 
 end.

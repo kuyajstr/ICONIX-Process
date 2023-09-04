@@ -1,0 +1,32 @@
+unit MainRestServiceStub;
+
+interface
+
+uses
+  MainRestService,
+  Generics.Collections;
+
+type
+  TMainRestServiceStub = class(TInterfacedObject, IMainRestService)
+  private
+    FList: TList<TObject>;
+  public
+    constructor Create;
+    function RetrieveBooks: TList<TObject>;
+  end;
+
+implementation
+
+{ TMainRestServiceStub }
+
+constructor TMainRestServiceStub.Create;
+begin
+  FList := TList<TObject>.Create;
+end;
+
+function TMainRestServiceStub.RetrieveBooks: TList<TObject>;
+begin
+  Result := FList;
+end;
+
+end.

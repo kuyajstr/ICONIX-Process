@@ -22,6 +22,7 @@ type
   public
     procedure SetTitle(const Value: string);
     procedure SetSynopsis(const Value: string);
+    function ShowConfirmationDialog(const MessageStr: string): Integer;
   end;
 
 implementation
@@ -29,7 +30,8 @@ implementation
 {$R *.dfm}
 
 uses
-  BookDetailsPresenter;
+  BookDetailsPresenter,
+  UITypes;
 
 procedure TBookDetailsForm.SetSynopsis(const Value: string);
 begin
@@ -39,6 +41,12 @@ end;
 procedure TBookDetailsForm.SetTitle(const Value: string);
 begin
   TitleEdit.Text := Value;
+end;
+
+function TBookDetailsForm.ShowConfirmationDialog(
+  const MessageStr: string): Integer;
+begin
+  Result := MessageDlg(MessageStr, mtConfirmation, [mbYes, mbNo], 0);
 end;
 
 procedure TBookDetailsForm.WriteReviewButtonClick(Sender: TObject);

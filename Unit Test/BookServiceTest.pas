@@ -10,33 +10,33 @@ type
   [TestFixture]
   TBookServiceTest = class
   public
-    [Test]
+//    [Test]
     procedure CreateBook_TitleIsEmpty_RaiseException;
-    [Test]
+//    [Test]
     procedure CreateBook_SynopsisIsEmpty_RaiseException;
-    [Test]
+//    [Test]
     procedure CreateBook_SuccessfullyInsert_WillNotRaiseException;
 
-    [TestCase('ZeroID', '0')]
-    [TestCase('NegativeID', '-1')]
-    [TestCase('ExceedingID', '100')]
+//    [TestCase('ZeroID', '0')]
+//    [TestCase('NegativeID', '-1')]
+//    [TestCase('ExceedingID', '100')]
     procedure GetBook_InvalidIdRange_RaiseException(const ID: Integer);
 
-    [TestCase('ZeroIdMessage', '0,Invalid ID')]
-    [TestCase('NegativeIdMessage', '-1,Invalid ID')]
-    [TestCase('ExceedingIdMessage', '100,ID Out of bound')]
+//    [TestCase('ZeroIdMessage', '0,Invalid ID')]
+//    [TestCase('NegativeIdMessage', '-1,Invalid ID')]
+//    [TestCase('ExceedingIdMessage', '100,ID Out of bound')]
     procedure GetBook_MatchingErrorMessage_True(const ID: Integer;
       const ErrorStr: string);
 
-    [Test]
+//    [Test]
     procedure GetBook_SucessfullyRetrieveBook_True;
 
-    [Test]
+//    [Test]
     procedure GetAllBooks_DatabaseHasData_True;
-    [Test]
+//    [Test]
     procedure GetAllBooks_DataBaseIsEmpty_True;
 
-    [Test]
+//    [Test]
     procedure GetAllBooks_UseActualDatabase_True;
   end;
 

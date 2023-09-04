@@ -1,0 +1,44 @@
+unit MainRestService;
+
+interface
+
+uses
+  Generics.Collections;
+
+type
+  IMainRestService = interface
+    ['{3CBFB9D4-16C7-4F8F-A371-284C49214518}']
+    function RetrieveBooks: TList<TObject>;
+    procedure GuestLogin;
+  end;
+
+  TMainRestService = class(TInterfacedObject, IMainRestService)
+  public
+    constructor Create;
+    function RetrieveBooks: TList<TObject>;
+    procedure GuestLogin;
+  end;
+
+implementation
+
+{ TMainRestService }
+
+constructor TMainRestService.Create;
+begin
+  inherited Create;
+  FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
+  FAuthService := TAuthService.GetInstance;
+  FRestClient.SetBearerAuthorization(FAuthService.GetToken);
+end;
+
+procedure TMainRestService.GuestLogin;
+begin
+
+end;
+
+function TMainRestService.RetrieveBooks: TList<TObject>;
+begin
+
+end;
+
+end.

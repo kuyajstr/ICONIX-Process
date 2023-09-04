@@ -1,0 +1,79 @@
+unit MainPresenter;
+
+interface
+
+uses
+  PresenterIntf,
+  ViewIntf,
+  Generics.Collections,
+  Book,
+  SysUtils,
+  MainRestService,
+  ViewFactory;
+
+type
+  TMainPresenter = class(TInterfacedObject, IMainPresenter)
+  private
+    FView: IMainView;
+    FBookList: TList<TObject>;
+    FRestService: IMainRestService;
+    FViewFactory: IViewFactory;
+  public
+    constructor Create(AView: IMainView; ARestService: IMainRestService;
+      AViewFactory: IViewFactory);
+    function GetModelClass: TClass;
+    function GetBookList: TList<TObject>;
+    procedure LoadBooks;
+    procedure ShowBookDetails;
+  end;
+
+implementation
+
+uses
+  BookDetailsView,
+  BookDetailsPresenter,
+  BookDetailsRestService,
+  Vcl.Forms;
+
+{ TMainPresenter }
+
+constructor TMainPresenter.Create(AView: IMainView;
+  ARestService: IMainRestService; AViewFactory: IViewFactory);
+begin
+  inherited Create;
+  FRestService := ARestService;
+  FRestService.GuestLogin;
+  FView := AView;
+  FView.SetPresenter(Self);
+  FBookList := TList<TObject>.Create;
+end;
+
+procedure TMainPresenter.LoadBooks;
+begin
+  FBookList := FRestService.RetrieveBooks;
+
+  if FBookList.Count = 0 then
+    FView.ShowMessageBox('No Record Found');
+end;
+
+function TMainPresenter.GetBookList: TList<TObject>;
+begin
+  Result := FBookList;
+end;
+
+function TMainPresenter.GetModelClass: TClass;
+begin
+  Result := TBook;
+end;
+
+procedure TMainPresenter.ShowBookDetails;
+begin
+  var SelectedBook := FView.GetBindSource.Adapter.Current as TBook;
+  var BookDetailsView := TBookDetailsForm.Create(FView as TForm);
+  var BookDetailsService := TBookDetailsRestService.Create;
+  var BookDetailsPresenter := TBookDetailsPresenter.Create(BookDetailsView,
+    SelectedBook, BookDetailsService);
+  BookDetailsPresenter.DisplayView;
+end;
+
+end.

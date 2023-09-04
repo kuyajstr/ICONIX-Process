@@ -85,6 +85,18 @@ begin
   finally
     BooksAR.Free;
   end;
+
+//  var BooksAR := TBookActiveRecord.Create;
+//  try
+//    var Books := BooksAR.All<TBookActiveRecord>;
+//
+//    for var Book in Books do
+//    begin
+//      AList.Add(TBook.Create(Book));
+//    end;
+//  finally
+//    BooksAR.Free;
+//  end;
 end;
 
 procedure TBookActiveRecordDao.Update(var Obj: TBook);

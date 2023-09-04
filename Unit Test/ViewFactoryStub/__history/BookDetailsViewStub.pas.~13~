@@ -1,0 +1,69 @@
+unit BookDetailsViewStub;
+
+interface
+
+uses
+  ViewIntf,
+  PresenterIntf;
+
+type
+  TBookDetailsViewStub = class(TInterfacedObject, IBookDetailsView)
+  private
+    FPresenter: IBookDetailsPresenter;
+    FResponse: Integer;
+  public
+    constructor CreateYesReponse;
+    constructor CreateNoResponse;
+    procedure Show;
+    procedure SetTitle(const Value: string);
+    procedure SetSynopsis(const Value: string);
+    procedure SetPresenter(APresenter: IBookDetailsPresenter);
+    function ShowConfirmationDialog(const MessageStr: string): Integer;
+  end;
+
+
+implementation
+
+uses
+  SysUtils,
+  Vcl.Controls;
+
+{ TBookDetailsViewStub }
+
+constructor TBookDetailsViewStub.CreateYesReponse;
+begin
+  FResponse := 6;
+end;
+
+constructor TBookDetailsViewStub.CreateNoResponse;
+begin
+  FResponse := 7;
+end;
+
+procedure TBookDetailsViewStub.SetPresenter(APresenter: IBookDetailsPresenter);
+begin
+  FPresenter := APresenter;
+end;
+
+procedure TBookDetailsViewStub.SetSynopsis(const Value: string);
+begin
+  raise Exception.Create(Value);
+end;
+
+procedure TBookDetailsViewStub.SetTitle(const Value: string);
+begin
+  raise Exception.Create(Value);
+end;
+
+procedure TBookDetailsViewStub.Show;
+begin
+    raise Exception.Create('BookDetailsView');
+end;
+
+function TBookDetailsViewStub.ShowConfirmationDialog(
+  const MessageStr: string): Integer;
+begin
+  Result := FResponse;
+end;
+
+end.

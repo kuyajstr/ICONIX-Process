@@ -1,0 +1,97 @@
+unit RestClientManager;
+
+interface
+
+uses
+  RestClientManagerIntf,
+  AuthService,
+  MVCFramework.RESTClient,
+  Generics.Collections,
+  Book;
+
+type
+  TRestClientManager = class(TInterfacedObject, IRestClientManager)
+  private
+    FRestClient: IMVCRestClient;
+    FAuthService: TAuthService;
+  protected
+    function RetrieveBooks: TList<TBook>;
+    function IsUserAuthorize: Boolean;
+    procedure GuestLogin;
+    procedure AdminLogin;
+    function Login(const Username, Password: string;
+      ShouldShowMessage: Boolean = False): Boolean;
+    function IsReviewValid: Boolean;
+    function IsSubmissionSuccess: Boolean;
+  public
+    constructor Create;
+  end;
+
+implementation
+
+uses
+  Vcl.Dialogs;
+
+{ TRestClientManager }
+
+procedure TRestClientManager.AdminLogin;
+begin
+  Login('Admin', 'admin');
+end;
+
+constructor TRestClientManager.Create;
+begin
+  FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
+  FAuthService := TAuthService.GetInstance;
+  FRestClient.SetBearerAuthorization(FAuthService.GetToken);
+end;
+
+procedure TRestClientManager.GuestLogin;
+begin
+  Login('Guest', 'guest');
+end;
+
+function TRestClientManager.IsReviewValid: Boolean;
+begin
+
+end;
+
+function TRestClientManager.IsSubmissionSuccess: Boolean;
+begin
+
+end;
+
+function TRestClientManager.IsUserAuthorize: Boolean;
+begin
+
+end;
+
+function TRestClientManager.Login(const Username, Password: string;
+  ShouldShowMessage: Boolean): Boolean;
+begin
+  FRestClient.SetBasicAuthorization(Username, Password);
+
+  var Response := FRestClient.Get('/api/login') as TMVCRESTResponse;
+  if Response.Success then
+  begin
+    var Token: string := Response.ToJSONObject.Values['token'];
+    FAuthService.SetToken(Token);
+  end;
+
+  if ShouldShowMessage then
+  begin
+    if Response.Success then
+      ShowMessage('Login Sucessful!')
+    else
+      ShowMessage('Incorrect Login Credentials!');
+  end;
+
+  Result := Response.Success;
+end;
+
+function TRestClientManager.RetrieveBooks: TList<TBook>;
+begin
+
+end;
+
+end.

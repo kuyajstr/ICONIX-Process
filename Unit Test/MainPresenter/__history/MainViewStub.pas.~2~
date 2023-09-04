@@ -1,0 +1,40 @@
+unit MainViewStub;
+
+interface
+
+uses
+  ViewIntf,
+  PresenterIntf,
+  Book;
+
+type
+  TMainViewStub = class(TInterfacedObject, IMainView) 
+  public
+    procedure SetPresenter(APresenter: IMainPresenter);
+    procedure ShowMessageBox(const MessageStr: string);
+    function GetSelectedBook: TObject;
+  end;
+
+implementation
+
+uses
+  SysUtils;
+
+{ TMainViewStub }
+
+function TMainViewStub.GetSelectedBook: TObject;
+begin
+  Result := TBook.Create('Book A', 'Book A Synopsis', 1);  
+end;
+
+procedure TMainViewStub.SetPresenter(APresenter: IMainPresenter);
+begin
+  //do nothing
+end;
+
+procedure TMainViewStub.ShowMessageBox(const MessageStr: string);
+begin
+  raise Exception.Create(MessageStr);
+end;
+
+end.

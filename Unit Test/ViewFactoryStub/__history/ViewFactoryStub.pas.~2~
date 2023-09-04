@@ -1,0 +1,16 @@
+unit ViewFactoryStub;
+
+interface
+
+uses
+  ViewFactory,
+  ViewIntf;
+
+type
+  TViewFactoryStub = class(TInterfacedObject, IViewFactory)
+
+  end;
+
+implementation
+
+end.

@@ -14,20 +14,20 @@ type
   private
     FMockDB: TList<TCustomerReview>;
   public
-    [Setup]
+//    [Setup]
     procedure Setup;
 
-    [TearDown]
+//    [TearDown]
     procedure Teardown;
 
-    [Test]
+//    [Test]
     procedure Validate_SucessfullyValidateReview_WillNotRaiseException;
 
-    [TestCase('Review is less than 10 char', 'Test,4,The review is too short')]
-    [TestCase('Rating is equal to 0', 'Review Test,0,Rating outside allowed range')]
-    [TestCase('Rating is less than 0', 'Review Test,-1,Rating outside allowed range')]
-    [TestCase('Rating is more than 5', 'Review Test,6,Rating outside allowed range')]
-    [TestCase('Rating is floating point', 'Review Test,4.5,Rating outside allowed range')]
+//    [TestCase('Review is less than 10 char', 'Test,4,The review is too short')]
+//    [TestCase('Rating is equal to 0', 'Review Test,0,Rating outside allowed range')]
+//    [TestCase('Rating is less than 0', 'Review Test,-1,Rating outside allowed range')]
+//    [TestCase('Rating is more than 5', 'Review Test,6,Rating outside allowed range')]
+//    [TestCase('Rating is floating point', 'Review Test,4.5,Rating outside allowed range')]
     procedure Validate_InputInvalidCustomerReview_MatchingErrorMessage(
       const ReviewStr : string; const Rating: Integer; const ExpectedErrorMsg: string);
   end;

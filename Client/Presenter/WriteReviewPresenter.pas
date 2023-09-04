@@ -5,22 +5,21 @@ interface
 uses
   PresenterIntf,
   ViewIntf,
-  Vcl.Forms,
   Json,
-  CustomerReview,
   MVCFramework.RESTClient,
-  Book;
+  Book,
+  WriteReviewRestService;
 
 type
   TWriteReviewPresenter = class(TInterfacedObject, IWriteReviewPresenter)
   private
     FView: IWriteReviewView;
-    FCustomerReview: TCustomerReview;
     FBook: TBook;
-    FRestClient: IMVCRESTClient;
-    procedure SubmitReview(JSONBody: TJSONObject);
+    FRestService: IWriteReviewRestService;
   public
-    constructor Create(AView: IWriteReviewView; ABook: TBook);
+    procedure SubmitReview(JSONBody: TJSONObject);
+    constructor Create(AView: IWriteReviewView; ABook: TBook;
+      ARestService: IWriteReviewRestService);
     procedure DisplayView;
     procedure ValidateReview;
   end;
@@ -29,15 +28,13 @@ implementation
 
 uses
   WriteReviewView,
-  Vcl.Dialogs,
-  Vcl.Controls,
   AuthService;
 
-constructor TWriteReviewPresenter.Create(AView: IWriteReviewView; ABook: TBook);
+constructor TWriteReviewPresenter.Create(AView: IWriteReviewView; ABook: TBook;
+  ARestService: IWriteReviewRestService);
 begin
   inherited Create;
-  FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
-  FRestClient.SetBearerAuthorization(TAuthService.GetInstance.GetToken);
+  FRestService := ARestService;
   FBook := ABook;
   FView := AView;
   FView.SetPresenter(Self);
@@ -51,8 +48,8 @@ end;
 
 procedure TWriteReviewPresenter.SubmitReview(JSONBody: TJSONObject);
 begin
-  var Resp := FRestClient.Post('/api/customer_reviews', JSONBody.ToString);
-  if Resp.Success then
+  var Submission := FRestService.IsSubmissionSuccess(JSONBody);
+  if Submission then
     FView.ShowMessageBox('Review submitted!')
   else
     FView.ShowMessageBox('Submission failed');
@@ -65,17 +62,18 @@ begin
   JSONBody.AddPair('Review', FView.GetReview);
   JSONBody.AddPair('Rating', FView.GetRating);
 
-  var Resp := FRestClient.Post('/api/customer_reviews/validate', JSONBody.ToString);
-  if Resp.Success then
+  var Response := FRestService.ValidationResponse(JSONBody);
+  var IsValid := Response = 'Customer Review is Valid';
+  if IsValid then
   begin
-    if FView.ShowConfirmationDialog('Submit Review?') = mrYes then
+    if FView.ShowConfirmationDialog('Submit Review?') = 6 then
     begin
       SubmitReview(JSONBody);
       FView.Close;
     end;
   end
   else
-    FView.ShowMessageBox(Resp.Content);
+    FView.ShowMessageBox(Response);
 end;
 
 end.

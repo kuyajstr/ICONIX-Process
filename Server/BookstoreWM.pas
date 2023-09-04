@@ -26,8 +26,9 @@ implementation
 {$R *.dfm}
 
 uses
-  BookService,
+  MVCFramework.ActiveRecord,
   BookActiveRecordDao,
+  BookService,
   BookController,
 
   CustomerService,

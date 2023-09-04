@@ -1,0 +1,16 @@
+unit BookDetailsViewStub;
+
+interface
+
+uses
+  ViewIntf;
+
+type
+  TBookDetailsViewStub = class()
+
+  end;
+
+
+implementation
+
+end.

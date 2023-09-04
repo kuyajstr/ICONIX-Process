@@ -96,7 +96,7 @@ procedure TAuthCriteria.OnRequest(const AContext: TWebContext;
   const AControllerQualifiedClassName, AActionName: string;
   var AAuthenticationRequired: Boolean);
 begin
-  AAuthenticationRequired := False;
+  AAuthenticationRequired := True;
 end;
 
 end.

@@ -1,0 +1,31 @@
+unit MainPresenterTest;
+
+interface
+
+uses
+  DUnitX.TestFramework;
+
+type
+  [TestFixture]
+  TMainPresenterTest = class
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+  end;
+
+implementation
+
+procedure TMainPresenterTest.Setup;
+begin
+end;
+
+procedure TMainPresenterTest.TearDown;
+begin
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TMainPresenterTest);
+
+end.

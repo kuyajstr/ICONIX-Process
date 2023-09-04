@@ -24,6 +24,7 @@ package DataLayer;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
+{$DEFINE InternetBookstore}
 {$ENDIF IMPLICITBUILDING}
 {$IMPLICITBUILD ON}
 
@@ -49,7 +50,8 @@ contains
   CustomerReviewActiveRecord in 'Customer Review\CustomerReviewActiveRecord.pas',
   CustomerReviewActiveRecordDao in 'Customer Review\CustomerReviewActiveRecordDao.pas',
   CustomerActiveRecord in 'Customer\CustomerActiveRecord.pas',
-  CustomerActiveRecordDao in 'Customer\CustomerActiveRecordDao.pas';
+  CustomerActiveRecordDao in 'Customer\CustomerActiveRecordDao.pas',
+  EntityActiveRecord in 'EntityActiveRecord.pas';
 
 end.
 

@@ -13,10 +13,11 @@ uses
   DUnitX.Loggers.Xml.NUnit,
   {$ENDIF }
   DUnitX.TestFramework,
-  TestBookDao in 'TestBookDao.pas',
-  BookServiceTest in 'BookServiceTest.pas',
-  CustomerReviewServiceTest in 'CustomerReviewServiceTest.pas',
-  TestCustomerReviewDao in 'TestCustomerReviewDao.pas';
+  MainPresenterTest in 'MainPresenter\MainPresenterTest.pas',
+  MainViewStub in 'ViewFactoryStub\MainViewStub.pas',
+  MainRestServiceStub in 'MainPresenter\MainRestServiceStub.pas',
+  BookDetailsViewStub in 'ViewFactoryStub\BookDetailsViewStub.pas',
+  ViewFactoryStub in 'ViewFactoryStub\ViewFactoryStub.pas';
 
 {$IFNDEF TESTINSIGHT}
 var

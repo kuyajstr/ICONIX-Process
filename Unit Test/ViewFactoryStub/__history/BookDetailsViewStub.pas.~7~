@@ -1,0 +1,55 @@
+unit BookDetailsViewStub;
+
+interface
+
+uses
+  ViewIntf,
+  PresenterIntf;
+
+type
+  TBookDetailsViewStub = class(TInterfacedObject, IBookDetailsView)
+  private
+    FPresenter: IBookDetailsPresenter;
+  public
+    procedure Show;
+    procedure SetTitle(const Value: string);
+    procedure SetSynopsis(const Value: string);
+    procedure SetPresenter(APresenter: IBookDetailsPresenter);
+    function ShowConfirmationDialog(const MessageStr: string): Integer;
+  end;
+
+
+implementation
+
+uses
+  SysUtils;
+
+{ TBookDetailsViewStub }
+
+procedure TBookDetailsViewStub.SetPresenter(APresenter: IBookDetailsPresenter);
+begin
+  FPresenter := APresenter;
+end;
+
+procedure TBookDetailsViewStub.SetSynopsis(const Value: string);
+begin
+  raise Exception.Create(Value);
+end;
+
+procedure TBookDetailsViewStub.SetTitle(const Value: string);
+begin
+  raise Exception.Create(Value);
+end;
+
+procedure TBookDetailsViewStub.Show;
+begin
+  raise Exception.Create('BookDetailsView');
+end;
+
+function TBookDetailsViewStub.ShowConfirmationDialog(
+  const MessageStr: string): Integer;
+begin
+  Result := 6;
+end;
+
+end.

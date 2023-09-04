@@ -1,0 +1,13 @@
+unit BookDetailsViewStub;
+
+interface
+
+uses
+  ViewIntf;
+
+
+
+
+implementation
+
+end.

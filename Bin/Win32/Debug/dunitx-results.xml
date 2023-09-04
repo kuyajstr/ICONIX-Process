@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<test-results name="C:\Users\Nathan\Desktop\Training Programs\Coding\Internet Bookstore\Bin\Win32\Debug\UnitTest.exe" total="7" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2023-09-04" time="0.128">
+  <culture-info current-culture="en" current-uiculture="en" />
+  <test-suite type="Assembly" name="UnitTest.exe" executed="true" result="Success" success="True" time="0.128" asserts="0">
+    <results>
+        <test-suite type="Namespace" name="MainPresenterTest" executed="true" result="Success" success="True" time="0.128" asserts="0" >
+          <results>
+              <test-suite type="Fixture" name="TMainPresenterTest" executed="True" result="Success" success="True" time="0.128" >
+                <results>
+                  <test-case name="LoadBooks_SuccessfullyRetrieveBooks_BookCountIsNotZero" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="LoadBooks_SuccessfullyRetrieveBooks_BookCountShouldBeThree" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="LoadBooks_NoBooksFound_CountShouldBeZero" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="LoadBooks_NoBooksFound_ShowMessageMatchErrorMessage" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="ShowBookDetails_SucessfullyRetrieveFirstBook_ShouldMatchBookName" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="ShowBookDetails_SucessfullyRetrieveFirstBook_ShouldMatchBookSynopsis" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="ShowBookDetails_SucessfullyRetrieveFirstBook_ShouldMatchBookID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                </results>
+              </test-suite>
+          </results>
+        </test-suite>
+    </results>
+  </test-suite>
+</test-results>

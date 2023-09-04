@@ -1,0 +1,96 @@
+unit MainPresenter;
+
+interface
+
+uses
+  PresenterIntf,
+  ViewIntf,
+  Generics.Collections,
+  Book,
+  SysUtils,
+  MainRestService;
+
+type
+  TMainPresenter = class(TInterfacedObject, IMainPresenter)
+  private
+    FView: IMainView;
+    FBookList: TList<TObject>;
+    FRestService: IMainRestService;
+  public
+    constructor Create(AView: IMainView; ARestService: IMainRestService);
+    function GetModelClass: TClass;
+    function GetBookList: TList<TObject>;
+    procedure LoadBooks;
+    procedure ShowBookDetails;
+  end;
+
+implementation
+
+uses
+  BookDetailsView,
+  BookDetailsPresenter,
+  BookDetailsRestService,
+  Vcl.Forms;
+//  Vcl.Dialogs;
+
+{ TMainCOntroller }
+
+constructor TMainPresenter.Create(AView: IMainView; ARestService: IMainRestService);
+begin
+//  FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
+//  FRestClient.SetBasicAuthorization('Guest', 'guest');
+//  FView := AView;
+//  FView.SetPresenter(Self);
+//  FBookList := TList<TObject>.Create;
+//  inherited Create;
+//
+//  var Response := FRestClient.Get('/api/login') as TMVCRESTResponse;
+//  if Response.Success then
+//  begin
+//    var Token: string := Response.ToJSONObject.Values['token'];
+//    var AuthService := TAuthService.GetInstance;
+//    AuthService.SetToken(Token);
+//    FRestClient.SetBearerAuthorization(AuthService.GetToken);
+//  end;
+
+  inherited Create;
+  FRestService := ARestService;
+  FRestService.GuestLogin;
+  FView := AView;
+  FView.SetPresenter(Self);
+  FBookList := TList<TObject>.Create;
+end;
+
+procedure TMainPresenter.LoadBooks;
+begin
+  FBookList := FRestService.RetrieveBooks;
+//  RetrieveBooks;
+//  var BindSourceAdapter := FView.GetBindSource;
+//  BindSourceAdapter.Adapter := CreateAdapter;
+//  BindSourceAdapter.Active := True;
+
+  if FBookList.Count = 0 then
+    FView.ShowMessageBox('No Record Found');
+end;
+
+function TMainPresenter.GetBookList: TList<TObject>;
+begin
+  Result := FBookList;
+end;
+
+function TMainPresenter.GetModelClass: TClass;
+begin
+  Result := TBook;
+end;
+
+procedure TMainPresenter.ShowBookDetails;
+begin
+  var SelectedBook := FView.GetBindSource.Adapter.Current as TBook;
+  var BookDetailsView := TBookDetailsForm.Create(FView as TForm);
+  var BookDetailsService := TBookDetailsRestService.Create;
+  var BookDetailsPresenter := TBookDetailsPresenter.Create(BookDetailsView,
+    SelectedBook, BookDetailsService);
+  BookDetailsPresenter.DisplayView;
+end;
+
+end.

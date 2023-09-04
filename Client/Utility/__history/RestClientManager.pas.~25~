@@ -1,0 +1,112 @@
+unit RestClientManager;
+
+interface
+
+uses
+  RestClientManagerIntf,
+  AuthService,
+  MVCFramework.RESTClient,
+  Generics.Collections;
+
+type
+  TRestClientManager = class(TInterfacedObject, IRestClientManager)
+  private
+    FRestClient: IMVCRestClient;
+    FAuthService: TAuthService;
+  protected
+    function RetrieveBooks: TList<TObject>;
+    function IsUserAuthorize: Boolean;
+    procedure GuestLogin;
+    procedure AdminLogin;
+    function Login(const Username, Password: string;
+      ShouldShowMessage: Boolean = False): Boolean;
+    function IsReviewValid: Boolean;
+    function IsSubmissionSuccess: Boolean;
+  public
+    constructor Create;
+  end;
+
+implementation
+
+uses
+  Book,
+  CustomerReview,
+  Vcl.Dialogs,
+  REST.Json,
+  Json;
+
+{ TRestClientManager }
+
+procedure TRestClientManager.AdminLogin;
+begin
+  Login('Admin', 'admin');
+end;
+
+constructor TRestClientManager.Create;
+begin
+  FRestClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
+  FAuthService := TAuthService.GetInstance;
+  FRestClient.SetBearerAuthorization(FAuthService.GetToken);
+end;
+
+procedure TRestClientManager.GuestLogin;
+begin
+  Login('Guest', 'guest');
+end;
+
+function TRestClientManager.IsReviewValid: Boolean;
+begin
+end;
+
+function TRestClientManager.IsSubmissionSuccess: Boolean;
+begin
+
+end;
+
+function TRestClientManager.IsUserAuthorize: Boolean;
+begin
+  var CheckUserRequest := FRestClient.Post('/api/customer_reviews', '{}');
+  // Check if ReasonString is Unauthorized
+  var IsUserValid := CheckUserRequest.StatusCode = 403;
+
+  Result := IsUserValid;
+end;
+
+function TRestClientManager.Login(const Username, Password: string;
+  ShouldShowMessage: Boolean): Boolean;
+begin
+  FRestClient.SetBasicAuthorization(Username, Password);
+
+  var Response := FRestClient.Get('/api/login') as TMVCRESTResponse;
+  if Response.Success then
+  begin
+    var Token: string := Response.ToJSONObject.Values['token'];
+    FAuthService.SetToken(Token);
+  end;
+
+  if ShouldShowMessage then
+  begin
+    if Response.Success then
+      ShowMessage('Login Sucessful!')
+    else
+      ShowMessage('Incorrect Login Credentials!');
+  end;
+
+  Result := Response.Success;
+end;
+
+function TRestClientManager.RetrieveBooks: TList<TObject>;
+begin
+  Result := TList<TObject>.Create;
+  var Response := FRestClient.Get('/api/books');
+  var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
+  var BookArray := JSONValue.GetValue<TJSONArray>('data');
+
+  for var BookJson in BookArray do
+  begin
+    var Book := TJSON.JsonToObject<TBook>(BookJson.ToString);
+    Result.Add(Book);
+  end;
+end;
+
+end.

@@ -33,7 +33,7 @@ implementation
 {$R *.dfm}
 
 uses
-  BookstoreDM;
+  UITypes;
 
 { TWriteReviewFrm }
 

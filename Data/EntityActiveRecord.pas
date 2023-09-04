@@ -11,11 +11,18 @@ type
     function QueryInterface(const IID: TGUID; out Obj): HRESULT; stdcall;
     function _AddRef: Integer; stdcall;
     function _Release: Integer; stdcall;
+    constructor Create; override;
+
   end;
 
 implementation
 
 { TEntityActiveRecord }
+
+constructor TEntityActiveRecord.Create;
+begin
+  inherited;
+end;
 
 function TEntityActiveRecord.QueryInterface(const IID: TGUID; out Obj): HRESULT;
 begin

@@ -26,7 +26,7 @@ type
   private
     FPresenter: IMainPresenter;
     procedure SetPresenter(APresenter: IMainPresenter);
-    function GetBindSource: TAdapterBindSource;
+    function GetSelectedBook: TObject;
   public
     procedure ShowMessageBox(const MessageStr: string);
   end;
@@ -40,9 +40,9 @@ uses
   MVCFramework.DataSet.Utils,
   MVCFramework.Serializer.Commons;
 
-function TMainForm.GetBindSource: TAdapterBindSource;
+function TMainForm.GetSelectedBook: TObject;
 begin
-  Result := BookAdapterBindSource;
+  Result := BookAdapterBindSource.Adapter.Current;
 end;
 
 procedure TMainForm.BookGridDblClick(Sender: TObject);
@@ -54,7 +54,7 @@ procedure TMainForm.FormShow(Sender: TObject);
 begin
   FPresenter.LoadBooks;
   BookAdapterBindSource.Adapter := TListBindSourceAdapter.Create(
-    Self, FPresenter.GetBookList, FPresenter.GetModelClass, False);
+    Self, FPresenter.GetBookList, FPresenter.GetModelClass, True);
   BookAdapterBindSource.Active := True;
 end;
 

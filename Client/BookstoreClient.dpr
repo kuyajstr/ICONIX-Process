@@ -13,17 +13,25 @@ uses
   LoginView in 'View\LoginView.pas' {LoginForm},
   WriteReviewView in 'View\WriteReviewView.pas' {WriteReviewForm},
   WriteReviewPresenter in 'Presenter\WriteReviewPresenter.pas',
-  RestClientManagerIntf in 'Utility\RestClientManagerIntf.pas';
+  MainRestService in 'Utility\MainRestService.pas',
+  BookDetailsRestService in 'Utility\BookDetailsRestService.pas',
+  LoginRestService in 'Utility\LoginRestService.pas',
+  WriteReviewRestService in 'Utility\WriteReviewRestService.pas',
+  ViewFactory in 'Utility\ViewFactory.pas';
 
 {$R *.res}
 
 var
   MainView: TMainForm;
   MainPresenter: TMainPresenter;
+  MainRestService: IMainRestService;
+  ViewFactory: IViewFactory;
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TMainView, MainView);
-  MainPresenter := TMainPresenter.Create(MainView);
+  Application.CreateForm(TMainForm, MainView);
+  MainRestService := TMainRestService.Create;
+  ViewFactory := TViewFactory.Create;
+  MainPresenter := TMainPresenter.Create(MainView, MainRestService, ViewFactory);
   Application.Run;
 end.

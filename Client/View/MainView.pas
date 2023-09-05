@@ -35,11 +35,6 @@ implementation
 
 {$R *.dfm}
 
-uses
-  BookstoreDM,
-  MVCFramework.DataSet.Utils,
-  MVCFramework.Serializer.Commons;
-
 function TMainForm.GetSelectedBook: TObject;
 begin
   Result := BookAdapterBindSource.Adapter.Current;

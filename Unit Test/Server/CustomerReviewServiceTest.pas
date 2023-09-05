@@ -14,10 +14,10 @@ type
   private
     FMockDB: TList<TCustomerReview>;
   public
-//    [Setup]
+    [Setup]
     procedure Setup;
 
-//    [TearDown]
+    [TearDown]
     procedure Teardown;
 
     [Test]
@@ -30,6 +30,12 @@ type
     [TestCase('Rating is floating point', 'Review Test,4.5,Rating outside allowed range')]
     procedure Validate_InputInvalidCustomerReview_MatchingErrorMessage(
       const ReviewStr : string; const Rating: Integer; const ExpectedErrorMsg: string);
+
+    [Test]
+    procedure SubmitReview_SuccessfullySubmitReview_WillNotRaiseException;
+
+    [Test]
+    procedure SubmitReview_SuccessfullySubmitReview_ListCountShouldNotBeZero;
   end;
 
 implementation
@@ -44,6 +50,35 @@ uses
 procedure TCustomerReviewServiceTest.Setup;
 begin
   FMockDB := TList<TCustomerReview>.Create;
+end;
+
+procedure TCustomerReviewServiceTest.SubmitReview_SuccessfullySubmitReview_ListCountShouldNotBeZero;
+begin
+  //Arrange
+  var ReviewDao := TTestCustomerReviewDao.Create(FMockDB);
+  var Service := TCustomerReviewService.Create(ReviewDao);
+  var Review := TCustomerReview.Create(1, 1, 1, 'Valid Customer Review', 5, True);
+
+  //Act
+  Service.CreateCustomerReview(Review);
+
+  //Assert
+  Assert.AreNotEqual(0, FMockDB.Count);
+end;
+
+procedure TCustomerReviewServiceTest.SubmitReview_SuccessfullySubmitReview_WillNotRaiseException;
+begin
+  //Arrange
+  var ReviewDao := TTestCustomerReviewDao.Create(FMockDB);
+  var Service := TCustomerReviewService.Create(ReviewDao);
+  var Review := TCustomerReview.Create(1, 1, 1, 'Valid Customer Review', 5, True);
+
+  //Act & Assert
+  Assert.WillNotRaise(
+  procedure
+  begin
+    Service.CreateCustomerReview(Review);
+  end);
 end;
 
 procedure TCustomerReviewServiceTest.Teardown;
@@ -72,7 +107,7 @@ begin
   Assert.AreEqual(ExpectedErrorMsg,ErrorMsg)
 end;
 
- procedure TCustomerReviewServiceTest.Validate_SucessfullyValidateReview_WillNotRaiseException;
+procedure TCustomerReviewServiceTest.Validate_SucessfullyValidateReview_WillNotRaiseException;
 begin
   //Arrange
   var ReviewDao := TTestCustomerReviewDao.Create(FMockDB);

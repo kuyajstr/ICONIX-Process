@@ -19,17 +19,14 @@ type
     HeaderLabel: TLabel;
     BookGrid: TStringGrid;
     BookAdapterBindSource: TAdapterBindSource;
-    DataGeneratorAdapter: TDataGeneratorAdapter;
     BindingList: TBindingsList;
     LinkGridToDataSourceBookAdapterBindSource: TLinkGridToDataSource;
-    procedure BookDBGridDblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BookGridDblClick(Sender: TObject);
   private
     FPresenter: IMainPresenter;
     procedure SetPresenter(APresenter: IMainPresenter);
-    procedure SetAndActivateAdapter;
-    function GetAdapter: TAdapterBindSource;
+    function GetSelectedBook: TObject;
   public
     procedure ShowMessageBox(const MessageStr: string);
   end;
@@ -43,29 +40,22 @@ uses
   MVCFramework.DataSet.Utils,
   MVCFramework.Serializer.Commons;
 
-function TMainForm.GetAdapter: TAdapterBindSource;
+function TMainForm.GetSelectedBook: TObject;
 begin
-  Result := BookAdapterBindSource;
-end;
-
-procedure TMainForm.BookDBGridDblClick(Sender: TObject);
-begin
-  FPresenter.ShowBookDetails;
+  Result := BookAdapterBindSource.Adapter.Current;
 end;
 
 procedure TMainForm.BookGridDblClick(Sender: TObject);
 begin
-  FPresenter.BookSelection;
+  FPresenter.ShowBookDetails;
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
   FPresenter.LoadBooks;
-end;
-
-procedure TMainForm.SetAndActivateAdapter;
-begin
-
+  BookAdapterBindSource.Adapter := TListBindSourceAdapter.Create(
+    Self, FPresenter.GetBookList, FPresenter.GetModelClass, True);
+  BookAdapterBindSource.Active := True;
 end;
 
 procedure TMainForm.SetPresenter(APresenter: IMainPresenter);

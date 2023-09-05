@@ -106,11 +106,9 @@ end;
 procedure TBookServiceTest.GetBook_InvalidIdRange_RaiseException
   (const ID: Integer);
 var
-  BookList: TObjectList<TBook>;
   Book: TBook;
 begin
   // Arrange
-  BookList := TObjectList<TBook>.Create;
   var DB := TDictionary<Integer, TBook>.Create;
   DB.Add(1, TBook.Create('Book A', 'Synopsis for Book A', 1));
   DB.Add(2, TBook.Create('Book B', 'Synopsis for Book B', 2));

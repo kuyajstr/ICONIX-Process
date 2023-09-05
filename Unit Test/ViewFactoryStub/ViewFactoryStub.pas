@@ -23,8 +23,7 @@ type
 implementation
 
 uses
-  BasicCourseMainView,
-  AlternativeMainView,
+  MainViewStub,
   BookDetailsViewStub,
   LoginViewStub,
   WriteReviewViewStub;
@@ -49,10 +48,7 @@ end;
 
 function TViewFactoryStub.CreateMainView(AOwner: IInterface): IMainView;
 begin
-  if FIsBasicCourse then
-    Result := TBasicCourseMainView.Create
-  else
-    Result := TAlternativeMainView.Create;
+  Result := TMainViewStub.Create(FIsBasicCourse);
 end;
 
 function TViewFactoryStub.CreateWriteReviewView(

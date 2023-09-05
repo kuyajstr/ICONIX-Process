@@ -95,13 +95,12 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="ViewFactoryStub\BasicCourseMainView.pas"/>
+        <DCCReference Include="ViewFactoryStub\MainViewStub.pas"/>
         <DCCReference Include="MainPresenter\MainRestServiceStub.pas"/>
         <DCCReference Include="ViewFactoryStub\BookDetailsViewStub.pas"/>
         <DCCReference Include="ViewFactoryStub\ViewFactoryStub.pas"/>
         <DCCReference Include="Exceptions\DisplayException.pas"/>
         <DCCReference Include="Exceptions\SetException.pas"/>
-        <DCCReference Include="ViewFactoryStub\AlternativeMainView.pas"/>
         <DCCReference Include="BookDetailsPresenter\BookDetailsServiceStub.pas"/>
         <DCCReference Include="ViewFactoryStub\LoginViewStub.pas"/>
         <DCCReference Include="ViewFactoryStub\WriteReviewViewStub.pas"/>

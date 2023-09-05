@@ -15,7 +15,6 @@ type
   TBookDetailsPresenterTest = class
   private
     FView: IBookDetailsView;
-    FRestService: IBookDetailsRestService;
     FViewFactory: IViewFactory;
   public
     [Setup]

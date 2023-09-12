@@ -24,6 +24,9 @@ type
 
 implementation
 
+uses
+  MapperUtility;
+
 { TBookActiveRecordDao }
 
 function TBookActiveRecordDao.ARtoBook(List: TObjectList<TMVCActiveRecord>)
@@ -81,22 +84,10 @@ procedure TBookActiveRecordDao.SelectAll(var AList: TObjectList<TBook>);
 begin
   var BooksAR := TMVCActiveRecord.All(TBookActiveRecord);
   try
-    AList := ARtoBook(BooksAR);
+    AList := TMapper.CopyList<TBook, TMVCActiveRecord>(BooksAR);
   finally
     BooksAR.Free;
   end;
-
-//  var BooksAR := TBookActiveRecord.Create;
-//  try
-//    var Books := BooksAR.All<TBookActiveRecord>;
-//
-//    for var Book in Books do
-//    begin
-//      AList.Add(TBook.Create(Book));
-//    end;
-//  finally
-//    BooksAR.Free;
-//  end;
 end;
 
 procedure TBookActiveRecordDao.Update(var Obj: TBook);

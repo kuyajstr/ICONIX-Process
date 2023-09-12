@@ -91,7 +91,7 @@ var
   ReviewList: TObjectList<TCustomerReview>;
 begin
   FService.GetAllCustomerReview(ReviewList);
-  Render(302, ReviewList);
+  Render(ObjectDict().Add('data', ReviewList));
 end;
 
 procedure TCustomerReviewController.GetCustomerReviewByID(const ID: Integer);

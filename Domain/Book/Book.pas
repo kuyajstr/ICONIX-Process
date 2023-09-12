@@ -14,6 +14,7 @@ type
     FTitle: string;
     FSynopsis: string;
   public
+    constructor Create; overload;
     constructor Create(const ATitle, ASynopsis: string;
       const AId: Integer); overload;
     constructor Create(const ABook: IBookContext); overload;
@@ -49,6 +50,11 @@ begin
   FId := AId;
   FTitle := ATitle;
   FSynopsis := ASynopsis;
+end;
+
+constructor TBook.Create;
+begin
+  inherited Create;
 end;
 
 end.

@@ -1,0 +1,102 @@
+unit AuthCriteria;
+
+interface
+
+uses
+  MVCFramework,
+  MVCFramework.Commons,
+  System.Generics.Collections;
+
+type
+
+  TAuthCriteria = class(TInterfacedObject, IMVCAuthenticationHandler)
+  public
+    procedure OnRequest(const AContext: TWebContext;
+      const AControllerQualifiedClassName: string; const AActionName: string;
+      var AAuthenticationRequired: Boolean);
+
+    procedure OnAuthentication(const AContext: TWebContext;
+      const AUserName: string; const APassword: string;
+      AUserRoles: TList<string>; var AIsValid: Boolean;
+      const ASessionData: TDictionary<string, string>);
+
+    procedure OnAuthorization(const AContext: TWebContext;
+      AUserRoles: TList<string>; const AControllerQualifiedClassName: string;
+      const AActionName: string; var AIsAuthorized: Boolean);
+  end;
+
+implementation
+
+uses
+  System.SysUtils,
+  System.StrUtils,
+  FireDAC.Comp.Client,
+  MVCFramework.ActiveRecord,
+  CustomerActiveRecordDao,
+  Customer;
+
+{ TAuthCriteria }
+
+procedure TAuthCriteria.OnAuthentication(const AContext: TWebContext;
+  const AUserName, APassword: string; AUserRoles: TList<string>;
+  var AIsValid: Boolean; const ASessionData: TDictionary<string, string>);
+var
+  Customer: TCustomer;
+begin
+
+  if AUserName = 'Admin' then
+  begin
+    AIsValid := APassword = 'admin';
+    AUserRoles.Add('admin');
+  end
+  else if AUserName = 'Guest' then
+  begin
+    AIsValid := APassword = 'guest';
+    AUserRoles.Add('guest');
+  end
+  else
+  begin
+    var CustomerDAO := TCustomerActiveRecordDao.Create;
+    try
+      try
+        CustomerDAO.SelectByFirstName(AUserName, Customer);
+        AIsValid := True;
+        AUserRoles.Add('customer')
+      except
+        on E: Exception do
+          AIsValid := False;
+      end;
+    finally
+      CustomerDAO.Free;
+    end;
+  end;
+
+end;
+
+procedure TAuthCriteria.OnAuthorization(const AContext: TWebContext;
+  AUserRoles: TList<string>; const AControllerQualifiedClassName,
+  AActionName: string; var AIsAuthorized: Boolean);
+begin
+  AIsAuthorized := False;
+  if AUserRoles.Contains('admin') then
+    AIsAuthorized := True
+  else if AUserRoles.Contains('customer') then
+  begin
+    if AContext.Request.HTTPMethodAsString = 'GET' then
+      AIsAuthorized := True
+    else if (AActionName = 'CreateCustomerReview') or
+      (AActionName = 'ValidateReview') then
+      AIsAuthorized := True;
+  end
+  else
+    AIsAuthorized := AContext.Request.HTTPMethodAsString = 'GET';
+end;
+
+procedure TAuthCriteria.OnRequest(const AContext: TWebContext;
+  const AControllerQualifiedClassName, AActionName: string;
+  var AAuthenticationRequired: Boolean);
+begin
+  AAuthenticationRequired := True;
+end;
+
+end.

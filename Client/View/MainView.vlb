@@ -10,8 +10,9 @@ Coordinates=251,1,124,33
 Visible=False
 
 [BindingList]
-Coordinates=105,1,76,33
+Coordinates=105,1,70,33
 
 [BookGrid]
-Coordinates=10,71,70,51
+Coordinates=10,71,61,69
+Visible=True
 

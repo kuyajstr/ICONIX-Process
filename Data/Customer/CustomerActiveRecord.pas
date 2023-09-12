@@ -34,7 +34,7 @@ type
   public
     constructor Create; overload;
     constructor Create(const ACustomer: TCustomer); overload;
-  
+
     property Id: Integer read GetId write SetId;
     property FirstName: string read GetFirstName write SetFirstName;
     property LastName: string read GetLastName write SetLastName;
@@ -46,13 +46,13 @@ implementation
 { TCustomerActiveRecord }
 
 constructor TCustomerActiveRecord.Create(const ACustomer: TCustomer);
-begin                    
-  inherited Create(True);    
+begin
+  inherited Create(True);
 
   Id := ACustomer.Id;
   FirstName := ACustomer.FirstName;
   LastName := ACustomer.LastName;
-  Email := ACustomer.Email;  
+  Email := ACustomer.Email;
 end;
 
 constructor TCustomerActiveRecord.Create;
@@ -77,7 +77,6 @@ end;
 
 function TCustomerActiveRecord.GetLastName: string;
 begin
-
 
   Result := FLastName;
 end;

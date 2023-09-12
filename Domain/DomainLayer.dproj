@@ -86,18 +86,6 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="rtl.dcp"/>
-        <DCCReference Include="dbrtl.dcp"/>
-        <DCCReference Include="inet.dcp"/>
-        <DCCReference Include="IndySystem.dcp"/>
-        <DCCReference Include="IndyProtocols.dcp"/>
-        <DCCReference Include="IndyCore.dcp"/>
-        <DCCReference Include="FireDAC.dcp"/>
-        <DCCReference Include="FireDACCommonDriver.dcp"/>
-        <DCCReference Include="FireDACCommon.dcp"/>
-        <DCCReference Include="FireDACMySQLDriver.dcp"/>
-        <DCCReference Include="SwagDoc.dcp"/>
-        <DCCReference Include="loggerproRT.dcp"/>
-        <DCCReference Include="dmvcframeworkRT.dcp"/>
         <DCCReference Include="DAOIntf.pas"/>
         <DCCReference Include="Book\Book.pas"/>
         <DCCReference Include="Book\BookContextIntf.pas"/>
@@ -155,7 +143,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\22.0\Bpl\DomainLayer.bpl" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\Bin\Win32\Debug\DomainLayer.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>DomainLayer.bpl</RemoteName>
                         <Overwrite>true</Overwrite>

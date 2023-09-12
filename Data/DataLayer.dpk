@@ -35,23 +35,23 @@ requires
   IndySystem,
   IndyProtocols,
   IndyCore,
+  RESTComponents,
   FireDAC,
   FireDACCommonDriver,
   FireDACCommon,
   FireDACMySQLDriver,
   dmvcframeworkRT,
   SwagDoc,
-  loggerproRT,
-  DomainLayer;
+  loggerproRT;
 
 contains
   BookActiveRecord in 'Book\BookActiveRecord.pas',
-  BookActiveRecordDao in 'Book\BookActiveRecordDao.pas',
   CustomerReviewActiveRecord in 'Customer Review\CustomerReviewActiveRecord.pas',
   CustomerReviewActiveRecordDao in 'Customer Review\CustomerReviewActiveRecordDao.pas',
   CustomerActiveRecord in 'Customer\CustomerActiveRecord.pas',
   CustomerActiveRecordDao in 'Customer\CustomerActiveRecordDao.pas',
-  EntityActiveRecord in 'EntityActiveRecord.pas';
+  EntityActiveRecord in 'EntityActiveRecord.pas',
+  BookActiveRecordDao in 'Book\BookActiveRecordDao.pas';
 
 end.
 

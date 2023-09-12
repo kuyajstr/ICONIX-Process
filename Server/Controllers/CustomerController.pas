@@ -89,7 +89,7 @@ var
   CustomerList: TObjectList<TCustomer>;
 begin
   FService.GetAllCustomer(CustomerList);
-  Render(302, CustomerList);
+  Render(ObjectDict().Add('data', CustomerList));
 end;
 
 procedure TCustomerController.GetCustomerByFirstName(const FirstName: string);

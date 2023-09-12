@@ -2,14 +2,29 @@
 Coordinates=206,1,84,105
 
 [HeaderLabel]
-Coordinates=10,10,61,51
+Coordinates=10,399,76,51
 
 [IdEdit]
-Coordinates=390,0,40,51
+Coordinates=40,80,42,51
 
 [TitleEdit]
-Coordinates=310,0,50,51
+Coordinates=230,10,54,51
 
 [BooklistLabel]
-Coordinates=470,50,70,51
+Coordinates=329,10,81,51
+
+[ViewModelBindScope]
+Coordinates=10,139,121,105
+
+[BindlingList]
+Coordinates=246,125,73,33
+
+[ViewBookButton]
+Coordinates=112,399,96,51
+
+[LoadBookButton]
+Coordinates=436,10,97,51
+
+[BooklistListBox]
+Coordinates=211,121,92,141
 

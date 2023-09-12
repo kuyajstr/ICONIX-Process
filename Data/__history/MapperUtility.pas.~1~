@@ -1,0 +1,87 @@
+unit MapperUtility;
+
+interface
+
+uses
+  Rtti,
+  Generics.Collections;
+
+type
+  TMapper = class(TObject)
+  private
+    class function CopyProperties<T: class>(SourceObject: TObject): T;
+    class function CopyFields<T: class>(SourceObject: TObject): T;
+  public
+    class function CopyObject<T: class>(SourceObject: TObject): T;
+    class function CopyList<T, S: class>(SourceList: TEnumerable<S>)
+      : TObjectList<T>;
+  end;
+
+implementation
+
+{ TCloner }
+
+class function TMapper.CopyFields<T>(SourceObject: TObject): T;
+begin
+  var
+  Context := TRttiContext.Create;
+  try
+    var TargetType := Context.GetType(T);
+    var SourceType := Context.GetType(SourceObject.ClassType);
+
+    Result := TargetType.GetMethod('Create')
+      .Invoke(TargetType.AsInstance.MetaclassType, []).AsType<T>;
+
+    for var Field in SourceType.GetFields do
+    begin
+      var FieldValue := Field.GetValue(SourceObject);
+      var TargetField := TargetType.GetField(Field.Name);
+      if TargetField <> PtrToNil then
+        TargetField.SetValue(PPointer(Result), FieldValue);
+    end;
+  finally
+    Context.Free;
+  end;
+end;
+
+class function TMapper.CopyProperties<T>(SourceObject: TObject): T;
+begin
+  var
+  Context := TRttiContext.Create;
+  try
+    var TargetType := Context.GetType(T);
+    var SourceType := Context.GetType(SourceObject.ClassType);
+
+    Result := TargetType.GetMethod('Create')
+      .Invoke(TargetType.AsInstance.MetaclassType, []).AsType<T>;
+
+    for var Prop in SourceType.GetProperties do
+    begin
+      if (Prop.IsWritable) and (Prop.IsReadable) then
+      begin
+        var SourceValue := Prop.GetValue(SourceObject);
+        var TargetProperty := TargetType.GetProperty(Prop.Name);
+        if TargetProperty <> PtrToNil then
+          TargetProperty.SetValue(PPointer(Result), SourceValue);
+      end;
+    end;
+  finally
+    Context.Free;
+  end;
+end;
+
+class function TMapper.CopyList<T, S>(SourceList: TEnumerable<S>)
+  : TObjectList<T>;
+begin
+  Result := TObjectList<T>.Create;
+
+  for var Element in SourceList do
+    Result.Add(CopyObject<T>(Element));
+end;
+
+class function TMapper.CopyObject<T>(SourceObject: TObject): T;
+begin
+  Result := CopyFields<T>(SourceObject);
+end;
+
+end.

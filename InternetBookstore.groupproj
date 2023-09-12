@@ -9,6 +9,9 @@
         <Projects Include="Data\DataLayer.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="..\CloningDemo\CloningDemo.dproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="Server\BookstoreServer.dproj">
             <Dependencies/>
         </Projects>
@@ -16,6 +19,12 @@
             <Dependencies/>
         </Projects>
         <Projects Include="Unit Test\UnitTest.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="BookMVVM\BookMVVM.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\TSM MVVM\AdvStringGridDemo.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -44,6 +53,15 @@
     <Target Name="DataLayer:Make">
         <MSBuild Projects="Data\DataLayer.dproj" Targets="Make"/>
     </Target>
+    <Target Name="CloningDemo">
+        <MSBuild Projects="..\CloningDemo\CloningDemo.dproj"/>
+    </Target>
+    <Target Name="CloningDemo:Clean">
+        <MSBuild Projects="..\CloningDemo\CloningDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CloningDemo:Make">
+        <MSBuild Projects="..\CloningDemo\CloningDemo.dproj" Targets="Make"/>
+    </Target>
     <Target Name="BookstoreServer">
         <MSBuild Projects="Server\BookstoreServer.dproj"/>
     </Target>
@@ -71,14 +89,32 @@
     <Target Name="UnitTest:Make">
         <MSBuild Projects="Unit Test\UnitTest.dproj" Targets="Make"/>
     </Target>
+    <Target Name="BookMVVM">
+        <MSBuild Projects="BookMVVM\BookMVVM.dproj"/>
+    </Target>
+    <Target Name="BookMVVM:Clean">
+        <MSBuild Projects="BookMVVM\BookMVVM.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BookMVVM:Make">
+        <MSBuild Projects="BookMVVM\BookMVVM.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="AdvStringGridDemo">
+        <MSBuild Projects="..\TSM MVVM\AdvStringGridDemo.dproj"/>
+    </Target>
+    <Target Name="AdvStringGridDemo:Clean">
+        <MSBuild Projects="..\TSM MVVM\AdvStringGridDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="AdvStringGridDemo:Make">
+        <MSBuild Projects="..\TSM MVVM\AdvStringGridDemo.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="DomainLayer;DataLayer;BookstoreServer;BookstoreClient;UnitTest"/>
+        <CallTarget Targets="DomainLayer;DataLayer;CloningDemo;BookstoreServer;BookstoreClient;UnitTest;BookMVVM;AdvStringGridDemo"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="DomainLayer:Clean;DataLayer:Clean;BookstoreServer:Clean;BookstoreClient:Clean;UnitTest:Clean"/>
+        <CallTarget Targets="DomainLayer:Clean;DataLayer:Clean;CloningDemo:Clean;BookstoreServer:Clean;BookstoreClient:Clean;UnitTest:Clean;BookMVVM:Clean;AdvStringGridDemo:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="DomainLayer:Make;DataLayer:Make;BookstoreServer:Make;BookstoreClient:Make;UnitTest:Make"/>
+        <CallTarget Targets="DomainLayer:Make;DataLayer:Make;CloningDemo:Make;BookstoreServer:Make;BookstoreClient:Make;UnitTest:Make;BookMVVM:Make;AdvStringGridDemo:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

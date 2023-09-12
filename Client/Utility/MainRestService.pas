@@ -64,6 +64,8 @@ begin
   for var BookJson in BookArray do
   begin
     var Book := TJSON.JsonToObject<TBook>(BookJson.ToString);
+
+    TJSON.ObjectToJsonString(Book);
     Result.Add(Book);
   end;
 end;
